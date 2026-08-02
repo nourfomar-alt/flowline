@@ -323,6 +323,26 @@
     .tabs{width:100%;}
     .tab{flex:1;text-align:center;}
   }
+
+  /* ---- Auth & Account UI ---- */
+  #authGate{position:fixed;inset:0;z-index:300;background:var(--bg);display:none;align-items:center;justify-content:center;}
+  .spinner{width:28px;height:28px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--gold);animation:flowspin .8s linear infinite;}
+  @keyframes flowspin{to{transform:rotate(360deg);}}
+  .avatar-circle{width:26px;height:26px;border-radius:50%;object-fit:cover;background:var(--gold);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;overflow:hidden;}
+  #authOverlay .modal, #accountOverlay .modal{max-width:400px;}
+  .auth-screen{text-align:center;}
+  .auth-logo{font-family:'Fraunces',serif;font-size:24px;font-weight:600;margin-bottom:6px;}
+  .auth-sub{color:var(--ink-soft);font-size:13px;margin-bottom:20px;}
+  .auth-divider{display:flex;align-items:center;gap:10px;color:var(--ink-soft);font-size:11px;margin:14px 0;}
+  .auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--line);}
+  .auth-switch{font-size:13px;color:var(--ink-soft);margin-top:14px;}
+  .auth-switch a{color:var(--gold);font-weight:600;cursor:pointer;text-decoration:none;}
+  .auth-error{color:var(--exam);font-size:12px;margin-top:8px;display:none;text-align:left;}
+  .auth-success{color:var(--free);font-size:12px;margin-top:8px;text-align:left;}
+  .oauth-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:11px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-weight:600;font-size:13px;cursor:pointer;margin-bottom:8px;font-family:inherit;}
+  .oauth-btn:hover{border-color:var(--glow2);}
+  .guest-banner{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:12px;color:var(--ink-soft);display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
+  .field-note{font-size:11px;color:var(--ink-soft);margin-top:4px;}
 </style>
 </head>
 <body>
@@ -338,6 +358,7 @@
       <button class="tab" data-tab="today">Today</button>
       <button class="tab" data-tab="month">Month</button>
     </div>
+    <button class="theme-toggle" id="accountBtn" title="Account"><span class="avatar-circle" id="headerAvatar">👤</span></button>
     <button class="theme-toggle" id="themeToggle" title="Switch theme">🌙</button>
     <button class="theme-toggle" id="settingsBtn" title="Settings">⚙️</button>
   </header>
@@ -461,6 +482,107 @@
       <div style="flex:1"></div>
       <button class="btn btn-ghost" id="cancelBtn" style="margin-right:8px;">Cancel</button>
       <button class="btn btn-primary" id="saveBtn">Save</button>
+    </div>
+  </div>
+</div>
+
+<div id="authGate"><div class="spinner"></div></div>
+
+<div class="overlay" id="authOverlay">
+  <div class="modal">
+
+    <div class="auth-screen" data-screen="welcome">
+      <div class="auth-logo">Flowline</div>
+      <div class="auth-sub">Sign in to back up your week and keep it in sync across your devices.</div>
+      <button class="btn btn-primary" style="width:100%;margin-bottom:8px;" id="goSignup">Create an account</button>
+      <button class="btn btn-ghost" style="width:100%;" id="goLogin">Log in</button>
+      <div class="auth-divider">or</div>
+      <button class="oauth-btn" id="googleBtnWelcome">Continue with Google</button>
+      <button class="oauth-btn" id="appleBtnWelcome">Continue with Apple</button>
+      <div class="auth-error" id="welcomeError"></div>
+      <div class="auth-switch"><a id="goGuest">Continue without an account</a></div>
+    </div>
+
+    <div class="auth-screen" data-screen="login" style="display:none;">
+      <div class="auth-logo">Welcome back</div>
+      <div class="field" style="text-align:left;"><label>Email</label><input type="email" id="loginEmail"></div>
+      <div class="field" style="text-align:left;"><label>Password</label><input type="password" id="loginPassword"></div>
+      <button class="btn btn-primary" style="width:100%;" id="loginSubmit">Log in</button>
+      <div class="auth-error" id="loginError"></div>
+      <div class="auth-switch"><a id="goForgot">Forgot password?</a></div>
+      <div class="auth-divider">or</div>
+      <button class="oauth-btn" id="googleBtnLogin">Continue with Google</button>
+      <button class="oauth-btn" id="appleBtnLogin">Continue with Apple</button>
+      <div class="auth-switch">New here? <a id="loginToSignup">Create an account</a></div>
+      <div class="auth-switch"><a id="loginBack">‹ Back</a></div>
+    </div>
+
+    <div class="auth-screen" data-screen="signup" style="display:none;">
+      <div class="auth-logo">Create your account</div>
+      <div class="field" style="text-align:left;"><label>Name</label><input type="text" id="signupName"></div>
+      <div class="field" style="text-align:left;"><label>Email</label><input type="email" id="signupEmail"></div>
+      <div class="field" style="text-align:left;"><label>Password</label><input type="password" id="signupPassword"><div class="field-note">At least 6 characters.</div></div>
+      <button class="btn btn-primary" style="width:100%;" id="signupSubmit">Create account</button>
+      <div class="auth-error" id="signupError"></div>
+      <div class="auth-switch">Already have an account? <a id="signupToLogin">Log in</a></div>
+      <div class="auth-switch"><a id="signupBack">‹ Back</a></div>
+    </div>
+
+    <div class="auth-screen" data-screen="forgot" style="display:none;">
+      <div class="auth-logo">Reset your password</div>
+      <div class="field" style="text-align:left;"><label>Email</label><input type="email" id="forgotEmail"></div>
+      <button class="btn btn-primary" style="width:100%;" id="forgotSubmit">Send reset link</button>
+      <div class="auth-error" id="forgotError"></div>
+      <div class="auth-success" id="forgotSuccess" style="display:none;">Check your email for a reset link.</div>
+      <div class="auth-switch"><a id="forgotBack">‹ Back to log in</a></div>
+    </div>
+
+  </div>
+</div>
+
+<div class="overlay" id="accountOverlay">
+  <div class="modal">
+    <h3>Account</h3>
+    <div class="guest-banner" id="guestBanner" style="display:none;">
+      <span>Guest mode — your data lives only on this device.</span>
+      <button class="btn btn-primary" id="guestUpgradeBtn" style="white-space:nowrap;padding:8px 14px;">Create account</button>
+    </div>
+    <div id="accountSignedInSection" style="display:none;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;">
+        <div class="avatar-circle" id="accountAvatar" style="width:52px;height:52px;font-size:18px;flex-shrink:0;"></div>
+        <div>
+          <input type="file" id="avatarInput" accept="image/*" style="display:none;">
+          <button class="btn btn-ghost" id="avatarUploadBtn" style="padding:6px 12px;font-size:12px;">Change photo</button>
+        </div>
+      </div>
+      <div class="field"><label>Name</label><input type="text" id="accountName"></div>
+      <div class="field"><label>Email</label><input type="email" id="accountEmail" disabled><div class="field-note" id="emailVerifiedNote"></div></div>
+      <div class="field"><label>Time zone</label><select id="accountTimezone"></select></div>
+      <div class="modal-actions" style="margin-top:0;margin-bottom:6px;">
+        <div style="flex:1"></div>
+        <button class="btn btn-primary" id="accountSaveProfileBtn">Save profile</button>
+      </div>
+      <div style="border-top:1px solid var(--line);padding-top:14px;margin:10px 0 14px;">
+        <div class="field"><label>Current password <span style="font-weight:400;">(required to change email or password)</span></label><input type="password" id="accountCurrentPassword"></div>
+        <div class="row2">
+          <div class="field"><label>New email</label><input type="email" id="accountNewEmail" placeholder="Leave blank to keep current"></div>
+          <div class="field"><label>New password</label><input type="password" id="accountNewPassword" placeholder="Leave blank to keep current"></div>
+        </div>
+        <button class="btn btn-ghost" id="accountSecuritySaveBtn">Update</button>
+        <div class="auth-error" id="accountSecurityError"></div>
+        <div class="auth-success" id="accountSecuritySuccess" style="display:none;"></div>
+      </div>
+      <div class="row2">
+        <button class="btn btn-ghost" id="exportDataBtn">Export my data</button>
+        <button class="btn btn-ghost" id="signOutBtn">Sign out</button>
+      </div>
+      <div style="border-top:1px solid var(--line);margin-top:14px;padding-top:12px;">
+        <button id="deleteAccountBtn" style="background:none;border:none;color:var(--exam);text-decoration:underline;cursor:pointer;font-size:12px;">Delete my account permanently</button>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <div style="flex:1"></div>
+      <button class="btn btn-ghost" id="accountCloseBtn">Close</button>
     </div>
   </div>
 </div>
@@ -659,7 +781,21 @@ function loadState(){
 }
 function saveState(){
   localStorage.setItem(STORE_KEY, JSON.stringify(state));
+  try{ if(window.__flowSyncPush) window.__flowSyncPush(state); }catch(e){}
 }
+
+/* ---- Bridge for the Firebase auth/sync module (type="module" scripts can't
+   see this script's `let state` directly, so it talks to these instead) ---- */
+window.__flowGetState = function(){ return state; };
+window.__flowSetState = function(newState){
+  if(!newState || typeof newState !== 'object') return;
+  state = newState;
+  if(!state.categories) state.categories = [];
+  if(!state.events) state.events = [];
+  if(!state.settings) state.settings = { startHour:0, endHour:24, reminderMinutes:10 };
+  localStorage.setItem(STORE_KEY, JSON.stringify(state));
+  renderAll();
+};
 
 function timeToMin(t){ const [h,m]=t.split(':').map(Number); return h*60+m; }
 function minToTime(min){ const h=Math.floor(min/60)%24; const m=min%60; return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0'); }
@@ -1658,6 +1794,423 @@ setInterval(renderArc, 60000);
 if(state.settings.defaultTab && state.settings.defaultTab !== 'week'){
   const targetTab = document.querySelector('.tab[data-tab="'+state.settings.defaultTab+'"]');
   if(targetTab) targetTab.click();
+}
+</script>
+
+<script type="module">
+/* =============================================================================
+   FLOWLINE — ACCOUNTS & CLOUD SYNC (Firebase Authentication + Firestore)
+   =============================================================================
+   SETUP REQUIRED — do this once before any of this works:
+
+   1. Go to https://console.firebase.google.com and create a free project.
+   2. In the project, click "Add app" → Web app, and copy the config object
+      it gives you into `firebaseConfig` below (replace the placeholder).
+   3. Authentication → Sign-in method → enable "Email/Password", "Google",
+      and "Apple". Apple requires a paid Apple Developer account and a
+      Services ID configured under Firebase's Apple provider settings — if
+      you skip that, just leave the Apple button; it'll show a clear error
+      instead of crashing anything else.
+   4. Firestore Database → create a database (start in production mode) and
+      set rules so each user can only read/write their own data, e.g.:
+
+        rules_version = '2';
+        service cloud.firestore {
+          match /databases/{database}/documents {
+            match /users/{uid} {
+              allow read, write: if request.auth != null && request.auth.uid == uid;
+              match /appData/{doc} {
+                allow read, write: if request.auth != null && request.auth.uid == uid;
+              }
+            }
+          }
+        }
+
+   5. Reload the file. Until step 1–2 are done, the app runs exactly as
+      before (local-only, no accounts) — nothing here breaks that.
+
+   Notes on scope:
+   - Firebase handles password hashing/storage server-side — this code never
+     sees or stores a raw password beyond the login form's memory.
+   - "Sign in with Apple (on iPhone)" is implemented as Firebase's standard
+     Apple OAuth flow, which works in Safari on iPhone/iPad/Mac and in
+     desktop browsers. A truly native Apple Sign-In button (Face ID prompt)
+     only exists inside a native iOS app shell, which a single HTML file
+     can't provide — this is the closest web-based equivalent.
+   - Flowline's data model today is Categories + Events + Settings — that's
+     what gets synced. Goals/Habits/Notes/Statistics/Streaks aren't features
+     of this app yet, so there's nothing of that kind to sync.
+   ========================================================================== */
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getAuth, setPersistence, browserLocalPersistence, onAuthStateChanged,
+  createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut,
+  sendEmailVerification, sendPasswordResetEmail, updateProfile, updateEmail,
+  updatePassword, deleteUser, reauthenticateWithCredential, EmailAuthProvider,
+  GoogleAuthProvider, OAuthProvider, signInWithPopup
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {
+  getFirestore, doc, setDoc, getDoc, deleteDoc, onSnapshot, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+const CLOUD_CONFIGURED = !!(firebaseConfig.apiKey && firebaseConfig.apiKey.indexOf('YOUR_') !== 0);
+
+const $ = (id) => document.getElementById(id);
+const authGate = $('authGate');
+const authOverlay = $('authOverlay');
+const accountOverlay = $('accountOverlay');
+
+if(!CLOUD_CONFIGURED){
+  // No Firebase project configured yet — run exactly like the original local-only app.
+  authGate.remove();
+  authOverlay.remove();
+  const note = document.createElement('div');
+  note.style.cssText = 'text-align:center;font-size:11px;color:var(--ink-soft);margin-top:8px;';
+  note.textContent = "Cloud accounts aren't set up yet — this copy runs local-only. See the FIREBASE SETUP comment near the end of the file's HTML.";
+  document.querySelector('footer').insertAdjacentElement('afterend', note);
+  $('accountBtn').addEventListener('click', ()=> alert("Cloud accounts aren't configured in this file yet — see the FIREBASE SETUP comment for how to turn this on."));
+} else {
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  setPersistence(auth, browserLocalPersistence).catch(()=>{});
+
+  const GUEST_KEY = 'flow_guest_mode';
+  const stateDoc = (uid) => doc(db, 'users', uid, 'appData', 'state');
+  const profileDoc = (uid) => doc(db, 'users', uid);
+
+  let unsubState = null;
+  let pushTimer = null;
+  let pendingGuestState = null; // guest data captured just before sign-up/login, to migrate in
+
+  function isGuest(){ return localStorage.getItem(GUEST_KEY) === '1' && !auth.currentUser; }
+
+  authGate.style.display = 'flex';
+
+  // ---- Screen switching ----
+  function showAuthScreen(name){
+    authOverlay.classList.add('show');
+    document.querySelectorAll('#authOverlay .auth-screen').forEach(s=>{
+      s.style.display = (s.dataset.screen === name) ? 'block' : 'none';
+    });
+    ['loginError','signupError','forgotError','welcomeError'].forEach(id=>{ $(id).style.display='none'; });
+    $('forgotSuccess').style.display = 'none';
+  }
+  function hideAuthOverlay(){ authOverlay.classList.remove('show'); }
+  $('goSignup').onclick = ()=>showAuthScreen('signup');
+  $('goLogin').onclick = ()=>showAuthScreen('login');
+  $('loginToSignup').onclick = ()=>showAuthScreen('signup');
+  $('signupToLogin').onclick = ()=>showAuthScreen('login');
+  $('goForgot').onclick = ()=>showAuthScreen('forgot');
+  $('forgotBack').onclick = ()=>showAuthScreen('login');
+  $('loginBack').onclick = ()=>showAuthScreen('welcome');
+  $('signupBack').onclick = ()=>showAuthScreen('welcome');
+  $('goGuest').onclick = ()=>{
+    localStorage.setItem(GUEST_KEY, '1');
+    hideAuthOverlay();
+    refreshAccountUI(null);
+  };
+
+  function showError(id, err){
+    const el = $(id);
+    el.textContent = friendlyAuthError(err);
+    el.style.display = 'block';
+  }
+  function friendlyAuthError(err){
+    const code = (err && err.code) || '';
+    const map = {
+      'auth/email-already-in-use': 'That email already has an account — try logging in instead.',
+      'auth/invalid-email': 'That email address doesn\'t look right.',
+      'auth/weak-password': 'Password should be at least 6 characters.',
+      'auth/wrong-password': 'Incorrect password.',
+      'auth/invalid-credential': 'Incorrect email or password.',
+      'auth/user-not-found': 'No account found with that email.',
+      'auth/too-many-requests': 'Too many attempts — please wait a bit and try again.',
+      'auth/popup-closed-by-user': 'Sign-in window was closed before finishing.',
+      'auth/requires-recent-login': 'Please re-enter your current password and try again.'
+    };
+    return map[code] || (err && err.message) || 'Something went wrong — please try again.';
+  }
+
+  function captureGuestStateIfAny(){
+    pendingGuestState = isGuest() ? window.__flowGetState() : null;
+  }
+
+  // ---- Email/password sign up & login ----
+  $('signupSubmit').onclick = async ()=>{
+    const name = $('signupName').value.trim();
+    const email = $('signupEmail').value.trim();
+    const password = $('signupPassword').value;
+    if(!name || !email || !password){ showError('signupError', {message:'Please fill in every field.'}); return; }
+    captureGuestStateIfAny();
+    try{
+      const cred = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(cred.user, {displayName: name});
+      await sendEmailVerification(cred.user);
+    }catch(err){ showError('signupError', err); }
+  };
+  $('loginSubmit').onclick = async ()=>{
+    const email = $('loginEmail').value.trim();
+    const password = $('loginPassword').value;
+    if(!email || !password){ showError('loginError', {message:'Please fill in both fields.'}); return; }
+    captureGuestStateIfAny();
+    try{ await signInWithEmailAndPassword(auth, email, password); }
+    catch(err){ showError('loginError', err); }
+  };
+  $('forgotSubmit').onclick = async ()=>{
+    const email = $('forgotEmail').value.trim();
+    if(!email){ showError('forgotError', {message:'Enter the email on your account.'}); return; }
+    try{
+      await sendPasswordResetEmail(auth, email);
+      $('forgotError').style.display = 'none';
+      $('forgotSuccess').style.display = 'block';
+    }catch(err){ showError('forgotError', err); }
+  };
+
+  // ---- OAuth (Google / Apple) ----
+  function wireOAuth(btnId, provider){
+    $(btnId).onclick = async ()=>{
+      captureGuestStateIfAny();
+      try{ await signInWithPopup(auth, provider); }
+      catch(err){
+        const lower = btnId.toLowerCase();
+        const errTargetId = lower.includes('login') ? 'loginError' : lower.includes('welcome') ? 'welcomeError' : 'signupError';
+        showError(errTargetId, err);
+      }
+    };
+  }
+  wireOAuth('googleBtnWelcome', new GoogleAuthProvider());
+  wireOAuth('googleBtnLogin', new GoogleAuthProvider());
+  wireOAuth('appleBtnWelcome', new OAuthProvider('apple.com'));
+  wireOAuth('appleBtnLogin', new OAuthProvider('apple.com'));
+
+  // ---- Cloud sync ----
+  function mergeStates(remote, guest){
+    const catIds = new Set((remote.categories||[]).map(c=>c.id));
+    const categories = (remote.categories||[]).concat((guest.categories||[]).filter(c=>!catIds.has(c.id)));
+    const evIds = new Set((remote.events||[]).map(e=>e.id));
+    const events = (remote.events||[]).concat((guest.events||[]).filter(e=>!evIds.has(e.id)));
+    return { categories, events, settings: remote.settings || guest.settings };
+  }
+
+  window.__flowSyncPush = function(appState){
+    if(!auth.currentUser || isGuest()) return; // guests stay local-only
+    clearTimeout(pushTimer);
+    pushTimer = setTimeout(()=>{
+      setDoc(stateDoc(auth.currentUser.uid), { payload: JSON.stringify(appState), updatedAt: serverTimestamp() }, { merge: true })
+        .catch(err=>console.warn('Cloud sync failed:', err));
+    }, 800);
+  };
+
+  function attachStateListener(uid){
+    if(unsubState) unsubState();
+    unsubState = onSnapshot(stateDoc(uid), (snap)=>{
+      if(!snap.exists() || !snap.data().payload) return;
+      try{
+        const remote = JSON.parse(snap.data().payload);
+        const local = window.__flowGetState();
+        if(JSON.stringify(remote) !== JSON.stringify(local)) window.__flowSetState(remote);
+      }catch(e){}
+    }, (err)=>console.warn('Sync listener error:', err));
+  }
+
+  async function onSignedIn(user){
+    localStorage.removeItem(GUEST_KEY);
+    hideAuthOverlay();
+    try{
+      const snap = await getDoc(stateDoc(user.uid));
+      if(snap.exists() && snap.data().payload){
+        const remote = JSON.parse(snap.data().payload);
+        const finalState = pendingGuestState ? mergeStates(remote, pendingGuestState) : remote;
+        window.__flowSetState(finalState);
+        await setDoc(stateDoc(user.uid), { payload: JSON.stringify(finalState), updatedAt: serverTimestamp() }, { merge: true });
+      } else {
+        const initial = pendingGuestState || window.__flowGetState();
+        window.__flowSetState(initial);
+        await setDoc(stateDoc(user.uid), { payload: JSON.stringify(initial), updatedAt: serverTimestamp() });
+      }
+    }catch(err){ console.warn('Initial sync failed:', err); }
+    pendingGuestState = null;
+    attachStateListener(user.uid);
+    await ensureProfileDoc(user);
+    refreshAccountUI(user);
+  }
+
+  async function ensureProfileDoc(user){
+    const ref = profileDoc(user.uid);
+    const snap = await getDoc(ref);
+    if(!snap.exists()){
+      await setDoc(ref, {
+        displayName: user.displayName || '',
+        email: user.email || '',
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        theme: document.documentElement.getAttribute('data-theme') || 'light',
+        photoDataUrl: '',
+        createdAt: serverTimestamp()
+      });
+    }
+  }
+
+  // ---- Auth state gate ----
+  onAuthStateChanged(auth, (user)=>{
+    authGate.style.display = 'none';
+    if(user){ onSignedIn(user); }
+    else if(isGuest()){ hideAuthOverlay(); refreshAccountUI(null); }
+    else { showAuthScreen('welcome'); authOverlay.classList.add('show'); refreshAccountUI(null); }
+  });
+
+  // ---- Account panel ----
+  const TIMEZONES = Intl.supportedValuesOf ? Intl.supportedValuesOf('timeZone') : [Intl.DateTimeFormat().resolvedOptions().timeZone];
+  const tzSelect = $('accountTimezone');
+  TIMEZONES.forEach(tz=>{ const o=document.createElement('option'); o.value=tz; o.textContent=tz; tzSelect.appendChild(o); });
+
+  function initialsFor(user){
+    const src = (user && (user.displayName || user.email)) || '?';
+    return src.trim().slice(0,1).toUpperCase();
+  }
+
+  async function refreshAccountUI(user){
+    const headerAvatar = $('headerAvatar');
+    if(user){
+      headerAvatar.textContent = initialsFor(user);
+      $('guestBanner').style.display = 'none';
+      $('accountSignedInSection').style.display = 'block';
+      $('accountName').value = user.displayName || '';
+      $('accountEmail').value = user.email || '';
+      $('emailVerifiedNote').textContent = user.emailVerified ? 'Email verified.' : 'Email not verified yet — check your inbox.';
+      let photoDataUrl = '';
+      try{
+        const snap = await getDoc(profileDoc(user.uid));
+        if(snap.exists()){
+          const d = snap.data();
+          if(d.timezone) tzSelect.value = d.timezone;
+          photoDataUrl = d.photoDataUrl || '';
+        }
+      }catch(e){}
+      const avatarEl = $('accountAvatar');
+      if(photoDataUrl){ avatarEl.style.backgroundImage = 'none'; avatarEl.innerHTML = '<img src="'+photoDataUrl+'" style="width:100%;height:100%;object-fit:cover;">'; headerAvatar.innerHTML = '<img src="'+photoDataUrl+'" style="width:100%;height:100%;object-fit:cover;">'; }
+      else { avatarEl.textContent = initialsFor(user); headerAvatar.textContent = initialsFor(user); }
+    } else {
+      headerAvatar.textContent = '👤';
+      $('accountSignedInSection').style.display = 'none';
+      $('guestBanner').style.display = isGuest() ? 'flex' : 'none';
+    }
+  }
+
+  $('accountBtn').onclick = ()=>{ accountOverlay.classList.add('show'); };
+  $('accountCloseBtn').onclick = ()=> accountOverlay.classList.remove('show');
+  $('guestUpgradeBtn').onclick = ()=>{ accountOverlay.classList.remove('show'); showAuthScreen('signup'); authOverlay.classList.add('show'); };
+
+  $('accountSaveProfileBtn').onclick = async ()=>{
+    if(!auth.currentUser) return;
+    const name = $('accountName').value.trim();
+    const tz = tzSelect.value;
+    try{
+      await updateProfile(auth.currentUser, { displayName: name });
+      await setDoc(profileDoc(auth.currentUser.uid), { displayName: name, timezone: tz }, { merge: true });
+      refreshAccountUI(auth.currentUser);
+    }catch(err){ alert(friendlyAuthError(err)); }
+  };
+
+  $('avatarUploadBtn').onclick = ()=> $('avatarInput').click();
+  $('avatarInput').onchange = (e)=>{
+    const file = e.target.files[0];
+    if(!file || !auth.currentUser) return;
+    const img = new Image();
+    const reader = new FileReader();
+    reader.onload = (ev)=>{
+      img.onload = async ()=>{
+        const size = 128;
+        const canvas = document.createElement('canvas');
+        canvas.width = size; canvas.height = size;
+        const ctx = canvas.getContext('2d');
+        const scale = Math.max(size/img.width, size/img.height);
+        const w = img.width*scale, h = img.height*scale;
+        ctx.drawImage(img, (size-w)/2, (size-h)/2, w, h);
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.75);
+        try{
+          await setDoc(profileDoc(auth.currentUser.uid), { photoDataUrl: dataUrl }, { merge: true });
+          refreshAccountUI(auth.currentUser);
+        }catch(err){ alert(friendlyAuthError(err)); }
+      };
+      img.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  };
+
+  $('accountSecuritySaveBtn').onclick = async ()=>{
+    const user = auth.currentUser;
+    if(!user) return;
+    const errEl = $('accountSecurityError'), okEl = $('accountSecuritySuccess');
+    errEl.style.display='none'; okEl.style.display='none';
+    const currentPw = $('accountCurrentPassword').value;
+    const newEmail = $('accountNewEmail').value.trim();
+    const newPassword = $('accountNewPassword').value;
+    if(!newEmail && !newPassword){ errEl.textContent='Enter a new email or new password to update.'; errEl.style.display='block'; return; }
+    if(!currentPw){ errEl.textContent='Enter your current password to confirm this change.'; errEl.style.display='block'; return; }
+    try{
+      const cred = EmailAuthProvider.credential(user.email, currentPw);
+      await reauthenticateWithCredential(user, cred);
+      if(newEmail && newEmail !== user.email){
+        await updateEmail(user, newEmail);
+        await sendEmailVerification(user);
+        await setDoc(profileDoc(user.uid), { email: newEmail }, { merge: true });
+      }
+      if(newPassword){ await updatePassword(user, newPassword); }
+      $('accountCurrentPassword').value=''; $('accountNewEmail').value=''; $('accountNewPassword').value='';
+      okEl.textContent = 'Updated. ' + (newEmail ? 'Check your new email to verify it.' : '');
+      okEl.style.display = 'block';
+      refreshAccountUI(user);
+    }catch(err){ errEl.textContent = friendlyAuthError(err); errEl.style.display='block'; }
+  };
+
+  $('exportDataBtn').onclick = async ()=>{
+    const user = auth.currentUser;
+    const payload = {
+      profile: user ? { name:user.displayName, email:user.email } : { mode:'guest' },
+      appData: window.__flowGetState()
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href=url; a.download='flowline-data-export.json'; a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  $('signOutBtn').onclick = async ()=>{
+    await signOut(auth);
+    if(unsubState){ unsubState(); unsubState = null; }
+    accountOverlay.classList.remove('show');
+    localStorage.removeItem(GUEST_KEY);
+    showAuthScreen('welcome');
+    authOverlay.classList.add('show');
+  };
+
+  $('deleteAccountBtn').onclick = async ()=>{
+    const user = auth.currentUser;
+    if(!user) return;
+    if(!confirm('This permanently deletes your account and cloud data. This cannot be undone. Continue?')) return;
+    const pw = prompt('Please re-enter your password to confirm account deletion:');
+    if(pw === null) return;
+    try{
+      try{
+        const cred = EmailAuthProvider.credential(user.email, pw);
+        await reauthenticateWithCredential(user, cred);
+      }catch(e){ /* may already be recently authenticated, e.g. via OAuth */ }
+      await deleteDoc(stateDoc(user.uid)).catch(()=>{});
+      await deleteDoc(profileDoc(user.uid)).catch(()=>{});
+      await deleteUser(user);
+      accountOverlay.classList.remove('show');
+    }catch(err){ alert(friendlyAuthError(err)); }
+  };
 }
 </script>
 </body>
