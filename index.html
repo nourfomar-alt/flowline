@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Flowline — Your Week, Your Way</title>
 <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAFUUlEQVR4nLxXW2wUVRj+zuyll2m723ZpoWVhi62ldGklWyAEiBcuQU0wxAcoYjCmkajRYEyUywMvoCExXqJBTTQBIsIDCsRITBOUFQkYUOyNFgqlhQrItt1tt912dmfm+J8tFdqd7m4R+JPpznTO+f7vv3xnzjFjtDHZ7loPjmfofjYHL2GMmfA/jHOuMbBWum0Aw48DgfY9oxyO3MhyUT43872MYTkeoHHgcIjrL6P3ql88R6OTbc7lkFgtOa9MFignqwRPzduJIucK+AJNUMK9Sc2jiGdaGFtrsmSdUcO9V6MErKk5O+jN/GQA5LQ8LKrcjMWebTBbMpCWno+y0vVITXWg298EVR1MiEEkbBJjckQJHGRpWa41koT9iSZZzTI8pTUoL14HTqmqu7QXdS1fR9HcM2tQUrIWGuNovrAHF1t2J0VE11Etmu443T8+3iCJenB20WpUlb0KizULzR2Hceb8ZwgN+UaNS0ubhPKKN+B8ZCUGw34013+Oq60HqQn1OBTgZel2VzsFMd3obUnBciwo34iszGm4fOM4Tjd+CH+wLR4gMm0zUFb1NhxTFyPY34GWsx/B1/Gz4VhqyA6WbnMNUUZT7n4xJbsCT1ZuhcNejpu9jfi1fidudp/DRCw7fw5KF2yBPKkM/q56tP62A0Ff02gCHIooAb/7n0sqtqJyRjW6B67hVPOnuNh5FPduDHnFT2P6/DdhtU3F9aYDuOLdPmqEeeyUglwPOnv+wsET66FzLQaywO6GK28RuGSKNp1K9dMomZr4lUBKOI9bnd6RGHHr0lH42mrhfv4byIWeGLwYAqLDxWXkXNizj22HzV4CBTrCJGKFnETEr8QRtkhwmjQc27cQWmTgDqauRskyiSUmoLPhazxLSc2FKiKmaP/7FZkwMbqAgL+FnIdgFJgRbiwBAo0nHJFuof26y9/iZN37SNZ0IslNyRAQTMHHBRIRcwKLlyVDAuRcl7QkCJBzHgdcpcsUbbyJmSoRspknQSAB+L1nQL8/GYjQCJGBGY+ugbO8GgqlVnS/QkiDeh+avn8Jg10XY+ZpgoBBBqQYAol6gN3uftH1QgG3u18883Q7rI4i43kmoZjY9jZWARs/BUIFnJz5ehpw45+TURIa6VuURgkH0HfZazyPnIsyJCQg0h9fBZQhctbjb0TruV1I1qIlMCAQUwKVPp8pch7kDKch0EjatQk0oSm3EDwnl0hoiQn4euqQkjEZS5/7Ae65m2i3lI3RkQzXXpcSMzDJ2bCtegc57+4Hz3Ug3F4fMyamBH+e3Y4r7UfgnrcF02e9gCmlq9DWtBvtDbuh0S5HOGdmFleGzJqGrEXrkP7EWqjpVih/N2Lg0MfQ2psTExDm72rAiaPVmOxahuK5b8HleQ2T3avR9scuhLkC2sIhosVuuRh9ITM9q5C5pAbcbofi70DwO5pT5x2f7Nj9gBFo4axqOD0bKKU5UPt9UPpv4IJ3G0Ldd/SeMXMpcpa9DuQVIqz0oPeXrzB46hDVKv6ayWSbq4U+LqVIYCaLjMKqV5A/50VwSwqCtxpw7fh70VUxb8UmmJ1liPAQAqf3IejdA66EEkGKHdHvgsABIrAaSZo1Ix8FCzfC5l4J1ayTIjSoFg2B+iMIHNsFra8rWShB4EvaEzqrSAynJ3oES3UUU+SbSbZD8NV+gIjvykSmR49s9Hd+tJdpY/oFLX4b8HDtEzonbhwWU2aBQ5YszWDMgYdgtJh3hgKhMlp1+ocXouD1LhK4m2pSiwdsw4dTXiGci+exywn1xLQaBmkZ7t/xXKXyXiC5iOP5T2OP5/8CAAD//40a6E0AAAAGSURBVAMAmN4jQm/67cIAAAAASUVORK5CYII=">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -155,7 +155,6 @@
   .dash-bar-fill{height:100%;border-radius:3px;background:var(--gradient-accent);transition:width .5s cubic-bezier(.19,1,.22,1);}
   @media (max-width:640px){ .dashboard-row{grid-template-columns:repeat(2,1fr);} .dash-card:last-child{grid-column:1/-1;} }
   @keyframes fadeInUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
-  @media (max-width:640px){ .dashboard-row{grid-template-columns:repeat(2,1fr);} }
   .undo-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(120%);background:var(--surface-solid);color:var(--ink);border:1px solid var(--line);padding:13px 18px;border-radius:14px;font-size:13px;display:flex;align-items:center;gap:14px;box-shadow:0 14px 40px rgba(0,0,0,0.28);z-index:100;transition:transform .3s cubic-bezier(.34,1.56,.64,1);}
   .undo-toast.show{transform:translateX(-50%) translateY(0);}
   .undo-toast button{background:var(--gradient-accent);color:#fff;border:none;padding:6px 13px;border-radius:9px;font-weight:700;font-size:12px;cursor:pointer;}
@@ -373,35 +372,36 @@
   .day-column:hover .day-column-empty{opacity:.45;}
 
   /* ---------- COMPACT MOBILE WEEK AGENDA (no scroll — every day glanceable) ---------- */
-  .week-compact{display:flex;flex-direction:column;gap:8px;}
+  .week-compact{display:flex;flex-direction:column;gap:10px;}
   @keyframes compactRowIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
   .week-compact-row{
-    display:flex;align-items:center;gap:10px;
-    background:var(--surface); border:1px solid var(--line); border-radius:14px;
-    padding:8px 10px; animation:compactRowIn .3s ease both;
-    transition:border-color .2s ease, background .2s ease;
+    display:flex;align-items:center;gap:12px;
+    background:var(--surface); border:1px solid var(--line); border-radius:16px;
+    padding:11px 13px; animation:compactRowIn .3s ease both; box-shadow:var(--shadow);
+    transition:border-color .2s ease, background .2s ease, transform .18s ease, box-shadow .18s ease;
   }
+  .week-compact-row:active{transform:scale(0.985);}
   .week-compact-row.is-today{
     border-color:rgba(139,92,246,0.35);
     background:linear-gradient(90deg, rgba(139,92,246,0.08), rgba(6,182,212,0.05));
-    box-shadow:0 4px 14px rgba(99,102,241,0.12);
+    box-shadow:0 4px 14px rgba(99,102,241,0.16);
   }
-  .week-compact-daylabel{width:36px;flex-shrink:0;text-align:center;}
-  .week-compact-daylabel .wd{font-size:9px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;}
-  .week-compact-daylabel .dn{font-size:15px;font-weight:800;color:var(--ink);margin-top:1px;}
+  .week-compact-daylabel{width:42px;flex-shrink:0;text-align:center;}
+  .week-compact-daylabel .wd{font-size:10px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;}
+  .week-compact-daylabel .dn{font-size:17px;font-weight:800;color:var(--ink);margin-top:2px;}
   .week-compact-row.is-today .week-compact-daylabel .dn{
-    display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;
-    border-radius:50%;background:var(--gradient-accent);color:#fff;font-size:12px;
+    display:inline-flex;align-items:center;justify-content:center;width:27px;height:27px;
+    border-radius:50%;background:var(--gradient-accent);color:#fff;font-size:13px;
     box-shadow:0 3px 10px rgba(99,102,241,0.4);
   }
   .week-compact-track{
-    position:relative; flex:1; height:32px; border-radius:9px; overflow:hidden; cursor:pointer;
+    position:relative; flex:1; height:42px; border-radius:12px; overflow:hidden; cursor:pointer;
     background:linear-gradient(90deg, rgba(139,92,246,0.05), rgba(6,182,212,0.05));
     border:1px solid var(--line);
   }
   .week-compact-block{
-    position:absolute; top:3px; bottom:3px; border-radius:6px;
-    font-size:8.5px; font-weight:700; color:#fff; padding:0 5px;
+    position:absolute; top:3px; bottom:3px; border-radius:7px;
+    font-size:10px; font-weight:700; color:#fff; padding:0 7px;
     display:flex; align-items:center; overflow:hidden; white-space:nowrap;
     border:1px solid rgba(255,255,255,0.18); border-left:2px solid rgba(255,255,255,0.55);
     box-shadow:0 2px 6px rgba(0,0,0,0.16);
@@ -409,8 +409,8 @@
   }
   .week-compact-block:active{transform:scale(0.96);filter:brightness(1.08);}
   .week-compact-now{position:absolute;top:0;bottom:0;width:2px;background:var(--gradient-accent);box-shadow:0 0 6px rgba(99,102,241,0.7);z-index:3;}
-  .week-compact-empty{position:absolute;left:8px;top:50%;transform:translateY(-50%);font-size:9.5px;color:var(--ink-soft);opacity:.55;font-weight:600;}
-  .week-compact-count{width:16px;flex-shrink:0;text-align:right;font-size:10px;font-weight:700;color:var(--ink-soft);}
+  .week-compact-empty{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:10.5px;color:var(--ink-soft);opacity:.55;font-weight:600;}
+  .week-compact-count{width:20px;flex-shrink:0;text-align:right;font-size:11px;font-weight:700;color:var(--ink-soft);}
 
   .cat-card{background:var(--surface);backdrop-filter:blur(var(--blur));-webkit-backdrop-filter:blur(var(--blur));border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;margin-top:22px;box-shadow:var(--shadow);}
   .cat-card h2{font-size:13px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px;}
@@ -450,6 +450,15 @@
     header h1{font-size:24px;}
     .tabs{width:100%;}
     .tab{flex:1;text-align:center;}
+    .wrap{padding-left:14px;padding-right:14px;}
+    .grid-card{padding:16px 14px 14px;}
+  }
+
+  /* Prevent iOS/Android auto-zoom on input focus (fields need 16px+ to avoid it) and
+     stop double-tap zoom on buttons/tabs so tapping around the app doesn't zoom the page */
+  html{touch-action:manipulation;}
+  @media (max-width:640px){
+    input, select, textarea, .field input, .field select{font-size:16px !important;}
   }
 
   /* ---------- BOTTOM NAV ---------- */
