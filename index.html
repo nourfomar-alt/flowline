@@ -586,22 +586,31 @@
   }
   .daypanel-overlay.show .daypanel{transform:translateX(0);}
   .daypanel-head{
-    padding:24px 24px 18px; position:relative; flex-shrink:0;
+    padding:calc(env(safe-area-inset-top) + 30px) 24px 18px; position:relative; flex-shrink:0;
     background:linear-gradient(120deg, rgba(139,92,246,0.14), rgba(6,182,212,0.08) 70%);
     border-bottom:1px solid var(--line);
   }
   .daypanel-close{
-    position:absolute; top:18px; right:18px; width:32px; height:32px; border-radius:10px; border:1px solid var(--line);
+    position:absolute; top:calc(env(safe-area-inset-top) + 14px); right:18px; width:32px; height:32px; border-radius:10px; border:1px solid var(--line);
     background:var(--surface); color:var(--ink-soft); display:flex; align-items:center; justify-content:center;
-    cursor:pointer; transition:all .18s ease;
+    cursor:pointer; transition:all .18s ease; z-index:2;
   }
   .daypanel-close:hover{color:var(--ink); background:rgba(139,92,246,0.14); transform:rotate(90deg);}
+  .daypanel-titlerow{display:flex; align-items:center; gap:10px; padding-right:38px;}
+  .daypanel-nav-btn{
+    flex-shrink:0; width:30px; height:30px; border-radius:10px; border:1px solid var(--line);
+    background:var(--surface); color:var(--ink-soft); display:flex; align-items:center; justify-content:center;
+    cursor:pointer; transition:all .15s ease; font-size:16px; font-weight:700;
+  }
+  .daypanel-nav-btn:hover{color:var(--purple); border-color:rgba(139,92,246,0.4); background:rgba(139,92,246,0.1);}
+  .daypanel-nav-btn:active{transform:scale(.9);}
+  .daypanel-titlewrap{flex:1; min-width:0;}
   .daypanel-eyebrow{font-size:11px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--purple); margin-bottom:4px;}
-  .daypanel-title{font-size:24px; font-weight:800; letter-spacing:-0.02em; color:var(--ink); padding-right:40px;}
-  .daypanel-stats{display:flex; gap:14px; margin-top:12px; flex-wrap:wrap;}
-  .daypanel-stat{font-size:12px; font-weight:700; color:var(--ink-soft); display:flex; align-items:center; gap:5px;}
+  .daypanel-title{font-size:22px; font-weight:800; letter-spacing:-0.02em; color:var(--ink); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .daypanel-stats{display:flex; gap:12px; margin-top:14px; flex-wrap:wrap;}
+  .daypanel-stat{font-size:11.5px; font-weight:700; color:var(--ink-soft); display:flex; align-items:center; gap:5px; background:var(--surface); border:1px solid var(--line); padding:4px 9px; border-radius:20px;}
   .daypanel-stat b{color:var(--ink); font-weight:800;}
-  .daypanel-body{flex:1; overflow-y:auto; padding:18px 20px 24px;}
+  .daypanel-body{flex:1; overflow-y:auto; padding:18px 20px 24px; -webkit-overflow-scrolling:touch;}
   .daypanel-body::-webkit-scrollbar{width:8px;}
   .daypanel-body::-webkit-scrollbar-thumb{background:var(--line); border-radius:8px;}
   .daypanel-section{margin-bottom:22px;}
@@ -655,6 +664,13 @@
   }
   .dp-add-btn:hover{background:rgba(139,92,246,0.14); transform:translateY(-1px); border-color:var(--purple);}
   .dp-add-btn:active{transform:scale(.98);}
+  .dp-manage-btn{
+    width:100%; padding:10px; border-radius:12px; border:1px solid var(--line); background:var(--surface);
+    color:var(--ink-soft); font-weight:700; font-size:12.5px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px;
+    transition:all .18s ease; margin-top:8px;
+  }
+  .dp-manage-btn:hover{color:var(--purple); border-color:rgba(139,92,246,0.4); background:rgba(139,92,246,0.08);}
+  .dp-manage-btn:active{transform:scale(.98);}
   .daypanel-jump{
     margin:0 20px 14px; padding:9px 12px; border-radius:12px; border:none; background:var(--surface);
     border:1px solid var(--line); color:var(--ink-soft); font-size:11.5px; font-weight:700; cursor:pointer;
@@ -869,6 +885,109 @@
   @media (max-width:640px){
     .gb-cards{grid-template-columns:1fr;}
     .gb-tab{font-size:11px;padding:9px 8px;}
+  }
+  /* ---------- TOASTS (replaces browser alert()) ---------- */
+  .toast-stack{position:fixed; left:50%; transform:translateX(-50%); bottom:calc(96px + env(safe-area-inset-bottom)); z-index:400; display:flex; flex-direction:column; gap:8px; align-items:center; width:min(92vw,400px); pointer-events:none;}
+  .toast{
+    pointer-events:auto; display:flex; align-items:center; gap:10px; width:100%;
+    background:linear-gradient(165deg, rgba(255,255,255,0.14), rgba(255,255,255,0.02) 55%), var(--surface-solid);
+    border:1px solid rgba(255,255,255,0.14); border-radius:16px; padding:12px 14px;
+    box-shadow:0 18px 44px rgba(20,10,60,0.25), inset 0 1px 0 rgba(255,255,255,0.08);
+    backdrop-filter:blur(20px) saturate(160%); -webkit-backdrop-filter:blur(20px) saturate(160%);
+    font-size:13px; font-weight:600; color:var(--ink);
+    opacity:0; transform:translateY(16px) scale(.96);
+    transition:opacity .32s cubic-bezier(.16,1,.3,1), transform .32s cubic-bezier(.16,1,.3,1);
+  }
+  .toast.show{opacity:1; transform:translateY(0) scale(1);}
+  .toast.hide{opacity:0; transform:translateY(-8px) scale(.96);}
+  .toast-icon{flex-shrink:0; width:24px;height:24px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12.5px; font-weight:800;}
+  .toast.success .toast-icon{background:rgba(16,185,129,.16); color:#10B981;}
+  .toast.error .toast-icon{background:rgba(236,72,153,.16); color:#EC4899;}
+  .toast.info .toast-icon{background:rgba(139,92,246,.16); color:var(--purple);}
+  .toast-msg{flex:1; line-height:1.4; word-break:break-word;}
+  .toast-close{flex-shrink:0; background:none;border:none;color:var(--ink-soft);cursor:pointer;font-size:12px;padding:2px;opacity:.6;transition:opacity .15s ease;}
+  .toast-close:hover{opacity:1;}
+
+  /* ---------- CUSTOM CONFIRM / ALERT DIALOGS ---------- */
+  .confirm-modal{max-width:340px; text-align:center;}
+  .confirm-icon{font-size:32px; margin-bottom:8px;}
+  .confirm-modal h3{margin-bottom:8px !important; font-size:18px;}
+  .confirm-msg{color:var(--ink-soft); font-size:13.5px; line-height:1.5; margin-bottom:2px; white-space:pre-wrap; word-break:break-word;}
+  .confirm-modal .modal-actions{justify-content:center;}
+  .btn-danger-confirm{background:linear-gradient(135deg,#EC4899,#F43F5E) !important; box-shadow:0 6px 20px rgba(236,72,153,.35) !important;}
+  .reveal-text{width:100%; max-height:220px; overflow:auto; background:var(--bg-elev); border:1px solid var(--line); border-radius:10px; padding:10px 12px; font-size:12px; white-space:pre-wrap; word-break:break-word; color:var(--ink); font-family:inherit;}
+
+  /* ---------- QUICK ADD FAB ---------- */
+  .quickadd-wrap{position:fixed; right:calc(20px + env(safe-area-inset-right)); bottom:calc(90px + env(safe-area-inset-bottom)); z-index:130; display:flex; flex-direction:column; align-items:flex-end; gap:10px;}
+  .quickadd-fab{
+    width:58px; height:58px; border-radius:50%; border:none; cursor:pointer;
+    background:var(--gradient-accent); color:#fff; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 14px 32px rgba(99,102,241,0.45), inset 0 1px 0 rgba(255,255,255,0.25);
+    transition:transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .25s ease;
+  }
+  .quickadd-fab:hover{box-shadow:0 18px 40px rgba(99,102,241,0.55);}
+  .quickadd-fab:active{transform:scale(.92);}
+  .quickadd-wrap.open .quickadd-fab{transform:rotate(45deg);}
+  .quickadd-menu{
+    display:flex; flex-direction:column; align-items:flex-end; gap:8px;
+    opacity:0; pointer-events:none; transform:translateY(10px) scale(.92); transform-origin:bottom right;
+    transition:opacity .22s cubic-bezier(.16,1,.3,1), transform .22s cubic-bezier(.16,1,.3,1);
+  }
+  .quickadd-wrap.open .quickadd-menu{opacity:1; pointer-events:auto; transform:translateY(0) scale(1);}
+  .qa-item{
+    display:flex; align-items:center; gap:9px; border:1px solid rgba(255,255,255,0.14); cursor:pointer;
+    background:linear-gradient(165deg, rgba(255,255,255,0.14), rgba(255,255,255,0.02) 55%), var(--surface-solid);
+    backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+    color:var(--ink); font-weight:700; font-size:12.5px; padding:9px 16px 9px 12px; border-radius:26px;
+    box-shadow:0 10px 26px rgba(20,10,60,0.22); transition:transform .15s cubic-bezier(.34,1.56,.64,1), box-shadow .15s ease;
+    white-space:nowrap;
+  }
+  .qa-item:hover{transform:translateX(-2px); box-shadow:0 12px 30px rgba(99,102,241,.28);}
+  .qa-item:active{transform:scale(.95);}
+  .quickadd-backdrop{position:fixed; inset:0; background:rgba(11,16,32,0.35); backdrop-filter:blur(3px); -webkit-backdrop-filter:blur(3px); z-index:125; display:none; opacity:0; transition:opacity .25s ease;}
+  .quickadd-backdrop.show{display:block; opacity:1;}
+  .notes-mini-list{max-height:160px; overflow-y:auto; margin-top:4px; margin-bottom:2px;}
+  .note-mini-item{display:flex; align-items:flex-start; gap:8px; padding:8px 10px; border:1px solid var(--line); border-radius:10px; margin-bottom:6px; font-size:12.5px; background:var(--surface);}
+  .note-mini-item .note-mini-text{flex:1; line-height:1.4; white-space:pre-wrap; word-break:break-word;}
+  .note-mini-del{flex-shrink:0; background:none; border:none; color:var(--ink-soft); cursor:pointer; font-size:12px;}
+  .note-mini-del:hover{color:#EC4899;}
+
+  /* ---------- NOTIFICATION PERMISSION PROMPT ---------- */
+  .notif-prompt{
+    position:fixed; left:50%; bottom:calc(96px + env(safe-area-inset-bottom)); transform:translateX(-50%) translateY(160%);
+    z-index:401; width:min(92vw,420px);
+    display:flex; align-items:center; gap:12px; padding:14px 16px;
+    background:linear-gradient(165deg, rgba(255,255,255,0.16), rgba(255,255,255,0.02) 55%), var(--surface-solid);
+    border:1px solid rgba(255,255,255,0.16); border-radius:18px;
+    box-shadow:0 20px 50px rgba(20,10,60,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+    backdrop-filter:blur(22px) saturate(160%); -webkit-backdrop-filter:blur(22px) saturate(160%);
+    transition:transform .4s cubic-bezier(.34,1.56,.64,1);
+  }
+  .notif-prompt.show{transform:translateX(-50%) translateY(0);}
+  .notif-prompt-icon{font-size:22px; flex-shrink:0;}
+  .notif-prompt-text{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px;}
+  .notif-prompt-text b{font-size:13px; color:var(--ink);}
+  .notif-prompt-text span{font-size:11.5px; color:var(--ink-soft); line-height:1.4;}
+  .notif-prompt-actions{display:flex; flex-direction:column; gap:6px; flex-shrink:0;}
+  .notif-prompt-actions button{border:none; border-radius:10px; padding:7px 12px; font-size:11.5px; font-weight:700; cursor:pointer; white-space:nowrap;}
+  #notifPromptEnable{background:var(--gradient-accent); color:#fff;}
+  #notifPromptDismiss{background:none; color:var(--ink-soft);}
+
+  /* ---------- SKELETON LOADING ---------- */
+  #skeletonOverlay{position:fixed; inset:0; z-index:900; background:var(--bg); padding:20px; display:flex; flex-direction:column; gap:16px; opacity:1; transition:opacity .45s ease; pointer-events:none;}
+  #skeletonOverlay.hide{opacity:0;}
+  .skel-block{border-radius:18px; background:linear-gradient(100deg, var(--surface) 30%, var(--line) 50%, var(--surface) 70%); background-size:220% 100%; animation:skelShimmer 1.4s ease-in-out infinite;}
+  .skel-banner{height:64px; border-radius:20px;}
+  .skel-row{display:flex; gap:14px;}
+  .skel-card{flex:1; height:90px;}
+  .skel-list{flex:1; border-radius:22px;}
+  @keyframes skelShimmer{0%{background-position:200% 0;}100%{background-position:-20% 0;}}
+
+  /* ---------- PREMIUM MOTION POLISH ---------- */
+  .btn, .bn-item, .qa-item, .quickadd-fab, .dp-icon-btn, .daypanel-nav-btn, .toast-close{ -webkit-tap-highlight-color:transparent; }
+  .btn:active, .dp-add-btn:active, .dp-manage-btn:active{ transform:scale(.97); }
+  @media (prefers-reduced-motion: reduce){
+    .skel-block, .dp-card, .toast, .quickadd-menu, .notif-prompt, .daypanel{ animation-duration:.001s !important; transition-duration:.001s !important; }
   }
 </style>
 </head>
@@ -1288,8 +1407,14 @@
       <button class="daypanel-close" id="daypanelCloseBtn" title="Close" type="button">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
       </button>
-      <div class="daypanel-eyebrow" id="daypanelEyebrow">Day view</div>
-      <div class="daypanel-title" id="daypanelTitle">—</div>
+      <div class="daypanel-titlerow">
+        <button class="daypanel-nav-btn" id="daypanelPrevBtn" title="Previous day" type="button">‹</button>
+        <div class="daypanel-titlewrap">
+          <div class="daypanel-eyebrow" id="daypanelEyebrow">Day view</div>
+          <div class="daypanel-title" id="daypanelTitle">—</div>
+        </div>
+        <button class="daypanel-nav-btn" id="daypanelNextBtn" title="Next day" type="button">›</button>
+      </div>
       <div class="daypanel-stats" id="daypanelStats"></div>
     </div>
     <div class="daypanel-body" id="daypanelBody"></div>
@@ -1398,6 +1523,77 @@
   </div>
 </div>
 
+<!-- SKELETON LOADING OVERLAY -->
+<div id="skeletonOverlay">
+  <div class="skel-block skel-banner"></div>
+  <div class="skel-row">
+    <div class="skel-block skel-card"></div>
+    <div class="skel-block skel-card"></div>
+    <div class="skel-block skel-card"></div>
+  </div>
+  <div class="skel-block skel-list"></div>
+</div>
+
+<!-- TOAST STACK (replaces browser alert()) -->
+<div class="toast-stack" id="toastStack"></div>
+
+<!-- CUSTOM CONFIRM / TEXT-REVEAL DIALOG (replaces browser confirm()/alert()) -->
+<div class="overlay" id="confirmOverlay">
+  <div class="modal confirm-modal" role="alertdialog" aria-modal="true">
+    <div class="confirm-icon" id="confirmIcon">⚠️</div>
+    <h3 id="confirmTitle">Are you sure?</h3>
+    <p class="confirm-msg" id="confirmMsg"></p>
+    <textarea class="reveal-text" id="confirmRevealText" style="display:none;margin-top:10px;" readonly></textarea>
+    <div class="modal-actions">
+      <div style="flex:1"></div>
+      <button class="btn btn-ghost" id="confirmCancelBtn">Cancel</button>
+      <button class="btn btn-primary" id="confirmOkBtn">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- QUICK ADD FLOATING BUTTON -->
+<div class="quickadd-backdrop" id="quickAddBackdrop"></div>
+<div class="quickadd-wrap" id="quickAddWrap">
+  <div class="quickadd-menu" id="quickAddMenu">
+    <button class="qa-item" data-qa="note">📝 <span>Note</span></button>
+    <button class="qa-item" data-qa="routine">🌤 <span>Routine</span></button>
+    <button class="qa-item" data-qa="goal">🎯 <span>Goal</span></button>
+    <button class="qa-item" data-qa="habit">🔥 <span>Habit</span></button>
+    <button class="qa-item" data-qa="task">📋 <span>Task / Event</span></button>
+  </div>
+  <button class="quickadd-fab" id="quickAddFab" title="Quick add" type="button">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+  </button>
+</div>
+
+<!-- QUICK NOTE MODAL -->
+<div class="overlay" id="noteOverlay">
+  <div class="modal">
+    <div class="modal-titlebar"><h3>Quick note</h3></div>
+    <div class="field"><textarea id="noteText" rows="4" placeholder="Jot something down..." style="width:100%;padding:9px 11px;border-radius:8px;border:1px solid var(--line);font-family:inherit;font-size:14px;resize:vertical;"></textarea></div>
+    <div id="notesMiniList" class="notes-mini-list"></div>
+    <div class="modal-actions">
+      <div style="flex:1"></div>
+      <button class="btn btn-ghost" id="noteCancelBtn">Close</button>
+      <button class="btn btn-primary" id="noteSaveBtn">Save note</button>
+    </div>
+  </div>
+</div>
+
+<!-- NOTIFICATION PERMISSION PROMPT -->
+<div class="notif-prompt" id="notifPrompt">
+  <div class="notif-prompt-icon">🔔</div>
+  <div class="notif-prompt-text">
+    <b>Turn on reminders</b>
+    <span>Flowline can notify you automatically when tasks and events are due.</span>
+  </div>
+  <div class="notif-prompt-actions">
+    <button id="notifPromptEnable" type="button">Enable</button>
+    <button id="notifPromptDismiss" type="button">Not now</button>
+  </div>
+</div>
+
 <script>
 const DAY_NAMES = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
 const STORE_KEY = 'planner_data_v1';
@@ -1429,6 +1625,9 @@ function loadState(){
       if(!parsed.routineStepLog) parsed.routineStepLog = {};
       if(!parsed.completionLog) parsed.completionLog = [];
       if(!parsed.achievementsUnlocked) parsed.achievementsUnlocked = {};
+      if(!parsed.notes) parsed.notes = [];
+      if(parsed.settings.notifTiming===undefined) parsed.settings.notifTiming = 10;
+      if(parsed.settings.notifPromptDismissed===undefined) parsed.settings.notifPromptDismissed = false;
       return parsed;
     }
   }catch(e){}
@@ -1441,9 +1640,9 @@ function loadState(){
       {id:'school', name:'School', color:'#8B5CF6'},
     ],
     events: [],
-    settings: { startHour: 0, endHour: 24, reminderMinutes: 10 },
+    settings: { startHour: 0, endHour: 24, reminderMinutes: 10, notifTiming: 10, notifPromptDismissed: false },
     stats: { streak: 0, lastStreakDate: null, longestStreak: 0 },
-    goals: [], habits: [], routines: [],
+    goals: [], habits: [], routines: [], notes: [],
     habitLog: {}, goalLog: {}, routineStepLog: {},
     completionLog: [], achievementsUnlocked: {}
   };
@@ -1451,9 +1650,10 @@ function loadState(){
 function saveState(){
   try{
     localStorage.setItem(STORE_KEY, JSON.stringify(state));
+    if(typeof rescheduleAllReminders==='function') rescheduleAllReminders();
     return true;
   }catch(e){
-    alert('Could not save — your device storage is full. Try removing a large uploaded video/image, or use a YouTube link instead.');
+    showToast('Could not save — your device storage is full. Try removing a large uploaded video/image, or use a YouTube link instead.', 'error', 6000);
     return false;
   }
 }
@@ -1537,14 +1737,15 @@ function renderCategories(){
     });
   });
   list.querySelectorAll('.catDelete').forEach(btn=>{
-    btn.addEventListener('click', e=>{
+    btn.addEventListener('click', async e=>{
       const id = e.target.dataset.id;
       if(state.categories.length <= 1){
-        alert('You need at least one category. Add another before deleting this one.');
+        showToast('You need at least one category. Add another before deleting this one.', 'error');
         return;
       }
       if(state.events.some(ev=>ev.cat===id)){
-        if(!confirm('This category has events in it. Delete it and its events?')) return;
+        const ok = await showConfirm('This category has events in it. Delete it and its events?', {title:'Delete category?'});
+        if(!ok) return;
         state.events = state.events.filter(ev=>ev.cat!==id);
       }
       state.categories = state.categories.filter(c=>c.id!==id);
@@ -2142,6 +2343,53 @@ document.getElementById('daypanelCloseBtn').addEventListener('click', closeDayPa
 document.getElementById('daypanelOverlay').addEventListener('click', e=>{ if(e.target.id==='daypanelOverlay') closeDayPanel(); });
 document.addEventListener('keydown', e=>{ if(e.key==='Escape' && document.getElementById('daypanelOverlay').classList.contains('show')) closeDayPanel(); });
 
+function shiftDayPanel(delta){
+  if(!daypanelDate) return;
+  const d = new Date(daypanelDate);
+  d.setDate(d.getDate()+delta);
+  daypanelDate = d;
+  renderDayPanel();
+}
+document.getElementById('daypanelPrevBtn').addEventListener('click', ()=>shiftDayPanel(-1));
+document.getElementById('daypanelNextBtn').addEventListener('click', ()=>shiftDayPanel(1));
+
+/* ---- Edge-swipe to close (native iOS style: swipe from left edge of the panel) ---- */
+(function(){
+  const panel = document.getElementById('daypanel');
+  let startX=0, startY=0, dragging=false, active=false;
+  panel.addEventListener('touchstart', e=>{
+    const t = e.touches[0];
+    const rect = panel.getBoundingClientRect();
+    if(t.clientX - rect.left <= 28){ // finger started within the left edge zone of the panel
+      active = true; dragging=false; startX = t.clientX; startY = t.clientY;
+      panel.style.transition = 'none';
+    } else { active = false; }
+  }, {passive:true});
+  panel.addEventListener('touchmove', e=>{
+    if(!active) return;
+    const t = e.touches[0];
+    const dx = t.clientX - startX, dy = t.clientY - startY;
+    if(!dragging && Math.abs(dx) > 6 && Math.abs(dx) > Math.abs(dy)) dragging = true;
+    if(dragging){
+      if(e.cancelable) e.preventDefault();
+      const clamped = Math.max(0, dx);
+      panel.style.transform = `translateX(${clamped}px)`;
+    }
+  }, {passive:false});
+  panel.addEventListener('touchend', e=>{
+    if(!active) return;
+    active = false;
+    panel.style.transition = '';
+    if(dragging){
+      const t = e.changedTouches[0];
+      const dx = t.clientX - startX;
+      panel.style.transform = '';
+      if(dx > 90) closeDayPanel();
+    }
+    dragging = false;
+  });
+})();
+
 function renderDayPanel(){
   if(!daypanelDate) return;
   const dateObj = daypanelDate;
@@ -2157,11 +2405,26 @@ function renderDayPanel(){
   const dueRoutines = state.routines.filter(r=>routineIsDueOnDate(r, dateObj));
   const doneCount = evs.filter(e=>e.done).length;
 
+  // Estimated focus time = total scheduled minutes across today's tasks/events
+  const focusMin = evs.reduce((sum,e)=>sum + Math.max(0, timeToMin(e.end)-timeToMin(e.start)), 0);
+  const focusLabel = focusMin >= 60 ? `${Math.floor(focusMin/60)}h ${focusMin%60?(focusMin%60)+'m':''}`.trim() : `${focusMin}m`;
+
+  // Completion % across everything checkable today (tasks/events + habits + routine steps)
+  let totalItems = evs.length + dueHabits.length;
+  let doneItems = doneCount + dueHabits.filter(h=>habitDoneOn(h, iso)).length;
+  dueRoutines.forEach(r=>{
+    const steps = r.steps || [];
+    totalItems += steps.length;
+    doneItems += steps.filter(s=>stepDoneOn(r.id, s.id, iso)).length;
+  });
+  const completionPct = totalItems ? Math.round((doneItems/totalItems)*100) : 0;
+
   const statsHtml = [];
-  statsHtml.push(`<span class="daypanel-stat"><b>${evs.length}</b> event${evs.length===1?'':'s'}</span>`);
-  if(evs.length) statsHtml.push(`<span class="daypanel-stat"><b>${doneCount}</b> done</span>`);
-  if(dueHabits.length) statsHtml.push(`<span class="daypanel-stat"><b>${dueHabits.length}</b> habit${dueHabits.length===1?'':'s'}</span>`);
-  if(dueRoutines.length) statsHtml.push(`<span class="daypanel-stat"><b>${dueRoutines.length}</b> routine${dueRoutines.length===1?'':'s'}</span>`);
+  statsHtml.push(`<span class="daypanel-stat">📋 <b>${evs.length}</b> task${evs.length===1?'':'s'}</span>`);
+  statsHtml.push(`<span class="daypanel-stat">🗓 <b>${evs.length}</b> event${evs.length===1?'':'s'}</span>`);
+  statsHtml.push(`<span class="daypanel-stat">🌤 <b>${dueRoutines.length}</b> routine${dueRoutines.length===1?'':'s'}</span>`);
+  statsHtml.push(`<span class="daypanel-stat">⏱ <b>${focusMin?focusLabel:'0m'}</b> focus</span>`);
+  statsHtml.push(`<span class="daypanel-stat">✅ <b>${completionPct}%</b> done</span>`);
   document.getElementById('daypanelStats').innerHTML = statsHtml.join('');
 
   const body = document.getElementById('daypanelBody');
@@ -2220,8 +2483,8 @@ function renderDayPanel(){
   }
 
   // ---- Routines active this day ----
+  html += '<div class="daypanel-section"><div class="daypanel-section-title">🌤 Routines</div>';
   if(dueRoutines.length){
-    html += '<div class="daypanel-section"><div class="daypanel-section-title">🌤 Routines</div>';
     dueRoutines.forEach((r,i)=>{
       const prog = (r.steps && r.steps.length) ? r.steps.filter(s=>stepDoneOn(r.id, s.id, iso)).length : 0;
       const total = r.steps ? r.steps.length : 0;
@@ -2235,8 +2498,11 @@ function renderDayPanel(){
           </div>
         </div>`;
     });
-    html += '</div>';
+  } else {
+    html += `<div class="daypanel-empty"><span class="dp-empty-emoji">🌤</span>No routines scheduled for this day.</div>`;
   }
+  html += `<button class="dp-manage-btn" id="dpManageRoutinesBtn">⚙ Manage Routines</button>`;
+  html += '</div>';
 
   body.innerHTML = html;
 
@@ -2263,8 +2529,9 @@ function renderDayPanel(){
     });
   });
   body.querySelectorAll('.dp-del').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      if(!confirm('Delete this event?')) return;
+    btn.addEventListener('click', async ()=>{
+      const ok = await showConfirm('Delete this event?', {title:'Delete event?'});
+      if(!ok) return;
       state.events = state.events.filter(x=>x.id!==btn.dataset.id);
       saveState(); renderAll(); renderDayPanel();
     });
@@ -2291,6 +2558,17 @@ function renderDayPanel(){
       renderRoutines();
     });
   });
+  const manageBtn = document.getElementById('dpManageRoutinesBtn');
+  if(manageBtn){
+    manageBtn.addEventListener('click', ()=>{
+      closeDayPanel();
+      const view = document.querySelector('.bn-item[data-view="getbetter"]');
+      if(view) view.click();
+      const tab = document.querySelector('.gb-tab[data-gb="routines"]');
+      if(tab) tab.click();
+      renderRoutines();
+    });
+  }
 }
 
 function renderYear(){
@@ -2483,7 +2761,7 @@ document.getElementById('printGoBtn').addEventListener('click', ()=>{
   let html = '';
   if(scope==='day'){
     const val = document.getElementById('printDaySelect').value;
-    if(!val){ alert('Pick a date first.'); return; }
+    if(!val){ showToast('Pick a date first.', 'error'); return; }
     const [y,m,d] = val.split('-').map(Number);
     html = buildPrintDay(new Date(y, m-1, d));
   }
@@ -2552,9 +2830,9 @@ async function shareOrCopy(title, text){
   }
   try{
     await navigator.clipboard.writeText(text);
-    alert('Sharing isn\'t available here, so it was copied to your clipboard instead — paste it anywhere.');
+    showToast('Sharing isn\'t available here, so it was copied to your clipboard instead — paste it anywhere.', 'info', 5000);
   }catch(err){
-    alert('Could not share or copy automatically. Here it is:\n\n'+text);
+    showTextRevealModal('Could not copy automatically — here is the text to copy manually:', text);
   }
 }
 
@@ -2563,7 +2841,7 @@ document.getElementById('shareGoBtn').addEventListener('click', ()=>{
   let text = '';
   if(scope==='day'){
     const val = document.getElementById('shareDaySelect').value;
-    if(!val){ alert('Pick a date first.'); return; }
+    if(!val){ showToast('Pick a date first.', 'error'); return; }
     const [y,m,d] = val.split('-').map(Number);
     text = buildShareDayText(new Date(y, m-1, d));
   }
@@ -2639,15 +2917,15 @@ document.getElementById('settingsBtn').addEventListener('click', ()=>{
 document.getElementById('settingsCancelBtn').addEventListener('click', ()=>{
   document.getElementById('settingsOverlay').classList.remove('show');
 });
-document.getElementById('settingsResetBtn').addEventListener('click', ()=>{
-  if(!confirm('This will permanently delete every event and category on this device. Continue?')) return;
+document.getElementById('settingsResetBtn').addEventListener('click', async ()=>{
+  if(!(await showConfirm('This will permanently delete every event and category on this device. Continue?', {title:'Reset all data?'}))) return;
   try{ localStorage.removeItem(STORE_KEY); }catch(e){}
   location.reload();
 });
 document.getElementById('settingsSaveBtn').addEventListener('click', ()=>{
   const s = Number(document.getElementById('settingsStartHour').value);
   const e = Number(document.getElementById('settingsEndHour').value);
-  if(e <= s){ alert('The end time must be after the start time.'); return; }
+  if(e <= s){ showToast('The end time must be after the start time.', 'error'); return; }
   state.settings.startHour = s;
   state.settings.endHour = e;
   state.settings.defaultTab = document.getElementById('settingsDefaultTab').value;
@@ -2796,7 +3074,7 @@ document.getElementById('overlay').addEventListener('click', e=>{ if(e.target.id
 
 document.getElementById('saveBtn').addEventListener('click', ()=>{
   const title = document.getElementById('evTitle').value.trim();
-  if(!title){ alert('Give it a title first.'); return; }
+  if(!title){ showToast('Give it a title first.', 'error'); return; }
   const repeat = document.getElementById('evRepeat').checked;
   const data = {
     title,
@@ -2812,11 +3090,11 @@ document.getElementById('saveBtn').addEventListener('click', ()=>{
   if(repeat){ data.day = Number(document.getElementById('evDay').value); data.date = undefined; }
   else {
     const dateVal = document.getElementById('evDate').value;
-    if(!dateVal){ alert('Pick a date.'); return; }
+    if(!dateVal){ showToast('Pick a date.', 'error'); return; }
     data.date = dateVal; data.day = undefined;
   }
   if(!editingId){ data.done = false; }
-  if(timeToMin(data.end) <= timeToMin(data.start)){ alert('End time must be after start time.'); return; }
+  if(timeToMin(data.end) <= timeToMin(data.start)){ showToast('End time must be after start time.', 'error'); return; }
 
   if(editingId){
     const ev = state.events.find(e=>e.id===editingId);
@@ -2828,6 +3106,7 @@ document.getElementById('saveBtn').addEventListener('click', ()=>{
   saveState();
   closeModal();
   renderAll();
+  if(data.reminder && data.reminder!=='none') maybeShowNotifPrompt();
 });
 
 document.getElementById('duplicateBtn').addEventListener('click', ()=>{
@@ -2899,7 +3178,7 @@ document.getElementById('fillFreeBtn').addEventListener('click', ()=>{
   });
   if(dayEnd - cursor >= 45) gaps.push([cursor, dayEnd]);
 
-  if(gaps.length===0){ alert('No open gaps of 45+ minutes today — your day looks full.'); return; }
+  if(gaps.length===0){ showToast('No open gaps of 45+ minutes today — your day looks full.', 'info'); return; }
 
   let studyCat = state.categories.find(c=>c.name.toLowerCase()==='study');
   if(!studyCat){ studyCat = {id:uid(), name:'Study', color:'#6366F1'}; state.categories.push(studyCat); }
@@ -2912,11 +3191,11 @@ document.getElementById('fillFreeBtn').addEventListener('click', ()=>{
   });
   saveState();
   renderAll();
-  alert(added + ' suggested study block(s) added to today. Edit or delete any you don\'t want.');
+  showToast(added + ' suggested study block(s) added to today. Edit or delete any you don\'t want.', 'success');
 });
 
 document.getElementById('exportBtn').addEventListener('click', ()=>{
-  if(state.events.length===0){ alert('Add some events first.'); return; }
+  if(state.events.length===0){ showToast('Add some events first.', 'error'); return; }
 
   let ics = 'BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//My Week Planner//EN\nCALSCALE:GREGORIAN\n';
   const BYDAY = ['MO','TU','WE','TH','FR','SA','SU'];
@@ -3309,7 +3588,7 @@ document.getElementById('goalCancelBtn').addEventListener('click', ()=>document.
 document.getElementById('goalOverlay').addEventListener('click', e=>{ if(e.target.id==='goalOverlay') document.getElementById('goalOverlay').classList.remove('show'); });
 document.getElementById('goalSaveBtn').addEventListener('click', ()=>{
   const title = document.getElementById('goalTitle').value.trim();
-  if(!title){ alert('Give the goal a title.'); return; }
+  if(!title){ showToast('Give the goal a title.', 'error'); return; }
   const target = Math.max(1, Number(document.getElementById('goalTarget').value)||1);
   const current = Math.max(0, Number(document.getElementById('goalCurrent').value)||0);
   const data = {
@@ -3331,8 +3610,8 @@ document.getElementById('goalSaveBtn').addEventListener('click', ()=>{
   renderGoals();
   checkAchievements();
 });
-document.getElementById('goalDeleteBtn').addEventListener('click', ()=>{
-  if(!confirm('Delete this goal?')) return;
+document.getElementById('goalDeleteBtn').addEventListener('click', async ()=>{
+  if(!(await showConfirm('Delete this goal?', {title:'Delete goal?'}))) return;
   state.goals = state.goals.filter(g=>g.id!==editingGoalId);
   saveState();
   document.getElementById('goalOverlay').classList.remove('show');
@@ -3459,7 +3738,7 @@ document.getElementById('habitCancelBtn').addEventListener('click', ()=>document
 document.getElementById('habitOverlay').addEventListener('click', e=>{ if(e.target.id==='habitOverlay') document.getElementById('habitOverlay').classList.remove('show'); });
 document.getElementById('habitSaveBtn').addEventListener('click', ()=>{
   const title = document.getElementById('habitTitle').value.trim();
-  if(!title){ alert('Give the habit a title.'); return; }
+  if(!title){ showToast('Give the habit a title.', 'error'); return; }
   const data = {
     title,
     freq: document.getElementById('habitFreq').value,
@@ -3477,8 +3756,8 @@ document.getElementById('habitSaveBtn').addEventListener('click', ()=>{
   document.getElementById('habitOverlay').classList.remove('show');
   renderHabits();
 });
-document.getElementById('habitDeleteBtn').addEventListener('click', ()=>{
-  if(!confirm('Delete this habit? Its history will be lost.')) return;
+document.getElementById('habitDeleteBtn').addEventListener('click', async ()=>{
+  if(!(await showConfirm('Delete this habit? Its history will be lost.', {title:'Delete habit?'}))) return;
   state.habits = state.habits.filter(h=>h.id!==editingHabitId);
   delete state.habitLog[editingHabitId];
   saveState();
@@ -3727,7 +4006,7 @@ document.getElementById('routineCancelBtn').addEventListener('click', ()=>docume
 document.getElementById('routineOverlay').addEventListener('click', e=>{ if(e.target.id==='routineOverlay') document.getElementById('routineOverlay').classList.remove('show'); });
 document.getElementById('routineSaveBtn').addEventListener('click', ()=>{
   const title = document.getElementById('routineTitle').value.trim();
-  if(!title){ alert('Give the routine a title.'); return; }
+  if(!title){ showToast('Give the routine a title.', 'error'); return; }
   const data = {
     title,
     days: getToggledDays('routineWeekdayToggles'),
@@ -3743,8 +4022,8 @@ document.getElementById('routineSaveBtn').addEventListener('click', ()=>{
   document.getElementById('routineOverlay').classList.remove('show');
   renderRoutines();
 });
-document.getElementById('routineDeleteBtn').addEventListener('click', ()=>{
-  if(!confirm('Delete this routine and all its steps?')) return;
+document.getElementById('routineDeleteBtn').addEventListener('click', async ()=>{
+  if(!(await showConfirm('Delete this routine and all its steps?', {title:'Delete routine?'}))) return;
   state.routines = state.routines.filter(r=>r.id!==editingRoutineId);
   saveState();
   document.getElementById('routineOverlay').classList.remove('show');
@@ -3789,14 +4068,14 @@ function readFileAsDataURL(file){
 
 document.getElementById('stepSaveBtn').addEventListener('click', async ()=>{
   const title = document.getElementById('stepTitle').value.trim();
-  if(!title){ alert('Give the step a title.'); return; }
+  if(!title){ showToast('Give the step a title.', 'error'); return; }
   const r = state.routines.find(x=>x.id===editingStepRoutineId);
   const mediaType = document.getElementById('stepMediaType').value;
   let media = { type: 'none' };
   if(mediaType==='youtube'){
     const url = document.getElementById('stepYoutubeUrl').value.trim();
     if(!url){ media = { type: 'none' }; }
-    else if(!extractYoutubeId(url)){ alert('That doesn\'t look like a valid YouTube link.'); return; }
+    else if(!extractYoutubeId(url)){ showToast('That doesn\'t look like a valid YouTube link.', 'error'); return; }
     else { media = { type: 'youtube', url }; }
   } else if(mediaType==='link'){
     const url = document.getElementById('stepLinkUrl').value.trim();
@@ -3808,11 +4087,11 @@ document.getElementById('stepSaveBtn').addEventListener('click', async ()=>{
       try{
         const data = await readFileAsDataURL(fileInput.files[0]);
         media = { type: mediaType, data };
-      }catch(err){ alert('Could not read that file.'); return; }
+      }catch(err){ showToast('Could not read that file.', 'error'); return; }
     } else if(existing && existing.media && existing.media.type===mediaType){
       media = existing.media;
     } else {
-      alert('Choose a file for this step, or pick a different media type.');
+      showToast('Choose a file for this step, or pick a different media type.', 'error');
       return;
     }
   }
@@ -3827,8 +4106,8 @@ document.getElementById('stepSaveBtn').addEventListener('click', async ()=>{
   openRoutineIds.add(r.id);
   renderRoutines();
 });
-document.getElementById('stepDeleteBtn').addEventListener('click', ()=>{
-  if(!confirm('Delete this step?')) return;
+document.getElementById('stepDeleteBtn').addEventListener('click', async ()=>{
+  if(!(await showConfirm('Delete this step?', {title:'Delete step?'}))) return;
   const r = state.routines.find(x=>x.id===editingStepRoutineId);
   r.steps = r.steps.filter(s=>s.id!==editingStepId);
   saveState();
@@ -4058,6 +4337,308 @@ function renderAchievements(){
   }).join('');
 }
 checkAchievements();
+
+/* ================= PREMIUM UI SYSTEM ================= */
+
+/* ---------- TOASTS (replaces browser alert()) ---------- */
+function showToast(message, type, duration){
+  type = type || 'info';
+  duration = duration===undefined ? 4200 : duration;
+  const stack = document.getElementById('toastStack');
+  if(!stack) return;
+  const icons = {success:'✓', error:'!', info:'i'};
+  const el = document.createElement('div');
+  el.className = 'toast ' + type;
+  el.innerHTML = '<div class="toast-icon">'+(icons[type]||icons.info)+'</div><div class="toast-msg"></div><button class="toast-close" aria-label="Dismiss" type="button">✕</button>';
+  el.querySelector('.toast-msg').textContent = message;
+  stack.appendChild(el);
+  requestAnimationFrame(()=>el.classList.add('show'));
+  let removed = false;
+  const remove = ()=>{
+    if(removed) return; removed = true;
+    el.classList.remove('show'); el.classList.add('hide');
+    setTimeout(()=>el.remove(), 320);
+  };
+  el.querySelector('.toast-close').addEventListener('click', remove);
+  if(duration>0) setTimeout(remove, duration);
+  return el;
+}
+
+/* ---------- CUSTOM CONFIRM DIALOG (replaces browser confirm()) ---------- */
+function showConfirm(message, opts){
+  opts = opts || {};
+  return new Promise(resolve=>{
+    const overlay = document.getElementById('confirmOverlay');
+    const reveal = document.getElementById('confirmRevealText');
+    reveal.style.display = 'none';
+    document.getElementById('confirmIcon').textContent = opts.icon || (opts.danger===false ? '❓' : '⚠️');
+    document.getElementById('confirmTitle').textContent = opts.title || 'Are you sure?';
+    document.getElementById('confirmMsg').textContent = message;
+    const okBtn = document.getElementById('confirmOkBtn');
+    const cancelBtn = document.getElementById('confirmCancelBtn');
+    cancelBtn.style.display = '';
+    cancelBtn.textContent = opts.cancelText || 'Cancel';
+    okBtn.textContent = opts.okText || (opts.danger===false ? 'OK' : 'Delete');
+    okBtn.classList.toggle('btn-danger-confirm', opts.danger!==false);
+    overlay.classList.add('show');
+    function cleanup(result){
+      overlay.classList.remove('show');
+      okBtn.removeEventListener('click', onOk);
+      cancelBtn.removeEventListener('click', onCancel);
+      overlay.removeEventListener('click', onBackdrop);
+      document.removeEventListener('keydown', onKey);
+      resolve(result);
+    }
+    function onOk(){ cleanup(true); }
+    function onCancel(){ cleanup(false); }
+    function onBackdrop(e){ if(e.target===overlay) cleanup(false); }
+    function onKey(e){ if(e.key==='Escape') cleanup(false); }
+    okBtn.addEventListener('click', onOk);
+    cancelBtn.addEventListener('click', onCancel);
+    overlay.addEventListener('click', onBackdrop);
+    document.addEventListener('keydown', onKey);
+  });
+}
+
+/* ---------- TEXT REVEAL MODAL (fallback when clipboard/share both fail) ---------- */
+function showTextRevealModal(desc, text){
+  const overlay = document.getElementById('confirmOverlay');
+  document.getElementById('confirmIcon').textContent = '📋';
+  document.getElementById('confirmTitle').textContent = 'Copy manually';
+  document.getElementById('confirmMsg').textContent = desc;
+  const reveal = document.getElementById('confirmRevealText');
+  reveal.style.display = 'block';
+  reveal.value = text;
+  const okBtn = document.getElementById('confirmOkBtn');
+  const cancelBtn = document.getElementById('confirmCancelBtn');
+  okBtn.textContent = 'Close';
+  okBtn.classList.remove('btn-danger-confirm');
+  cancelBtn.style.display = 'none';
+  overlay.classList.add('show');
+  function cleanup(){
+    overlay.classList.remove('show');
+    reveal.style.display = 'none';
+    cancelBtn.style.display = '';
+    okBtn.removeEventListener('click', onOk);
+    overlay.removeEventListener('click', onBackdrop);
+  }
+  function onOk(){ cleanup(); }
+  function onBackdrop(e){ if(e.target===overlay) cleanup(); }
+  okBtn.addEventListener('click', onOk);
+  overlay.addEventListener('click', onBackdrop);
+  setTimeout(()=>{ reveal.focus(); reveal.select(); }, 300);
+}
+
+/* ---------- QUICK ADD FLOATING BUTTON ---------- */
+(function(){
+  const qaWrap = document.getElementById('quickAddWrap');
+  const qaBackdrop = document.getElementById('quickAddBackdrop');
+  const fab = document.getElementById('quickAddFab');
+  if(!qaWrap || !fab) return;
+  function closeQuickAdd(){ qaWrap.classList.remove('open'); qaBackdrop.classList.remove('show'); }
+  fab.addEventListener('click', ()=>{
+    const open = qaWrap.classList.toggle('open');
+    qaBackdrop.classList.toggle('show', open);
+  });
+  qaBackdrop.addEventListener('click', closeQuickAdd);
+  document.querySelectorAll('.qa-item').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const kind = btn.dataset.qa;
+      closeQuickAdd();
+      if(kind==='task'){
+        const plannerBtn = document.querySelector('.bn-item[data-view="planner"]');
+        if(plannerBtn) plannerBtn.click();
+        openModal(null);
+      } else if(kind==='habit'){
+        const gbBtn = document.querySelector('.bn-item[data-view="getbetter"]');
+        if(gbBtn) gbBtn.click();
+        const tab = document.querySelector('.gb-tab[data-gb="habits"]');
+        if(tab) tab.click();
+        setTimeout(()=>{ const b = document.getElementById('addHabitBtn'); if(b) b.click(); }, 0);
+      } else if(kind==='goal'){
+        const gbBtn = document.querySelector('.bn-item[data-view="getbetter"]');
+        if(gbBtn) gbBtn.click();
+        const tab = document.querySelector('.gb-tab[data-gb="goals"]');
+        if(tab) tab.click();
+        setTimeout(()=>{ const b = document.getElementById('addGoalBtn'); if(b) b.click(); }, 0);
+      } else if(kind==='routine'){
+        const gbBtn = document.querySelector('.bn-item[data-view="getbetter"]');
+        if(gbBtn) gbBtn.click();
+        const tab = document.querySelector('.gb-tab[data-gb="routines"]');
+        if(tab) tab.click();
+        setTimeout(()=>{ const b = document.getElementById('addRoutineBtn'); if(b) b.click(); }, 0);
+      } else if(kind==='note'){
+        openNoteModal();
+      }
+    });
+  });
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape' && qaWrap.classList.contains('open')) closeQuickAdd(); });
+})();
+
+/* ---------- QUICK NOTES ---------- */
+function renderNotesMiniList(){
+  const box = document.getElementById('notesMiniList');
+  if(!box) return;
+  if(!state.notes || state.notes.length===0){
+    box.innerHTML = '<div style="font-size:12px;color:var(--ink-soft);text-align:center;padding:10px 0;">No notes yet — jot something down above.</div>';
+    return;
+  }
+  box.innerHTML = state.notes.slice().reverse().map(n=>
+    '<div class="note-mini-item" data-id="'+n.id+'"><div class="note-mini-text">'+escHtml(n.text)+'</div><button class="note-mini-del" data-id="'+n.id+'" title="Delete" type="button">🗑</button></div>'
+  ).join('');
+  box.querySelectorAll('.note-mini-del').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      state.notes = state.notes.filter(n=>n.id!==btn.dataset.id);
+      saveState();
+      renderNotesMiniList();
+      showToast('Note deleted.', 'info', 2200);
+    });
+  });
+}
+function openNoteModal(){
+  const ta = document.getElementById('noteText');
+  if(ta) ta.value = '';
+  renderNotesMiniList();
+  document.getElementById('noteOverlay').classList.add('show');
+  setTimeout(()=>{ if(ta) ta.focus(); }, 250);
+}
+(function(){
+  const overlay = document.getElementById('noteOverlay');
+  if(!overlay) return;
+  document.getElementById('noteCancelBtn').addEventListener('click', ()=>overlay.classList.remove('show'));
+  overlay.addEventListener('click', e=>{ if(e.target.id==='noteOverlay') overlay.classList.remove('show'); });
+  document.getElementById('noteSaveBtn').addEventListener('click', ()=>{
+    const ta = document.getElementById('noteText');
+    const text = ta.value.trim();
+    if(!text){ showToast('Write something first.', 'error'); return; }
+    if(!state.notes) state.notes = [];
+    state.notes.push({id: uid(), text, createdAt: new Date().toISOString()});
+    saveState();
+    ta.value = '';
+    renderNotesMiniList();
+    showToast('Note saved.', 'success', 2200);
+  });
+})();
+
+/* ---------- SKELETON LOADING ---------- */
+(function(){
+  const skel = document.getElementById('skeletonOverlay');
+  if(!skel) return;
+  setTimeout(()=>{
+    skel.classList.add('hide');
+    setTimeout(()=>{ skel.remove(); }, 500);
+  }, 550);
+})();
+
+/* ================= AUTOMATIC REMINDERS & NOTIFICATIONS ================= */
+let reminderTimers = {};
+
+function nextEventOccurrence(ev){
+  const now = new Date();
+  if(!ev.start) return null;
+  const [sh,sm] = ev.start.split(':').map(Number);
+  if(ev.repeat){
+    for(let add=0; add<8; add++){
+      const cand = new Date(now.getFullYear(), now.getMonth(), now.getDate()+add, sh, sm, 0);
+      if(weekdayIndexFromDate(cand)===ev.day && cand.getTime() > now.getTime()) return cand;
+    }
+    return null;
+  } else {
+    if(!ev.date) return null;
+    const [y,m,d] = ev.date.split('-').map(Number);
+    return new Date(y, m-1, d, sh, sm, 0);
+  }
+}
+
+function scheduleReminder(ev){
+  unscheduleReminder(ev.id);
+  if(!ev || ev.done) return;
+  if(!('Notification' in window) || Notification.permission!=='granted') return;
+  if(ev.reminder==='none') return;
+  const offsetMin = (ev.reminder!==undefined && ev.reminder!==null && ev.reminder!=='') ? Number(ev.reminder) : (state.settings.notifTiming ?? state.settings.reminderMinutes ?? 10);
+  const occ = nextEventOccurrence(ev);
+  if(!occ) return;
+  const trigger = new Date(occ.getTime() - offsetMin*60000);
+  const msUntil = trigger.getTime() - Date.now();
+  // Only keep a live timer for things due within the next 24h — timers don't
+  // survive a closed tab, so anything further out gets re-checked by the
+  // periodic rescan below as it comes into range.
+  if(msUntil <= 0 || msUntil > 24*60*60*1000) return;
+  reminderTimers[ev.id] = setTimeout(()=>{
+    try{
+      const n = new Notification('Flowline', {
+        body: ev.title + (offsetMin>0 ? (' · in '+offsetMin+' min') : ' · now'),
+        tag: 'flowline-'+ev.id
+      });
+      n.onclick = ()=>{ try{ window.focus(); }catch(e){} };
+    }catch(e){}
+    delete reminderTimers[ev.id];
+  }, msUntil);
+}
+
+function unscheduleReminder(id){
+  if(reminderTimers[id]){ clearTimeout(reminderTimers[id]); delete reminderTimers[id]; }
+}
+
+function rescheduleAllReminders(){
+  if(!('Notification' in window) || Notification.permission!=='granted') return;
+  Object.keys(reminderTimers).forEach(unscheduleReminder);
+  (state.events||[]).forEach(ev=>scheduleReminder(ev));
+}
+
+setInterval(()=>{ if(typeof rescheduleAllReminders==='function') rescheduleAllReminders(); }, 60000);
+document.addEventListener('visibilitychange', ()=>{
+  if(document.visibilityState==='visible' && typeof rescheduleAllReminders==='function') rescheduleAllReminders();
+});
+
+/* ---------- NOTIFICATION PERMISSION PROMPT ---------- */
+function maybeShowNotifPrompt(){
+  if(!('Notification' in window)) return;
+  if(Notification.permission!=='default') return;
+  if(state.settings.notifPromptDismissed) return;
+  const prompt = document.getElementById('notifPrompt');
+  if(prompt) prompt.classList.add('show');
+}
+(function(){
+  const enableBtn = document.getElementById('notifPromptEnable');
+  const dismissBtn = document.getElementById('notifPromptDismiss');
+  const prompt = document.getElementById('notifPrompt');
+  if(!enableBtn || !dismissBtn || !prompt) return;
+  enableBtn.addEventListener('click', async ()=>{
+    prompt.classList.remove('show');
+    try{
+      const perm = await Notification.requestPermission();
+      if(perm==='granted'){
+        showToast('Reminders are on — you\'ll be notified automatically while Flowline is open.', 'success', 5000);
+        rescheduleAllReminders();
+      } else {
+        showToast('Notifications are blocked. You can turn them on later in your browser or device settings.', 'info', 5000);
+      }
+    }catch(e){}
+    state.settings.notifPromptDismissed = true;
+    saveState();
+  });
+  dismissBtn.addEventListener('click', ()=>{
+    prompt.classList.remove('show');
+    state.settings.notifPromptDismissed = true;
+    saveState();
+  });
+})();
+
+// Register a minimal service worker so notifications keep working while the
+// app is installed as a PWA. This only helps while the app/tab is running —
+// true background delivery when the app is fully closed would need a push
+// server, which this offline, single-file app doesn't have.
+if('serviceWorker' in navigator){
+  const swCode = "self.addEventListener('notificationclick', e => { e.notification.close(); e.waitUntil(clients.openWindow('/')); });";
+  try{
+    const swBlob = new Blob([swCode], {type:'application/javascript'});
+    navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(()=>{});
+  }catch(e){}
+}
+
+// Kick off reminder scheduling for anything already saved, once on load.
+if('Notification' in window && Notification.permission==='granted') rescheduleAllReminders();
 
 /* ---------- SPLASH SCREEN ---------- */
 (function(){
