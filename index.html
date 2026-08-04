@@ -954,24 +954,25 @@
 
   /* ---------- NOTIFICATION PERMISSION PROMPT ---------- */
   .notif-prompt{
-    position:fixed; left:50%; bottom:calc(96px + env(safe-area-inset-bottom)); transform:translateX(-50%) translateY(160%);
-    z-index:401; width:min(92vw,420px);
-    display:flex; align-items:center; gap:12px; padding:14px 16px;
-    background:linear-gradient(165deg, rgba(255,255,255,0.16), rgba(255,255,255,0.02) 55%), var(--surface-solid);
-    border:1px solid rgba(255,255,255,0.16); border-radius:18px;
-    box-shadow:0 20px 50px rgba(20,10,60,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
-    backdrop-filter:blur(22px) saturate(160%); -webkit-backdrop-filter:blur(22px) saturate(160%);
-    transition:transform .4s cubic-bezier(.34,1.56,.64,1);
+    position:fixed; left:50%; bottom:calc(90px + env(safe-area-inset-bottom)); transform:translateX(-50%) translateY(10px);
+    z-index:401; width:max-content; max-width:min(90vw,340px);
+    display:flex; align-items:center; gap:8px; padding:8px 8px 8px 12px;
+    background:var(--surface-solid); border:1px solid var(--line); border-radius:100px;
+    box-shadow:0 8px 22px rgba(20,10,60,0.16);
+    opacity:0; pointer-events:none;
+    transition:opacity .25s ease, transform .25s ease;
   }
-  .notif-prompt.show{transform:translateX(-50%) translateY(0);}
-  .notif-prompt-icon{font-size:22px; flex-shrink:0;}
-  .notif-prompt-text{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px;}
-  .notif-prompt-text b{font-size:13px; color:var(--ink);}
-  .notif-prompt-text span{font-size:11.5px; color:var(--ink-soft); line-height:1.4;}
-  .notif-prompt-actions{display:flex; flex-direction:column; gap:6px; flex-shrink:0;}
-  .notif-prompt-actions button{border:none; border-radius:10px; padding:7px 12px; font-size:11.5px; font-weight:700; cursor:pointer; white-space:nowrap;}
-  #notifPromptEnable{background:var(--gradient-accent); color:#fff;}
-  #notifPromptDismiss{background:none; color:var(--ink-soft);}
+  .notif-prompt.show{opacity:1; transform:translateX(-50%) translateY(0); pointer-events:auto;}
+  .notif-prompt-icon{font-size:13px; flex-shrink:0; opacity:.7;}
+  .notif-prompt-text{flex:1; min-width:0; font-size:11.5px; color:var(--ink-soft); font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .notif-prompt-text b{color:var(--ink); font-weight:700;}
+  .notif-prompt-text span{display:none;}
+  .notif-prompt-actions{display:flex; align-items:center; gap:2px; flex-shrink:0;}
+  .notif-prompt-actions button{border:none; border-radius:20px; padding:5px 10px; font-size:11px; font-weight:700; cursor:pointer; white-space:nowrap; background:none;}
+  #notifPromptEnable{color:var(--purple);}
+  #notifPromptEnable:hover{background:rgba(139,92,246,0.1);}
+  #notifPromptDismiss{width:22px; height:22px; padding:0; border-radius:50%; color:var(--ink-soft); font-size:13px; display:flex; align-items:center; justify-content:center;}
+  #notifPromptDismiss:hover{background:var(--surface); color:var(--ink);}
 
   /* ---------- SKELETON LOADING ---------- */
   #skeletonOverlay{position:fixed; inset:0; z-index:900; background:var(--bg); padding:20px; display:flex; flex-direction:column; gap:16px; opacity:1; transition:opacity .45s ease; pointer-events:none;}
@@ -1192,8 +1193,19 @@
 
   <div class="gb-panel" id="gbRoutines" style="display:none;">
     <div class="gb-panel-head">
-      <h2>Routines</h2>
-      <button class="btn btn-primary" id="addRoutineBtn">+ New routine</button>
+      <h2 id="routinesPanelTitle">Today's Routines</h2>
+      <div style="display:flex; gap:8px;">
+        <button class="btn btn-ghost" id="routinesManageToggleBtn" type="button">⚙ Manage all</button>
+        <button class="btn btn-primary" id="addRoutineBtn">+ New routine</button>
+      </div>
+    </div>
+    <div id="routinesManagerBar" style="display:none; gap:10px; align-items:center; margin-bottom:12px; flex-wrap:wrap;">
+      <input type="text" id="routineSearchInput" placeholder="Search routines..." style="flex:1; min-width:160px; padding:9px 12px;border-radius:9px;border:1px solid var(--line);font-family:inherit;font-size:13px;background:var(--surface);color:var(--ink);">
+      <select id="routineSortSelect" style="padding:9px 12px;border-radius:9px;border:1px solid var(--line);font-family:inherit;font-size:13px;background:var(--surface);color:var(--ink);">
+        <option value="custom">Sort: My order</option>
+        <option value="az">Sort: A → Z</option>
+        <option value="days">Sort: Most days</option>
+      </select>
     </div>
     <div id="routinesList" class="gb-cards"></div>
   </div>
@@ -1584,13 +1596,10 @@
 <!-- NOTIFICATION PERMISSION PROMPT -->
 <div class="notif-prompt" id="notifPrompt">
   <div class="notif-prompt-icon">🔔</div>
-  <div class="notif-prompt-text">
-    <b>Turn on reminders</b>
-    <span>Flowline can notify you automatically when tasks and events are due.</span>
-  </div>
+  <div class="notif-prompt-text"><b>Reminders are off</b> for this device</div>
   <div class="notif-prompt-actions">
-    <button id="notifPromptEnable" type="button">Enable</button>
-    <button id="notifPromptDismiss" type="button">Not now</button>
+    <button id="notifPromptEnable" type="button">Turn on</button>
+    <button id="notifPromptDismiss" type="button" title="Dismiss" aria-label="Dismiss">✕</button>
   </div>
 </div>
 
@@ -2566,6 +2575,7 @@ function renderDayPanel(){
       if(view) view.click();
       const tab = document.querySelector('.gb-tab[data-gb="routines"]');
       if(tab) tab.click();
+      routinesManagerMode = true;
       renderRoutines();
     });
   }
@@ -3769,6 +3779,7 @@ document.getElementById('habitDeleteBtn').addEventListener('click', async ()=>{
 let editingRoutineId = null;
 let editingStepRoutineId = null, editingStepId = null;
 let openRoutineIds = new Set();
+let routinesManagerMode = false;
 
 function routineIsDueOnDate(r, dateObj){
   if(!r.days || r.days.length===0) return true;
@@ -3882,15 +3893,57 @@ function stepMediaHTML(routine, step){
   return '';
 }
 
+function duplicateRoutine(r){
+  const copy = JSON.parse(JSON.stringify(r));
+  copy.id = 'routine_'+Date.now()+'_'+Math.random().toString(36).slice(2,7);
+  copy.title = r.title + ' (copy)';
+  (copy.steps||[]).forEach(s=>{ s.id = 'step_'+Date.now()+'_'+Math.random().toString(36).slice(2,7); });
+  state.routines.push(copy);
+  saveState();
+  showToast('Routine duplicated ✓', 'success');
+  renderRoutines();
+}
+
 function renderRoutines(){
   const box = document.getElementById('routinesList');
+  const titleEl = document.getElementById('routinesPanelTitle');
+  const toggleBtn = document.getElementById('routinesManageToggleBtn');
+  const managerBar = document.getElementById('routinesManagerBar');
+
+  if(titleEl) titleEl.textContent = routinesManagerMode ? 'Manage Routines' : "Today's Routines";
+  if(toggleBtn) toggleBtn.textContent = routinesManagerMode ? '← Back to today' : '⚙ Manage all';
+  if(managerBar) managerBar.style.display = routinesManagerMode ? 'flex' : 'none';
+
   if(state.routines.length===0){ box.innerHTML = '<div class="gb-empty">No routines yet. Try a Morning Routine or a Gym Routine.</div>'; return; }
+
+  // ---- filter: today-only unless in manager mode ----
+  let list = routinesManagerMode ? state.routines.slice() : state.routines.filter(r=>routineIsDueOnDate(r, new Date()));
+
+  // ---- search (manager mode only) ----
+  if(routinesManagerMode){
+    const term = (document.getElementById('routineSearchInput')?.value || '').trim().toLowerCase();
+    if(term) list = list.filter(r=>r.title.toLowerCase().includes(term));
+
+    // ---- sort (manager mode only) ----
+    const sortVal = document.getElementById('routineSortSelect')?.value || 'custom';
+    if(sortVal==='az') list.sort((a,b)=>a.title.localeCompare(b.title));
+    else if(sortVal==='days') list.sort((a,b)=>(b.days?b.days.length:7)-(a.days?a.days.length:7));
+  }
+
+  if(list.length===0){
+    box.innerHTML = routinesManagerMode
+      ? '<div class="gb-empty">No routines match your search.</div>'
+      : '<div class="gb-empty">No routines scheduled for today. Tap "Manage all" to see every routine.</div>';
+    return;
+  }
+
   box.innerHTML = '';
   box.style.display = 'flex';
   box.style.flexDirection = 'column';
-  state.routines.forEach(r=>{
+  list.forEach(r=>{
     const prog = routineTodayProgress(r);
     const isOpen = openRoutineIds.has(r.id);
+    const dayLabel = (!r.days || r.days.length===0 || r.days.length===7) ? 'Every day' : r.days.map(d=>DAY_NAMES[d].slice(0,3)).join(', ');
     const card = document.createElement('div');
     card.className = 'gb-card';
     card.dataset.id = r.id;
@@ -3899,10 +3952,11 @@ function renderRoutines(){
         <div class="gb-card-icon" style="background:${r.color}22;color:${r.color}">${r.icon}</div>
         <div style="flex:1;min-width:0;">
           <div class="gb-card-title">${escHtml(r.title)}</div>
-          <div class="gb-card-sub">${prog.total ? prog.done+' / '+prog.total+' steps today' : 'No steps yet'}</div>
+          <div class="gb-card-sub">${prog.total ? prog.done+' / '+prog.total+' steps today' : 'No steps yet'}${routinesManagerMode ? ' · '+dayLabel : ''}</div>
         </div>
         <div class="gb-card-menu">
-          <button class="gb-icon-btn routineEditBtn" data-id="${r.id}">✎</button>
+          ${routinesManagerMode ? `<button class="gb-icon-btn routineDupBtn" data-id="${r.id}" title="Duplicate">⧉</button>` : ''}
+          <button class="gb-icon-btn routineEditBtn" data-id="${r.id}" title="Edit">✎</button>
           <button class="gb-icon-btn" data-role="chevron">${isOpen?'▲':'▼'}</button>
         </div>
       </div>
@@ -3915,16 +3969,25 @@ function renderRoutines(){
     box.appendChild(card);
 
     card.querySelector('[data-role="toggleOpen"]').addEventListener('click', (e)=>{
-      if(e.target.closest('.routineEditBtn')) return;
+      if(e.target.closest('.routineEditBtn') || e.target.closest('.routineDupBtn')) return;
       if(openRoutineIds.has(r.id)) openRoutineIds.delete(r.id); else openRoutineIds.add(r.id);
       renderRoutines();
     });
     card.querySelector('.routineEditBtn').addEventListener('click', (e)=>{ e.stopPropagation(); openRoutineModal(r); });
+    const dupBtn = card.querySelector('.routineDupBtn');
+    if(dupBtn) dupBtn.addEventListener('click', (e)=>{ e.stopPropagation(); duplicateRoutine(r); });
     card.querySelector('.addStepBtn').addEventListener('click', ()=>openStepModal(r.id, null));
 
     if(isOpen) renderSteps(r);
   });
 }
+
+document.getElementById('routinesManageToggleBtn').addEventListener('click', ()=>{
+  routinesManagerMode = !routinesManagerMode;
+  renderRoutines();
+});
+document.getElementById('routineSearchInput').addEventListener('input', ()=>renderRoutines());
+document.getElementById('routineSortSelect').addEventListener('change', ()=>renderRoutines());
 
 function renderSteps(r){
   const listEl = document.getElementById('steps-'+r.id)?.querySelector('[data-role="stepList"]');
@@ -4597,7 +4660,11 @@ function maybeShowNotifPrompt(){
   if(Notification.permission!=='default') return;
   if(state.settings.notifPromptDismissed) return;
   const prompt = document.getElementById('notifPrompt');
-  if(prompt) prompt.classList.add('show');
+  if(prompt){
+    prompt.classList.add('show');
+    clearTimeout(prompt._autoHideTimer);
+    prompt._autoHideTimer = setTimeout(()=>{ prompt.classList.remove('show'); }, 8000);
+  }
 }
 (function(){
   const enableBtn = document.getElementById('notifPromptEnable');
@@ -4605,6 +4672,7 @@ function maybeShowNotifPrompt(){
   const prompt = document.getElementById('notifPrompt');
   if(!enableBtn || !dismissBtn || !prompt) return;
   enableBtn.addEventListener('click', async ()=>{
+    clearTimeout(prompt._autoHideTimer);
     prompt.classList.remove('show');
     try{
       const perm = await Notification.requestPermission();
@@ -4619,6 +4687,7 @@ function maybeShowNotifPrompt(){
     saveState();
   });
   dismissBtn.addEventListener('click', ()=>{
+    clearTimeout(prompt._autoHideTimer);
     prompt.classList.remove('show');
     state.settings.notifPromptDismissed = true;
     saveState();
