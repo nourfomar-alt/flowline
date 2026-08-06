@@ -430,9 +430,10 @@
   .btn-primary:hover{box-shadow:0 10px 28px rgba(99,102,241,0.45);}
   .btn-ghost{background:var(--surface);backdrop-filter:blur(var(--blur));-webkit-backdrop-filter:blur(var(--blur));color:var(--ink);border:1px solid var(--line);box-shadow:var(--shadow);}
 
-  .overlay{position:fixed;inset:0;background:rgba(11,16,32,0.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;z-index:120;padding:16px;}
-  .overlay.show{display:flex;}
-  .modal{background:var(--surface-solid);border:1px solid var(--line);border-radius:22px;padding:26px;width:100%;max-width:380px;box-shadow:0 30px 70px rgba(0,0,0,0.35);animation:modalIn .2s cubic-bezier(.34,1.56,.64,1);}
+  .overlay{position:fixed;inset:0;background:rgba(11,16,32,0.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;z-index:120;padding:16px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease, visibility .22s ease;}
+  .overlay.show{opacity:1;visibility:visible;pointer-events:auto;}
+  .modal{background:var(--surface-solid);border:1px solid var(--line);border-radius:22px;padding:26px;width:100%;max-width:380px;box-shadow:0 30px 70px rgba(0,0,0,0.35);transform:translateY(12px) scale(.96);opacity:0;transition:transform .28s cubic-bezier(.34,1.56,.64,1), opacity .22s ease;}
+  .overlay.show .modal{transform:none;opacity:1;}
   @keyframes modalIn{from{opacity:0;transform:translateY(12px) scale(.96);}to{opacity:1;transform:none;}}
   .modal h3{font-size:19px;margin-bottom:18px;font-weight:800;}
   .field{margin-bottom:13px;}
@@ -952,27 +953,17 @@
   .note-mini-del{flex-shrink:0; background:none; border:none; color:var(--ink-soft); cursor:pointer; font-size:12px;}
   .note-mini-del:hover{color:#EC4899;}
 
-  /* ---------- NOTIFICATION PERMISSION PROMPT ---------- */
-  .notif-prompt{
-    position:fixed; left:50%; bottom:calc(90px + env(safe-area-inset-bottom)); transform:translateX(-50%) translateY(10px);
-    z-index:401; width:max-content; max-width:min(90vw,340px);
-    display:flex; align-items:center; gap:8px; padding:8px 8px 8px 12px;
-    background:var(--surface-solid); border:1px solid var(--line); border-radius:100px;
-    box-shadow:0 8px 22px rgba(20,10,60,0.16);
-    opacity:0; pointer-events:none;
-    transition:opacity .25s ease, transform .25s ease;
-  }
-  .notif-prompt.show{opacity:1; transform:translateX(-50%) translateY(0); pointer-events:auto;}
-  .notif-prompt-icon{font-size:13px; flex-shrink:0; opacity:.7;}
-  .notif-prompt-text{flex:1; min-width:0; font-size:11.5px; color:var(--ink-soft); font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
-  .notif-prompt-text b{color:var(--ink); font-weight:700;}
-  .notif-prompt-text span{display:none;}
-  .notif-prompt-actions{display:flex; align-items:center; gap:2px; flex-shrink:0;}
-  .notif-prompt-actions button{border:none; border-radius:20px; padding:5px 10px; font-size:11px; font-weight:700; cursor:pointer; white-space:nowrap; background:none;}
-  #notifPromptEnable{color:var(--purple);}
-  #notifPromptEnable:hover{background:rgba(139,92,246,0.1);}
-  #notifPromptDismiss{width:22px; height:22px; padding:0; border-radius:50%; color:var(--ink-soft); font-size:13px; display:flex; align-items:center; justify-content:center;}
-  #notifPromptDismiss:hover{background:var(--surface); color:var(--ink);}
+  /* ---------- SETTINGS TOGGLE SWITCH ---------- */
+  .switch-row{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:4px;}
+  .switch-row label{font-size:12px; font-weight:700; color:var(--ink-soft); margin-bottom:0;}
+  .switch{position:relative; display:inline-block; width:44px; height:26px; flex-shrink:0;}
+  .switch input{opacity:0; width:0; height:0;}
+  .switch-track{position:absolute; inset:0; cursor:pointer; background:var(--line); border-radius:999px; transition:background .2s ease;}
+  .switch-track::before{content:""; position:absolute; height:20px; width:20px; left:3px; top:3px; background:#fff; border-radius:50%; box-shadow:0 1px 3px rgba(0,0,0,0.3); transition:transform .2s cubic-bezier(.34,1.56,.64,1);}
+  .switch input:checked + .switch-track{background:var(--gradient-accent, #6366F1);}
+  .switch input:checked + .switch-track::before{transform:translateX(18px);}
+  .switch input:disabled + .switch-track{opacity:.5; cursor:not-allowed;}
+  .switch-status{font-size:11px; color:var(--ink-soft); margin-top:4px; line-height:1.4;}
 
   /* ---------- SKELETON LOADING ---------- */
   #skeletonOverlay{position:fixed; inset:0; z-index:900; background:var(--bg); padding:20px; display:flex; flex-direction:column; gap:16px; opacity:1; transition:opacity .45s ease; pointer-events:none;}
@@ -1360,6 +1351,16 @@
       <div id="accentSwatches" style="display:flex;gap:8px;"></div>
     </div>
     <div class="field">
+      <div class="switch-row">
+        <label for="settingsNotifToggle" style="margin-bottom:0;">Notifications</label>
+        <label class="switch">
+          <input type="checkbox" id="settingsNotifToggle">
+          <span class="switch-track"></span>
+        </label>
+      </div>
+      <div class="switch-status" id="settingsNotifStatus"></div>
+    </div>
+    <div class="field">
       <label>Remind me before each task</label>
       <select id="settingsReminderMin">
         <option value="0">At the exact time</option>
@@ -1593,16 +1594,6 @@
   </div>
 </div>
 
-<!-- NOTIFICATION PERMISSION PROMPT -->
-<div class="notif-prompt" id="notifPrompt">
-  <div class="notif-prompt-icon">🔔</div>
-  <div class="notif-prompt-text"><b>Reminders are off</b> for this device</div>
-  <div class="notif-prompt-actions">
-    <button id="notifPromptEnable" type="button">Turn on</button>
-    <button id="notifPromptDismiss" type="button" title="Dismiss" aria-label="Dismiss">✕</button>
-  </div>
-</div>
-
 <script>
 const DAY_NAMES = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
 const STORE_KEY = 'planner_data_v1';
@@ -1637,6 +1628,7 @@ function loadState(){
       if(!parsed.notes) parsed.notes = [];
       if(parsed.settings.notifTiming===undefined) parsed.settings.notifTiming = 10;
       if(parsed.settings.notifPromptDismissed===undefined) parsed.settings.notifPromptDismissed = false;
+      if(parsed.settings.notifEnabled===undefined) parsed.settings.notifEnabled = true;
       return parsed;
     }
   }catch(e){}
@@ -1649,7 +1641,7 @@ function loadState(){
       {id:'school', name:'School', color:'#8B5CF6'},
     ],
     events: [],
-    settings: { startHour: 0, endHour: 24, reminderMinutes: 10, notifTiming: 10, notifPromptDismissed: false },
+    settings: { startHour: 0, endHour: 24, reminderMinutes: 10, notifTiming: 10, notifPromptDismissed: false, notifEnabled: true },
     stats: { streak: 0, lastStreakDate: null, longestStreak: 0 },
     goals: [], habits: [], routines: [], notes: [],
     habitLog: {}, goalLog: {}, routineStepLog: {},
@@ -2903,6 +2895,7 @@ document.getElementById('settingsBtn').addEventListener('click', ()=>{
   document.getElementById('settingsDefaultTab').value = state.settings.defaultTab || 'week';
   document.getElementById('settingsThemeSelect').value = currentTheme();
   document.getElementById('settingsReminderMin').value = state.settings.reminderMinutes ?? 10;
+  renderNotifToggle();
 
   const activeAccent = state.settings.accentColor || ACCENT_OPTIONS[0];
   const swatchBox = document.getElementById('accentSwatches');
@@ -3116,7 +3109,6 @@ document.getElementById('saveBtn').addEventListener('click', ()=>{
   saveState();
   closeModal();
   renderAll();
-  if(data.reminder && data.reminder!=='none') maybeShowNotifPrompt();
 });
 
 document.getElementById('duplicateBtn').addEventListener('click', ()=>{
@@ -4617,6 +4609,7 @@ function scheduleReminder(ev){
   unscheduleReminder(ev.id);
   if(!ev || ev.done) return;
   if(!('Notification' in window) || Notification.permission!=='granted') return;
+  if(state.settings.notifEnabled===false) return;
   if(ev.reminder==='none') return;
   const offsetMin = (ev.reminder!==undefined && ev.reminder!==null && ev.reminder!=='') ? Number(ev.reminder) : (state.settings.notifTiming ?? state.settings.reminderMinutes ?? 10);
   const occ = nextEventOccurrence(ev);
@@ -4644,7 +4637,7 @@ function unscheduleReminder(id){
 }
 
 function rescheduleAllReminders(){
-  if(!('Notification' in window) || Notification.permission!=='granted') return;
+  if(!('Notification' in window) || Notification.permission!=='granted' || state.settings.notifEnabled===false) return;
   Object.keys(reminderTimers).forEach(unscheduleReminder);
   (state.events||[]).forEach(ev=>scheduleReminder(ev));
 }
@@ -4654,46 +4647,71 @@ document.addEventListener('visibilitychange', ()=>{
   if(document.visibilityState==='visible' && typeof rescheduleAllReminders==='function') rescheduleAllReminders();
 });
 
-/* ---------- NOTIFICATION PERMISSION PROMPT ---------- */
-function maybeShowNotifPrompt(){
-  if(!('Notification' in window)) return;
-  if(Notification.permission!=='default') return;
-  if(state.settings.notifPromptDismissed) return;
-  const prompt = document.getElementById('notifPrompt');
-  if(prompt){
-    prompt.classList.add('show');
-    clearTimeout(prompt._autoHideTimer);
-    prompt._autoHideTimer = setTimeout(()=>{ prompt.classList.remove('show'); }, 8000);
+/* ---------- SETTINGS: NOTIFICATIONS TOGGLE ---------- */
+function renderNotifToggle(){
+  const toggle = document.getElementById('settingsNotifToggle');
+  const status = document.getElementById('settingsNotifStatus');
+  if(!toggle || !status) return;
+  const supported = 'Notification' in window;
+  if(!supported){
+    toggle.checked = false; toggle.disabled = true;
+    status.textContent = "Not supported on this browser/device.";
+    return;
+  }
+  const perm = Notification.permission;
+  if(perm==='denied'){
+    toggle.checked = false; toggle.disabled = true;
+    status.textContent = "Blocked in your browser's site settings for Flowline — enable it there, then toggle this on.";
+  } else if(perm==='granted'){
+    toggle.disabled = false;
+    toggle.checked = state.settings.notifEnabled !== false;
+    status.textContent = toggle.checked
+      ? "You'll be notified automatically while Flowline is open."
+      : "Reminders are paused. Toggle on to resume.";
+  } else {
+    toggle.disabled = false;
+    toggle.checked = false;
+    status.textContent = "Turn on to get notified when tasks and events are due.";
   }
 }
-(function(){
-  const enableBtn = document.getElementById('notifPromptEnable');
-  const dismissBtn = document.getElementById('notifPromptDismiss');
-  const prompt = document.getElementById('notifPrompt');
-  if(!enableBtn || !dismissBtn || !prompt) return;
-  enableBtn.addEventListener('click', async ()=>{
-    clearTimeout(prompt._autoHideTimer);
-    prompt.classList.remove('show');
-    try{
-      const perm = await Notification.requestPermission();
+document.getElementById('settingsNotifToggle').addEventListener('change', async (e)=>{
+  const toggle = e.target;
+  const status = document.getElementById('settingsNotifStatus');
+  if(toggle.checked){
+    if(!('Notification' in window)){ toggle.checked = false; return; }
+    if(Notification.permission==='default'){
+      toggle.disabled = true;
+      status.textContent = 'Requesting permission…';
+      let perm;
+      try{ perm = await Notification.requestPermission(); }catch(e){ perm = 'denied'; }
+      toggle.disabled = false;
       if(perm==='granted'){
-        showToast('Reminders are on — you\'ll be notified automatically while Flowline is open.', 'success', 5000);
+        state.settings.notifEnabled = true;
+        state.settings.notifPromptDismissed = true;
+        saveState();
         rescheduleAllReminders();
       } else {
-        showToast('Notifications are blocked. You can turn them on later in your browser or device settings.', 'info', 5000);
+        toggle.checked = false;
       }
-    }catch(e){}
+      renderNotifToggle();
+    } else if(Notification.permission==='granted'){
+      state.settings.notifEnabled = true;
+      state.settings.notifPromptDismissed = true;
+      saveState();
+      rescheduleAllReminders();
+      renderNotifToggle();
+    } else {
+      toggle.checked = false;
+      renderNotifToggle();
+    }
+  } else {
+    state.settings.notifEnabled = false;
     state.settings.notifPromptDismissed = true;
     saveState();
-  });
-  dismissBtn.addEventListener('click', ()=>{
-    clearTimeout(prompt._autoHideTimer);
-    prompt.classList.remove('show');
-    state.settings.notifPromptDismissed = true;
-    saveState();
-  });
-})();
-
+    Object.keys(reminderTimers).forEach(unscheduleReminder);
+    renderNotifToggle();
+  }
+});
 // Register a minimal service worker so notifications keep working while the
 // app is installed as a PWA. This only helps while the app/tab is running —
 // true background delivery when the app is fully closed would need a push
