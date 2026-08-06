@@ -510,7 +510,8 @@
   .gb-panel-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
   .gb-panel-head h2{font-size:22px;font-weight:800;font-family:'Inter',sans-serif;}
   .gb-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
-  .gb-card{background:var(--surface);backdrop-filter:blur(var(--blur));-webkit-backdrop-filter:blur(var(--blur));border:1px solid var(--line);border-radius:18px;padding:19px;box-shadow:var(--shadow);animation:fadeInUp .4s ease both;transition:transform .2s ease, box-shadow .2s ease;}
+  .gb-card{background:var(--surface);backdrop-filter:blur(var(--blur));-webkit-backdrop-filter:blur(var(--blur));border:1px solid var(--line);border-radius:18px;padding:19px;box-shadow:var(--shadow);transition:transform .2s ease, box-shadow .2s ease;}
+  .gb-card.gb-card-enter{animation:fadeInUp .4s ease both;}
   .gb-card:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(99,102,241,0.16);}
   .gb-card-head{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
   .gb-card-icon{width:40px;height:40px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;box-shadow:inset 0 0 0 1px var(--line);}
@@ -554,7 +555,7 @@
   .gb-media-link{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--study);text-decoration:none;background:rgba(139,92,246,0.08);padding:8px 12px;border-radius:10px;}
   .gb-fullscreen-btn{position:absolute;bottom:6px;right:6px;background:rgba(0,0,0,0.55);color:#fff;border:none;border-radius:8px;width:27px;height:27px;cursor:pointer;font-size:12px;z-index:2;}
   .gb-day-toggles{display:flex;gap:5px;flex-wrap:wrap;margin-top:4px;}
-  .gb-day-toggle{width:35px;height:35px;border-radius:50%;border:1px solid var(--line);background:var(--bg-elev);color:var(--ink-soft);font-size:11px;font-weight:700;cursor:pointer;transition:transform .15s ease;}
+  .gb-day-toggle{width:35px;height:35px;flex:0 0 35px;border-radius:50%;border:1px solid var(--line);background:var(--bg-elev);color:var(--ink-soft);font-size:11px;font-weight:700;cursor:pointer;transition:transform .15s ease;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
   .gb-day-toggle:hover{transform:translateY(-1px);}
   .gb-day-toggle.on{background:var(--gradient-accent);color:#fff;border-color:transparent;box-shadow:0 4px 12px rgba(99,102,241,0.35);}
   .emoji-pick{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px;}
@@ -1659,6 +1660,28 @@ function saveState(){
   }
 }
 
+// Prevents double-submits (e.g. rapid double-click/double-tap on a Save button)
+// from creating duplicate entries, and surfaces unexpected errors as a toast
+// instead of silently failing so the button never appears "broken".
+function guardedClick(id, fn){
+  const btn = document.getElementById(id);
+  if(!btn) return;
+  btn.addEventListener('click', async (e)=>{
+    if(btn.dataset.busy==='1') return;
+    btn.dataset.busy = '1';
+    const prevDisabled = btn.disabled;
+    btn.disabled = true;
+    try{
+      await fn(e);
+    }catch(err){
+      console.error('Action failed:', err);
+      if(typeof showToast==='function') showToast('Something went wrong — please try again.', 'error');
+    }finally{
+      btn.disabled = prevDisabled;
+      btn.dataset.busy = '0';
+    }
+  });
+}
 function timeToMin(t){ const [h,m]=t.split(':').map(Number); return h*60+m; }
 function minToTime(min){ const h=Math.floor(min/60)%24; const m=min%60; return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0'); }
 function todayIndex(){ const d = new Date().getDay(); return d===0?6:d-1; }
@@ -3075,7 +3098,7 @@ function closeModal(){ document.getElementById('overlay').classList.remove('show
 document.getElementById('cancelBtn').addEventListener('click', closeModal);
 document.getElementById('overlay').addEventListener('click', e=>{ if(e.target.id==='overlay') closeModal(); });
 
-document.getElementById('saveBtn').addEventListener('click', ()=>{
+guardedClick('saveBtn', ()=>{
   const title = document.getElementById('evTitle').value.trim();
   if(!title){ showToast('Give it a title first.', 'error'); return; }
   const repeat = document.getElementById('evRepeat').checked;
@@ -3124,7 +3147,7 @@ document.getElementById('duplicateBtn').addEventListener('click', ()=>{
   renderAll();
 });
 
-document.getElementById('deleteBtn').addEventListener('click', ()=>{
+guardedClick('deleteBtn', ()=>{
   const deleted = state.events.find(e=>e.id===editingId);
   lastDeletedEvent = deleted ? {...deleted} : null;
   state.events = state.events.filter(e=>e.id!==editingId);
@@ -3588,7 +3611,7 @@ function openGoalModal(g){
 document.getElementById('addGoalBtn').addEventListener('click', ()=>openGoalModal(null));
 document.getElementById('goalCancelBtn').addEventListener('click', ()=>document.getElementById('goalOverlay').classList.remove('show'));
 document.getElementById('goalOverlay').addEventListener('click', e=>{ if(e.target.id==='goalOverlay') document.getElementById('goalOverlay').classList.remove('show'); });
-document.getElementById('goalSaveBtn').addEventListener('click', ()=>{
+guardedClick('goalSaveBtn', ()=>{
   const title = document.getElementById('goalTitle').value.trim();
   if(!title){ showToast('Give the goal a title.', 'error'); return; }
   const target = Math.max(1, Number(document.getElementById('goalTarget').value)||1);
@@ -3612,7 +3635,7 @@ document.getElementById('goalSaveBtn').addEventListener('click', ()=>{
   renderGoals();
   checkAchievements();
 });
-document.getElementById('goalDeleteBtn').addEventListener('click', async ()=>{
+guardedClick('goalDeleteBtn', async ()=>{
   if(!(await showConfirm('Delete this goal?', {title:'Delete goal?'}))) return;
   state.goals = state.goals.filter(g=>g.id!==editingGoalId);
   saveState();
@@ -3738,7 +3761,7 @@ document.getElementById('habitFreq').addEventListener('change', toggleHabitFreqF
 document.getElementById('addHabitBtn').addEventListener('click', ()=>openHabitModal(null));
 document.getElementById('habitCancelBtn').addEventListener('click', ()=>document.getElementById('habitOverlay').classList.remove('show'));
 document.getElementById('habitOverlay').addEventListener('click', e=>{ if(e.target.id==='habitOverlay') document.getElementById('habitOverlay').classList.remove('show'); });
-document.getElementById('habitSaveBtn').addEventListener('click', ()=>{
+guardedClick('habitSaveBtn', ()=>{
   const title = document.getElementById('habitTitle').value.trim();
   if(!title){ showToast('Give the habit a title.', 'error'); return; }
   const data = {
@@ -3758,7 +3781,7 @@ document.getElementById('habitSaveBtn').addEventListener('click', ()=>{
   document.getElementById('habitOverlay').classList.remove('show');
   renderHabits();
 });
-document.getElementById('habitDeleteBtn').addEventListener('click', async ()=>{
+guardedClick('habitDeleteBtn', async ()=>{
   if(!(await showConfirm('Delete this habit? Its history will be lost.', {title:'Delete habit?'}))) return;
   state.habits = state.habits.filter(h=>h.id!==editingHabitId);
   delete state.habitLog[editingHabitId];
@@ -4059,7 +4082,7 @@ function openRoutineModal(r){
 document.getElementById('addRoutineBtn').addEventListener('click', ()=>openRoutineModal(null));
 document.getElementById('routineCancelBtn').addEventListener('click', ()=>document.getElementById('routineOverlay').classList.remove('show'));
 document.getElementById('routineOverlay').addEventListener('click', e=>{ if(e.target.id==='routineOverlay') document.getElementById('routineOverlay').classList.remove('show'); });
-document.getElementById('routineSaveBtn').addEventListener('click', ()=>{
+guardedClick('routineSaveBtn', ()=>{
   const title = document.getElementById('routineTitle').value.trim();
   if(!title){ showToast('Give the routine a title.', 'error'); return; }
   const data = {
@@ -4077,7 +4100,7 @@ document.getElementById('routineSaveBtn').addEventListener('click', ()=>{
   document.getElementById('routineOverlay').classList.remove('show');
   renderRoutines();
 });
-document.getElementById('routineDeleteBtn').addEventListener('click', async ()=>{
+guardedClick('routineDeleteBtn', async ()=>{
   if(!(await showConfirm('Delete this routine and all its steps?', {title:'Delete routine?'}))) return;
   state.routines = state.routines.filter(r=>r.id!==editingRoutineId);
   saveState();
@@ -4121,7 +4144,7 @@ function readFileAsDataURL(file){
   });
 }
 
-document.getElementById('stepSaveBtn').addEventListener('click', async ()=>{
+guardedClick('stepSaveBtn', async ()=>{
   const title = document.getElementById('stepTitle').value.trim();
   if(!title){ showToast('Give the step a title.', 'error'); return; }
   const r = state.routines.find(x=>x.id===editingStepRoutineId);
@@ -4161,7 +4184,7 @@ document.getElementById('stepSaveBtn').addEventListener('click', async ()=>{
   openRoutineIds.add(r.id);
   renderRoutines();
 });
-document.getElementById('stepDeleteBtn').addEventListener('click', async ()=>{
+guardedClick('stepDeleteBtn', async ()=>{
   if(!(await showConfirm('Delete this step?', {title:'Delete step?'}))) return;
   const r = state.routines.find(x=>x.id===editingStepRoutineId);
   r.steps = r.steps.filter(s=>s.id!==editingStepId);
