@@ -431,6 +431,10 @@
   .btn-ghost{background:var(--surface);backdrop-filter:blur(var(--blur));-webkit-backdrop-filter:blur(var(--blur));color:var(--ink);border:1px solid var(--line);box-shadow:var(--shadow);}
 
   .overlay{position:fixed;inset:0;background:rgba(11,16,32,0.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;z-index:120;padding:16px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease, visibility .22s ease;}
+  /* The confirm dialog can be triggered from inside any other overlay (including the
+     day panel, z-index:150/151), so it must always render above every other overlay
+     or its buttons become visually covered and unclickable. */
+  #confirmOverlay{z-index:500;}
   .overlay.show{opacity:1;visibility:visible;pointer-events:auto;}
   .modal{background:var(--surface-solid);border:1px solid var(--line);border-radius:22px;padding:26px;width:100%;max-width:380px;box-shadow:0 30px 70px rgba(0,0,0,0.35);transform:translateY(12px) scale(.96);opacity:0;transition:transform .28s cubic-bezier(.34,1.56,.64,1), opacity .22s ease;}
   .overlay.show .modal{transform:none;opacity:1;}
@@ -647,8 +651,11 @@
   .dp-meta-row{display:flex; align-items:center; gap:10px; margin-top:7px; flex-wrap:wrap;}
   .dp-meta{font-size:11px; color:var(--ink-soft); display:flex; align-items:center; gap:3px; font-weight:600;}
   .dp-meta.reminder-on{color:var(--purple);}
-  .dp-actions{display:flex; gap:4px; flex-shrink:0; opacity:0; transition:opacity .18s ease;}
-  .dp-card:hover .dp-actions{opacity:1;}
+  .dp-actions{display:flex; gap:4px; flex-shrink:0; transition:opacity .18s ease;}
+  @media (hover:hover) and (pointer:fine){
+    .dp-actions{opacity:0;}
+    .dp-card:hover .dp-actions{opacity:1;}
+  }
   .dp-icon-btn{
     width:26px; height:26px; border-radius:8px; border:1px solid var(--line); background:var(--surface-solid);
     color:var(--ink-soft); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:12px;
