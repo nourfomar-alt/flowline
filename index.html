@@ -467,7 +467,7 @@
   }
 
   /* ---------- BOTTOM NAV ---------- */
-  body{padding-bottom:calc(78px + env(safe-area-inset-bottom));}
+  body{padding-bottom:calc(100px + env(safe-area-inset-bottom));}
   @media (max-width:979.98px){
     body{padding-top:calc(50px + env(safe-area-inset-top));}
   }
@@ -514,7 +514,7 @@
   .gb-panel-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
   .gb-panel-head h2{font-size:22px;font-weight:800;font-family:'Inter',sans-serif;}
   .gb-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
-  .gb-card{background:var(--surface);backdrop-filter:blur(var(--blur));-webkit-backdrop-filter:blur(var(--blur));border:1px solid var(--line);border-radius:18px;padding:19px;box-shadow:var(--shadow);transition:transform .2s ease, box-shadow .2s ease;}
+  .gb-card{background:var(--surface-solid, var(--surface));border:1px solid var(--line);border-radius:18px;padding:19px;box-shadow:var(--shadow);transition:transform .2s ease, box-shadow .2s ease;}
   .gb-card.gb-card-enter{animation:fadeInUp .4s ease both;}
   .gb-card:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(99,102,241,0.16);}
   .gb-card-head{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
@@ -522,7 +522,7 @@
   .gb-card-title{font-weight:800;font-size:15px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
   .gb-card-sub{font-size:11px;color:var(--ink-soft);margin-top:1px;font-weight:600;}
   .gb-card-menu{display:flex;gap:4px;flex-shrink:0;}
-  .gb-icon-btn{width:29px;height:29px;border-radius:9px;border:1px solid var(--line);background:var(--bg-elev);color:var(--ink-soft);cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;transition:color .15s ease, transform .15s ease;}
+  .gb-icon-btn{width:40px;height:40px;border-radius:11px;border:1px solid var(--line);background:var(--bg-elev);color:var(--ink-soft);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:color .15s ease, transform .15s ease;touch-action:manipulation;-webkit-tap-highlight-color:transparent;flex-shrink:0;}
   .gb-icon-btn:hover{color:var(--purple);transform:translateY(-1px);}
   .gb-progress-track{height:10px;border-radius:99px;background:var(--line);overflow:hidden;margin:9px 0 7px;}
   .gb-progress-fill{height:100%;border-radius:99px;transition:width .5s cubic-bezier(.34,1.56,.64,1);}
@@ -534,6 +534,91 @@
   .gb-small-btn{border:1px solid var(--line);background:var(--bg-elev);color:var(--ink);padding:7px 12px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;transition:transform .15s ease;}
   .gb-small-btn:hover{transform:translateY(-1px);}
   .gb-small-btn.primary{background:var(--gradient-accent);color:#fff;border:none;}
+
+  /* ================= GET BETTER DASHBOARD (unified) ================= */
+  .gbd-header{margin-bottom:22px;}
+  .gbd-header .sub{font-size:14px;}
+  .gbd-view-switch{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:22px;}
+  .gbd-toggle{display:inline-flex;gap:4px;padding:4px;background:var(--bg-elev);border:1px solid var(--line);border-radius:14px;margin-bottom:0;}
+  .gbd-toggle-btn{border:none;background:transparent;color:var(--ink-soft);font-family:'Inter',sans-serif;font-weight:700;font-size:13.5px;padding:9px 18px;border-radius:10px;cursor:pointer;transition:background .18s ease,color .18s ease;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+  .gbd-home-btn{flex-shrink:0;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--bg-elev);color:var(--ink-soft);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .18s ease,color .18s ease,transform .15s ease;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+  .gbd-home-btn svg{width:18px;height:18px;}
+  .gbd-home-btn:active{transform:scale(.92);}
+  .gbd-home-btn.active{background:var(--gradient-accent);color:#fff;border-color:transparent;box-shadow:0 4px 14px rgba(99,102,241,0.35);}
+  .gbd-toggle-btn.active{background:var(--surface);color:var(--ink);box-shadow:var(--shadow);}
+
+  .gbd-stat-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:28px;}
+  .gbd-stat-card{background:var(--surface-solid, var(--surface));border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:var(--shadow);display:flex;align-items:center;gap:14px;transition:transform .25s cubic-bezier(.34,1.56,.64,1), box-shadow .25s ease;}
+  .gbd-stat-card:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(99,102,241,0.16);}
+  .gbd-stat-ring-wrap{position:relative;flex-shrink:0;width:84px;height:84px;}
+  .gbd-ring-fg{transition:stroke-dashoffset .6s cubic-bezier(.34,1.56,.64,1);}
+  .gbd-ring-center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;font-weight:800;font-size:18px;color:var(--ink);}
+  .gbd-stat-copy{min-width:0;}
+  .gbd-stat-label{font-size:12.5px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em;}
+  .gbd-stat-sub{font-size:12px;color:var(--ink-soft);margin-top:2px;}
+  .gbd-stat-number{font-family:'Inter',sans-serif;font-weight:800;font-size:26px;letter-spacing:-0.02em;color:var(--ink);}
+  .gbd-stat-icon{flex-shrink:0;width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;background:var(--bg-elev);}
+  .gbd-stat-row{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:6px;}
+  .gbd-xp-track{height:8px;border-radius:99px;background:var(--line);overflow:hidden;}
+  .gbd-xp-fill{height:100%;border-radius:99px;background:var(--gradient-accent);transition:width .6s cubic-bezier(.34,1.56,.64,1);}
+
+  .gbd-section{margin-bottom:30px;}
+  .gbd-section-last{margin-bottom:8px;}
+  .gbd-section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+  .gbd-section-head h2{font-size:20px;font-weight:800;font-family:'Inter',sans-serif;letter-spacing:-0.02em;}
+  .gbd-head-actions{display:flex;gap:8px;}
+  .gbd-btn-primary{background:var(--gradient-accent);color:#fff;border:none;padding:9px 16px;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(99,102,241,0.3);transition:transform .15s ease;}
+  .gbd-btn-primary:hover{transform:translateY(-1px);}
+  .gbd-btn-ghost{background:var(--surface);border:1px solid var(--line);color:var(--ink);padding:9px 16px;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;transition:transform .15s ease;}
+  .gbd-btn-ghost:hover{transform:translateY(-1px);}
+
+  .gbd-goals-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;}
+  .gbd-goal-card{background:var(--surface-solid, var(--surface));border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:var(--shadow);transition:transform .25s cubic-bezier(.34,1.56,.64,1), box-shadow .25s ease;}
+  .gbd-goal-card:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(99,102,241,0.14);}
+  .gbd-goal-head{display:flex;align-items:center;gap:12px;margin-bottom:4px;}
+  .gbd-goal-title{font-size:16px;font-weight:800;font-family:'Inter',sans-serif;letter-spacing:-0.01em;}
+  .gbd-goal-sub{font-size:12px;color:var(--ink-soft);margin-top:2px;}
+  .gbd-linked-habits{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);}
+  .gbd-linked-label{font-size:11px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;}
+  .gbd-habit-row{display:flex;align-items:center;gap:10px;padding:8px 0;}
+  .gbd-habit-row + .gbd-habit-row{border-top:1px solid var(--line);}
+  .gbd-habit-icon{flex-shrink:0;width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;}
+  .gbd-habit-body{flex:1;min-width:0;}
+  .gbd-habit-title{font-size:13.5px;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .gbd-habit-sub{font-size:11px;color:var(--ink-soft);margin-top:1px;}
+  .gbd-habit-check{flex-shrink:0;width:40px;height:40px;border-radius:50%;border:1.5px solid var(--line);background:var(--bg-elev);color:#fff;cursor:pointer;font-size:15px;font-weight:800;display:flex;align-items:center;justify-content:center;transition:transform .15s ease, background .15s ease, border-color .15s ease;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+  .gbd-habit-check:hover:not(:disabled){transform:scale(1.08);}
+  .gbd-habit-check.done{background:var(--gradient-accent);border-color:transparent;}
+  .gbd-habit-check:disabled{opacity:.35;cursor:not-allowed;}
+  .gbd-general-habits{background:var(--surface);}
+
+  .gbd-empty{grid-column:1/-1;text-align:center;padding:44px 20px;background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);}
+  .gbd-empty-emoji{font-size:38px;margin-bottom:10px;}
+  .gbd-empty-title{font-size:16px;font-weight:800;font-family:'Inter',sans-serif;margin-bottom:4px;}
+  .gbd-empty-sub{font-size:13px;color:var(--ink-soft);}
+
+  .gbd-routine-list{display:flex;flex-direction:column;gap:12px;}
+
+  .gbd-insight-chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:16px;}
+  .gbd-insight-chip{background:var(--surface-solid, var(--surface));border:1px solid var(--line);border-radius:16px;padding:14px;text-align:center;box-shadow:var(--shadow);}
+  .gbd-insight-num{font-family:'Inter',sans-serif;font-weight:800;font-size:22px;letter-spacing:-0.02em;background:var(--gradient-accent);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .gbd-insight-label{font-size:11px;color:var(--ink-soft);font-weight:700;margin-top:3px;text-transform:uppercase;letter-spacing:.04em;}
+  .gbd-chart-card{background:var(--surface-solid, var(--surface));border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:var(--shadow);}
+  .gbd-chart-title{font-size:13px;font-weight:700;color:var(--ink-soft);margin-bottom:10px;}
+
+  .gbd-ach-overview{background:var(--surface-solid, var(--surface));border:1px solid var(--line);border-radius:16px;padding:16px 18px;box-shadow:var(--shadow);margin-bottom:14px;}
+  .gbd-ach-count{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:8px;}
+  .gbd-ach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;}
+  .gbd-ach-badge{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px 8px;text-align:center;box-shadow:var(--shadow);transition:transform .2s ease;}
+  .gbd-ach-badge:hover{transform:translateY(-2px);}
+  .gbd-ach-badge.locked{opacity:.4;filter:grayscale(1);}
+  .gbd-ach-emoji{font-size:26px;margin-bottom:6px;}
+  .gbd-ach-name{font-size:10.5px;font-weight:700;color:var(--ink);line-height:1.3;}
+
+  @media (max-width:640px){
+    .gbd-stat-strip{grid-template-columns:1fr;}
+    .gbd-goals-list{grid-template-columns:1fr;}
+  }
   .gb-flame-row{display:flex;gap:14px;margin-top:10px;flex-wrap:wrap;}
   .gb-flame-stat{font-size:11px;color:var(--ink-soft);font-weight:600;}
   .gb-flame-stat b{color:var(--ink);font-size:15px;display:block;font-weight:800;}
@@ -552,7 +637,7 @@
   .gb-step.done .gb-step-title{text-decoration:line-through;color:var(--ink-soft);}
   .gb-step-notes{font-size:11px;color:var(--ink-soft);margin-top:2px;}
   .gb-step-media{margin-top:8px;}
-  .gb-step-actions{display:flex;gap:4px;flex-shrink:0;}
+  .gb-step-actions{display:flex;gap:6px;flex-shrink:0;}
   .gb-media-frame{position:relative;border-radius:12px;overflow:hidden;background:#000;}
   .gb-media-frame iframe, .gb-media-frame video{width:100%;display:block;aspect-ratio:16/9;border:none;}
   .gb-media-frame img{width:100%;display:block;border-radius:12px;max-height:220px;object-fit:cover;}
@@ -927,12 +1012,13 @@
   .reveal-text{width:100%; max-height:220px; overflow:auto; background:var(--bg-elev); border:1px solid var(--line); border-radius:10px; padding:10px 12px; font-size:12px; white-space:pre-wrap; word-break:break-word; color:var(--ink); font-family:inherit;}
 
   /* ---------- QUICK ADD FAB ---------- */
-  .quickadd-wrap{position:fixed; right:calc(20px + env(safe-area-inset-right)); bottom:calc(90px + env(safe-area-inset-bottom)); z-index:130; display:flex; flex-direction:column; align-items:flex-end; gap:10px;}
+  .quickadd-wrap{position:fixed; right:calc(20px + env(safe-area-inset-right)); bottom:calc(90px + env(safe-area-inset-bottom)); z-index:130; display:flex; flex-direction:column; align-items:flex-end; gap:10px; pointer-events:none;}
   .quickadd-fab{
     width:58px; height:58px; border-radius:50%; border:none; cursor:pointer;
     background:var(--gradient-accent); color:#fff; display:flex; align-items:center; justify-content:center;
     box-shadow:0 14px 32px rgba(99,102,241,0.45), inset 0 1px 0 rgba(255,255,255,0.25);
     transition:transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .25s ease;
+    pointer-events:auto; touch-action:manipulation; -webkit-tap-highlight-color:transparent;
   }
   .quickadd-fab:hover{box-shadow:0 18px 40px rgba(99,102,241,0.55);}
   .quickadd-fab:active{transform:scale(.92);}
@@ -949,7 +1035,7 @@
     backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
     color:var(--ink); font-weight:700; font-size:12.5px; padding:9px 16px 9px 12px; border-radius:26px;
     box-shadow:0 10px 26px rgba(20,10,60,0.22); transition:transform .15s cubic-bezier(.34,1.56,.64,1), box-shadow .15s ease;
-    white-space:nowrap;
+    white-space:nowrap; touch-action:manipulation; -webkit-tap-highlight-color:transparent;
   }
   .qa-item:hover{transform:translateX(-2px); box-shadow:0 12px 30px rgba(99,102,241,.28);}
   .qa-item:active{transform:scale(.95);}
@@ -1158,44 +1244,45 @@
 <!-- /plannerView -->
 
 <div id="getBetterView" style="display:none;">
-  <header style="margin-bottom:18px;">
+  <header class="gbd-header">
     <div>
       <h1>Get Better</h1>
-      <div class="sub">Your personal growth center.</div>
+      <div class="sub" id="gbdDateLine">Your personal growth dashboard.</div>
     </div>
   </header>
 
-  <div class="gb-tabs" id="gbTabs">
-    <button class="gb-tab active" data-gb="goals"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>Goals</button>
-    <button class="gb-tab" data-gb="habits"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Habits</button>
-    <button class="gb-tab" data-gb="routines"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>Routines</button>
-    <button class="gb-tab" data-gb="stats"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18M8 17V10M13 17V6M18 17v-4"/></svg>Statistics</button>
-    <button class="gb-tab" data-gb="streaks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c1 4-3 5-3 9a3 3 0 0 0 6 0c0-1-.5-2-1-2 .5 3-2 4-2 1 0-3 3-4 2-8Z"/></svg>Streaks</button>
-    <button class="gb-tab" data-gb="achievements"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4Z"/><path d="M7 5H4a3 3 0 0 0 3 5M17 5h3a3 3 0 0 1-3 5"/></svg>Achievements</button>
+  <div class="gbd-view-switch">
+    <div class="gbd-toggle" id="gbdToggle" role="tablist">
+      <button class="gbd-toggle-btn" id="gbdToggleRoutines" type="button" role="tab" aria-selected="false">Routine</button>
+      <button class="gbd-toggle-btn" id="gbdToggleGoals" type="button" role="tab" aria-selected="false">Goals</button>
+    </div>
+    <button class="gbd-home-btn" id="gbdHomeBtn" type="button" role="tab" aria-selected="true" title="See everything">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+    </button>
   </div>
 
-  <div class="gb-panel" id="gbGoals">
-    <div class="gb-panel-head">
+  <!-- Today's Progress · Current Streak · XP -->
+  <div class="gbd-stat-strip gbd-home-only" id="gbdStatStrip"></div>
+
+  <!-- Goals & Habits, merged: habits nest under the goal they support -->
+  <section class="gbd-section" id="gbdGoalsHabitsSection">
+    <div class="gbd-section-head">
       <h2>Goals</h2>
-      <button class="btn btn-primary" id="addGoalBtn">+ New goal</button>
+      <div class="gbd-head-actions">
+        <button class="gbd-btn-ghost" id="addHabitBtn" type="button">+ Habit</button>
+        <button class="gbd-btn-primary" id="addGoalBtn" type="button">+ Goal</button>
+      </div>
     </div>
-    <div id="goalsList" class="gb-cards"></div>
-  </div>
+    <div id="goalsHabitsList" class="gbd-goals-list"></div>
+  </section>
 
-  <div class="gb-panel" id="gbHabits" style="display:none;">
-    <div class="gb-panel-head">
-      <h2>Habits</h2>
-      <button class="btn btn-primary" id="addHabitBtn">+ New habit</button>
-    </div>
-    <div id="habitsList" class="gb-cards"></div>
-  </div>
-
-  <div class="gb-panel" id="gbRoutines" style="display:none;">
-    <div class="gb-panel-head">
-      <h2 id="routinesPanelTitle">Today's Routines</h2>
-      <div style="display:flex; gap:8px;">
-        <button class="btn btn-ghost" id="routinesManageToggleBtn" type="button">⚙ Manage all</button>
-        <button class="btn btn-primary" id="addRoutineBtn">+ New routine</button>
+  <!-- Today's Routine -->
+  <section class="gbd-section" id="gbdRoutinesSection">
+    <div class="gbd-section-head">
+      <h2 id="routinesPanelTitle">Today's Routine</h2>
+      <div class="gbd-head-actions">
+        <button class="gbd-btn-ghost" id="routinesManageToggleBtn" type="button">Manage all</button>
+        <button class="gbd-btn-primary" id="addRoutineBtn" type="button">+ Routine</button>
       </div>
     </div>
     <div id="routinesManagerBar" style="display:none; gap:10px; align-items:center; margin-bottom:12px; flex-wrap:wrap;">
@@ -1206,20 +1293,24 @@
         <option value="days">Sort: Most days</option>
       </select>
     </div>
-    <div id="routinesList" class="gb-cards"></div>
-  </div>
+    <div id="routinesList" class="gbd-routine-list"></div>
+  </section>
 
-  <div class="gb-panel" id="gbStats" style="display:none;">
-    <div id="statsContent"></div>
-  </div>
+  <!-- Weekly Insights -->
+  <section class="gbd-section gbd-home-only">
+    <div class="gbd-section-head">
+      <h2>Weekly Insights</h2>
+    </div>
+    <div id="weeklyInsightsContent"></div>
+  </section>
 
-  <div class="gb-panel" id="gbStreaks" style="display:none;">
-    <div id="streaksContent"></div>
-  </div>
-
-  <div class="gb-panel" id="gbAchievements" style="display:none;">
-    <div id="achievementsContent" class="gb-cards"></div>
-  </div>
+  <!-- Achievement Progress -->
+  <section class="gbd-section gbd-section-last gbd-home-only">
+    <div class="gbd-section-head">
+      <h2>Achievement Progress</h2>
+    </div>
+    <div id="achievementProgressContent"></div>
+  </section>
 </div>
 <!-- /getBetterView -->
 
@@ -1471,6 +1562,11 @@
     <div class="field"><label>Title</label><input type="text" id="habitTitle" placeholder="e.g. Drink water"></div>
     <div class="field"><label>Icon</label><div class="emoji-pick" id="habitEmojiPick"></div></div>
     <div class="field"><label>Color</label><div class="color-pick" id="habitColorPick"></div></div>
+    <div class="field"><label>Supports which goal? <span style="font-weight:400;color:var(--ink-soft);">(optional)</span></label>
+      <select id="habitGoalLink">
+        <option value="">No linked goal</option>
+      </select>
+    </div>
     <div class="field"><label>Frequency</label>
       <select id="habitFreq">
         <option value="daily">Daily</option>
@@ -1670,6 +1766,12 @@ function saveState(){
 // Prevents double-submits (e.g. rapid double-click/double-tap on a Save button)
 // from creating duplicate entries, and surfaces unexpected errors as a toast
 // instead of silently failing so the button never appears "broken".
+// Native HTML5 drag-and-drop (draggable="true") does not work via touch at all on
+// iOS/Android, and leaving it enabled there can still interfere with tap recognition
+// on nested buttons (e.g. a step's Edit button), especially once a list has many
+// items. Reordering falls back to per-row Up/Down controls on touch devices instead.
+const IS_TOUCH_DEVICE = (typeof window!=='undefined') && (('ontouchstart' in window) || (navigator.maxTouchPoints > 0));
+
 function guardedClick(id, fn){
   const btn = document.getElementById(id);
   if(!btn) return;
@@ -2583,10 +2685,13 @@ function renderDayPanel(){
       closeDayPanel();
       const view = document.querySelector('.bn-item[data-view="getbetter"]');
       if(view) view.click();
-      const tab = document.querySelector('.gb-tab[data-gb="routines"]');
-      if(tab) tab.click();
+      if(window.gbdShowRoutinesTab) window.gbdShowRoutinesTab();
       openRoutineIds.add(el.dataset.id);
       renderRoutines();
+      setTimeout(()=>{
+        const card = document.querySelector('#routinesList [data-id="'+el.dataset.id+'"]');
+        if(card) card.scrollIntoView({behavior:'smooth', block:'center'});
+      }, 50);
     });
   });
   const manageBtn = document.getElementById('dpManageRoutinesBtn');
@@ -2595,10 +2700,13 @@ function renderDayPanel(){
       closeDayPanel();
       const view = document.querySelector('.bn-item[data-view="getbetter"]');
       if(view) view.click();
-      const tab = document.querySelector('.gb-tab[data-gb="routines"]');
-      if(tab) tab.click();
+      if(window.gbdShowRoutinesTab) window.gbdShowRoutinesTab();
       routinesManagerMode = true;
       renderRoutines();
+      setTimeout(()=>{
+        const el = document.getElementById('routinesList');
+        if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+      }, 50);
     });
   }
 }
@@ -3321,16 +3429,7 @@ document.querySelectorAll('.bn-item').forEach(btn=>{
   });
 });
 
-const GB_PANELS = {goals:'gbGoals', habits:'gbHabits', routines:'gbRoutines', stats:'gbStats', streaks:'gbStreaks', achievements:'gbAchievements'};
-document.querySelectorAll('.gb-tab').forEach(tab=>{
-  tab.addEventListener('click', ()=>{
-    document.querySelectorAll('.gb-tab').forEach(t=>t.classList.remove('active'));
-    tab.classList.add('active');
-    Object.values(GB_PANELS).forEach(id=>document.getElementById(id).style.display='none');
-    document.getElementById(GB_PANELS[tab.dataset.gb]).style.display = 'block';
-    renderGetBetterPanel(tab.dataset.gb);
-  });
-});
+
 
 /* ---------- SIDEBAR (desktop) ---------- */
 (function(){
@@ -3400,8 +3499,10 @@ function routeSidebar(which){
     clickView('getbetter');
   } else if(which==='stats'){
     clickView('getbetter');
-    const st = document.querySelector('.gb-tab[data-gb="stats"]');
-    if(st) st.click();
+    setTimeout(()=>{
+      const el = document.getElementById('weeklyInsightsContent');
+      if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+    }, 50);
   } else if(which==='search'){
     clickView('planner'); clickTab('week');
     const si = document.getElementById('searchInput');
@@ -3471,16 +3572,7 @@ document.querySelectorAll('.sb-item[data-sb], .bn-item[data-sb]').forEach(btn=>{
 })();
 
 function renderGetBetter(){
-  const activeTab = document.querySelector('.gb-tab.active');
-  renderGetBetterPanel(activeTab ? activeTab.dataset.gb : 'goals');
-}
-function renderGetBetterPanel(which){
-  if(which==='goals') renderGoals();
-  else if(which==='habits') renderHabits();
-  else if(which==='routines') renderRoutines();
-  else if(which==='stats') renderStats();
-  else if(which==='streaks') renderStreaks();
-  else if(which==='achievements') renderAchievements();
+  renderGetBetterDashboard();
 }
 
 function renderAll(){
@@ -3639,15 +3731,16 @@ guardedClick('goalSaveBtn', ()=>{
   }
   saveState();
   document.getElementById('goalOverlay').classList.remove('show');
-  renderGoals();
+  renderGetBetterQuick();
   checkAchievements();
 });
 guardedClick('goalDeleteBtn', async ()=>{
   if(!(await showConfirm('Delete this goal?', {title:'Delete goal?'}))) return;
   state.goals = state.goals.filter(g=>g.id!==editingGoalId);
+  state.habits.forEach(h=>{ if(h.goalId===editingGoalId) h.goalId = null; });
   saveState();
   document.getElementById('goalOverlay').classList.remove('show');
-  renderGoals();
+  renderGetBetterQuick();
 });
 
 /* ================= HABITS ================= */
@@ -3662,7 +3755,9 @@ function habitDoneOn(h, iso){ return !!(state.habitLog[h.id] && state.habitLog[h
 function computeHabitStreaks(h){
   let current = 0, longest = 0, streakRun = 0, stillCounting = true;
   const dueDatesDesc = [];
-  for(let i=0;i<400;i++){ const d = addDays(new Date(), -i); if(habitIsDueOnDate(h,d)) dueDatesDesc.push(d); }
+  // 120 days (~4 months) is plenty for a displayed streak and is far cheaper than
+  // scanning a full year on every render of every habit row.
+  for(let i=0;i<120;i++){ const d = addDays(new Date(), -i); if(habitIsDueOnDate(h,d)) dueDatesDesc.push(d); }
   dueDatesDesc.forEach((d,idx)=>{
     const iso = formatDateISO(d);
     const done = habitDoneOn(h, iso);
@@ -3756,6 +3851,10 @@ function openHabitModal(h){
   buildColorPicker('habitColorPick', h ? h.color : GB_COLORS[1]);
   buildWeekdayToggles('habitWeekdayToggles', h && h.days ? h.days : [0,1,2,3,4]);
   toggleHabitFreqFields();
+  const goalLinkSel = document.getElementById('habitGoalLink');
+  goalLinkSel.innerHTML = '<option value="">No linked goal</option>' +
+    state.goals.map(g=>`<option value="${g.id}">${g.icon} ${escHtml(g.title)}</option>`).join('');
+  goalLinkSel.value = (h && h.goalId) ? h.goalId : '';
   document.getElementById('habitDeleteBtn').style.display = h ? 'inline-block' : 'none';
   document.getElementById('habitOverlay').classList.add('show');
 }
@@ -3778,6 +3877,7 @@ guardedClick('habitSaveBtn', ()=>{
     monthDay: Number(document.getElementById('habitMonthDay').value)||1,
     icon: document.getElementById('habitEmojiPick').dataset.selected || '✅',
     color: document.getElementById('habitColorPick').dataset.selected || GB_COLORS[1],
+    goalId: document.getElementById('habitGoalLink').value || null,
   };
   if(editingHabitId){
     Object.assign(state.habits.find(h=>h.id===editingHabitId), data);
@@ -3786,7 +3886,7 @@ guardedClick('habitSaveBtn', ()=>{
   }
   saveState();
   document.getElementById('habitOverlay').classList.remove('show');
-  renderHabits();
+  renderGetBetterQuick();
 });
 guardedClick('habitDeleteBtn', async ()=>{
   if(!(await showConfirm('Delete this habit? Its history will be lost.', {title:'Delete habit?'}))) return;
@@ -3794,7 +3894,7 @@ guardedClick('habitDeleteBtn', async ()=>{
   delete state.habitLog[editingHabitId];
   saveState();
   document.getElementById('habitOverlay').classList.remove('show');
-  renderHabits();
+  renderGetBetterQuick();
 });
 
 /* ================= ROUTINES ================= */
@@ -4015,9 +4115,9 @@ function renderSteps(r){
   const listEl = document.getElementById('steps-'+r.id)?.querySelector('[data-role="stepList"]');
   if(!listEl) return;
   const iso = isoToday();
-  listEl.innerHTML = (r.steps||[]).map(s=>`
-    <div class="gb-step" draggable="true" data-step="${s.id}">
-      <span class="gb-step-drag">⠿</span>
+  listEl.innerHTML = (r.steps||[]).map((s,i)=>`
+    <div class="gb-step" draggable="${IS_TOUCH_DEVICE ? 'false' : 'true'}" data-step="${s.id}">
+      ${IS_TOUCH_DEVICE ? '' : '<span class="gb-step-drag">⠿</span>'}
       <input type="checkbox" class="gb-step-check" data-routine="${r.id}" data-step="${s.id}" ${stepDoneOn(r.id,s.id,iso)?'checked':''}>
       <div class="gb-step-body">
         <div class="gb-step-title">${escHtml(s.title)}</div>
@@ -4025,6 +4125,10 @@ function renderSteps(r){
         ${stepMediaHTML(r, s)}
       </div>
       <div class="gb-step-actions">
+        ${IS_TOUCH_DEVICE ? `
+        <button class="gb-icon-btn stepMoveBtn" data-routine="${r.id}" data-step="${s.id}" data-dir="up" ${i===0?'disabled':''} title="Move up">↑</button>
+        <button class="gb-icon-btn stepMoveBtn" data-routine="${r.id}" data-step="${s.id}" data-dir="down" ${i===(r.steps.length-1)?'disabled':''} title="Move down">↓</button>
+        ` : ''}
         <button class="gb-icon-btn stepEditBtn" data-routine="${r.id}" data-step="${s.id}">✎</button>
       </div>
     </div>
@@ -4038,11 +4142,25 @@ function renderSteps(r){
       if(cb.checked) logCompletion('routine', r.title, 5);
       saveState();
       renderRoutines();
+      if(typeof renderStatStrip==='function') renderStatStrip();
       checkAchievements();
     });
   });
   listEl.querySelectorAll('.stepEditBtn').forEach(b=>{
-    b.addEventListener('click', ()=>openStepModal(b.dataset.routine, b.dataset.step));
+    b.addEventListener('click', (e)=>{ e.stopPropagation(); openStepModal(b.dataset.routine, b.dataset.step); });
+  });
+  listEl.querySelectorAll('.stepMoveBtn').forEach(b=>{
+    if(b.disabled) return;
+    b.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const steps = r.steps;
+      const idx = steps.findIndex(s=>s.id===b.dataset.step);
+      const swapWith = b.dataset.dir==='up' ? idx-1 : idx+1;
+      if(swapWith<0 || swapWith>=steps.length) return;
+      [steps[idx], steps[swapWith]] = [steps[swapWith], steps[idx]];
+      saveState();
+      renderSteps(r);
+    });
   });
 
   // media init (youtube players, fullscreen buttons)
@@ -4056,24 +4174,27 @@ function renderSteps(r){
     });
   });
 
-  // drag & drop reordering
-  let dragEl = null;
-  listEl.querySelectorAll('.gb-step').forEach(stepEl=>{
-    stepEl.addEventListener('dragstart', ()=>{ dragEl = stepEl; stepEl.classList.add('dragging'); });
-    stepEl.addEventListener('dragend', ()=>{ stepEl.classList.remove('dragging'); dragEl=null; });
-    stepEl.addEventListener('dragover', (e)=>{
-      e.preventDefault();
-      if(!dragEl || dragEl===stepEl) return;
-      const rect = stepEl.getBoundingClientRect();
-      const after = (e.clientY - rect.top) > rect.height/2;
-      listEl.insertBefore(dragEl, after ? stepEl.nextSibling : stepEl);
+  // drag & drop reordering (mouse/trackpad only — see IS_TOUCH_DEVICE note above;
+  // touch devices use the ↑/↓ buttons rendered into .gb-step-actions instead)
+  if(!IS_TOUCH_DEVICE){
+    let dragEl = null;
+    listEl.querySelectorAll('.gb-step').forEach(stepEl=>{
+      stepEl.addEventListener('dragstart', ()=>{ dragEl = stepEl; stepEl.classList.add('dragging'); });
+      stepEl.addEventListener('dragend', ()=>{ stepEl.classList.remove('dragging'); dragEl=null; });
+      stepEl.addEventListener('dragover', (e)=>{
+        e.preventDefault();
+        if(!dragEl || dragEl===stepEl) return;
+        const rect = stepEl.getBoundingClientRect();
+        const after = (e.clientY - rect.top) > rect.height/2;
+        listEl.insertBefore(dragEl, after ? stepEl.nextSibling : stepEl);
+      });
+      stepEl.addEventListener('drop', ()=>{
+        const newOrder = Array.from(listEl.querySelectorAll('.gb-step')).map(el=>el.dataset.step);
+        r.steps.sort((a,b)=>newOrder.indexOf(a.id)-newOrder.indexOf(b.id));
+        saveState();
+      });
     });
-    stepEl.addEventListener('drop', ()=>{
-      const newOrder = Array.from(listEl.querySelectorAll('.gb-step')).map(el=>el.dataset.step);
-      r.steps.sort((a,b)=>newOrder.indexOf(a.id)-newOrder.indexOf(b.id));
-      saveState();
-    });
-  });
+  }
 }
 
 function openRoutineModal(r){
@@ -4375,7 +4496,10 @@ function checkAchievements(){
       showAchievementToast(a);
     }
   });
-  if(anyNew) saveState();
+  if(anyNew){
+    saveState();
+    if(typeof renderAchievementProgress==='function') renderAchievementProgress();
+  }
 }
 function fireConfetti(){
   const colors = ['#E0A83E','#3D5A6C','#A6425A','#5C8A6A','#6B5B95'];
@@ -4422,6 +4546,288 @@ function renderAchievements(){
   }).join('');
 }
 checkAchievements();
+
+/* ================= GET BETTER DASHBOARD (unified) ================= */
+
+function gbdXP(){
+  const eventsDone = state.completionLog.filter(e=>e.type==='event').length;
+  const habitsDone = state.completionLog.filter(e=>e.type==='habit').length;
+  const routineDone = state.completionLog.filter(e=>e.type==='routine').length;
+  const goalsDone = state.goals.filter(g=>g.completed).length;
+  const xp = eventsDone*10 + habitsDone*15 + routineDone*8 + goalsDone*50;
+  const XP_PER_LEVEL = 500;
+  const level = Math.floor(xp / XP_PER_LEVEL) + 1;
+  const intoLevel = xp % XP_PER_LEVEL;
+  const pct = Math.round((intoLevel / XP_PER_LEVEL) * 100);
+  return { xp, level, intoLevel, xpPerLevel: XP_PER_LEVEL, pct };
+}
+
+function gbdTodayProgress(){
+  const dateObj = new Date();
+  const iso = isoToday();
+  const evs = state.events.filter(e=>eventOccursOnDate(e, dateObj));
+  const dueHabits = state.habits.filter(h=>habitIsDueOnDate(h, dateObj));
+  const dueRoutines = state.routines.filter(r=>routineIsDueOnDate(r, dateObj));
+  let total = evs.length + dueHabits.length;
+  let done = evs.filter(e=>e.done).length + dueHabits.filter(h=>habitDoneOn(h, iso)).length;
+  dueRoutines.forEach(r=>{
+    const steps = r.steps || [];
+    total += steps.length;
+    done += steps.filter(s=>stepDoneOn(r.id, s.id, iso)).length;
+  });
+  const pct = total ? Math.round((done/total)*100) : 0;
+  return { done, total, pct };
+}
+
+function gbdRingSVG(pct, color, size, stroke){
+  size = size || 84; stroke = stroke || 8;
+  const r = (size - stroke) / 2;
+  const c = 2 * Math.PI * r;
+  const offset = c - (Math.max(0, Math.min(100, pct)) / 100) * c;
+  const cx = size/2, cy = size/2;
+  return `
+    <svg viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" class="gbd-ring">
+      <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--line)" stroke-width="${stroke}"/>
+      <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${color}" stroke-width="${stroke}"
+        stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${offset}"
+        transform="rotate(-90 ${cx} ${cy})" class="gbd-ring-fg"/>
+    </svg>`;
+}
+
+function renderStatStrip(){
+  const box = document.getElementById('gbdStatStrip');
+  if(!box) return;
+  const prog = gbdTodayProgress();
+  const streak = state.stats.streak || 0;
+  const best = state.stats.longestStreak || 0;
+  const xpInfo = gbdXP();
+
+  box.innerHTML = `
+    <div class="gbd-stat-card gbd-stat-progress">
+      <div class="gbd-stat-ring-wrap">
+        ${gbdRingSVG(prog.pct, 'var(--indigo)', 84, 8)}
+        <div class="gbd-ring-center">${prog.pct}%</div>
+      </div>
+      <div class="gbd-stat-copy">
+        <div class="gbd-stat-label">Today's Progress</div>
+        <div class="gbd-stat-sub">${prog.total ? prog.done+' of '+prog.total+' done' : 'Nothing scheduled yet'}</div>
+      </div>
+    </div>
+    <div class="gbd-stat-card gbd-stat-streak">
+      <div class="gbd-stat-icon">🔥</div>
+      <div class="gbd-stat-copy">
+        <div class="gbd-stat-number">${streak}</div>
+        <div class="gbd-stat-label">Day Streak</div>
+        <div class="gbd-stat-sub">Best: ${best} day${best===1?'':'s'}</div>
+      </div>
+    </div>
+    <div class="gbd-stat-card gbd-stat-xp">
+      <div class="gbd-stat-icon">✨</div>
+      <div class="gbd-stat-copy" style="flex:1;">
+        <div class="gbd-stat-row"><span class="gbd-stat-number">Level ${xpInfo.level}</span><span class="gbd-stat-sub">${xpInfo.intoLevel} / ${xpInfo.xpPerLevel} XP</span></div>
+        <div class="gbd-xp-track"><div class="gbd-xp-fill" style="width:${xpInfo.pct}%"></div></div>
+      </div>
+    </div>
+  `;
+}
+
+function gbdHabitRowHTML(h){
+  const s = computeHabitStreaks(h);
+  const doneToday = habitDoneOn(h, isoToday());
+  const dueToday = habitIsDueOnDate(h, new Date());
+  const freqLabel = h.freq==='daily' ? 'Daily' : h.freq==='weekly' ? 'Weekly' : 'Monthly';
+  return `
+    <div class="gbd-habit-row" data-id="${h.id}">
+      <div class="gbd-habit-icon" style="background:${h.color}22;color:${h.color}">${h.icon}</div>
+      <div class="gbd-habit-body">
+        <div class="gbd-habit-title">${escHtml(h.title)}</div>
+        <div class="gbd-habit-sub">${freqLabel} · 🔥 ${s.current} streak</div>
+      </div>
+      <button class="gb-icon-btn habitEditBtn" data-id="${h.id}" title="Edit">✎</button>
+      <button class="gbd-habit-check habitToggleBtn ${doneToday?'done':''}" data-id="${h.id}" ${dueToday?'':'disabled'} title="${doneToday?'Done today':(dueToday?'Mark done today':'Not due today')}">${doneToday?'✓':''}</button>
+    </div>`;
+}
+
+function renderGoalsHabits(){
+  const box = document.getElementById('goalsHabitsList');
+  if(!box) return;
+
+  if(state.goals.length===0 && state.habits.length===0){
+    box.innerHTML = `<div class="gbd-empty">
+      <div class="gbd-empty-emoji">🌱</div>
+      <div class="gbd-empty-title">Start your growth journey</div>
+      <div class="gbd-empty-sub">Add a goal, then attach the habits that get you there.</div>
+    </div>`;
+    return;
+  }
+
+  const habitsByGoal = {};
+  const unlinkedHabits = [];
+  state.habits.forEach(h=>{
+    if(h.goalId && state.goals.some(g=>g.id===h.goalId)){
+      (habitsByGoal[h.goalId] = habitsByGoal[h.goalId] || []).push(h);
+    } else {
+      unlinkedHabits.push(h);
+    }
+  });
+
+  const goalHtml = state.goals.map(g=>{
+    const pct = g.target>0 ? Math.min(100, Math.round((g.current/g.target)*100)) : 0;
+    const linked = habitsByGoal[g.id] || [];
+    return `
+    <div class="gbd-goal-card" data-id="${g.id}">
+      <div class="gbd-goal-head">
+        <div class="gb-card-icon" style="background:${g.color}22;color:${g.color}">${g.icon}</div>
+        <div style="flex:1;min-width:0;">
+          <div class="gbd-goal-title">${escHtml(g.title)}</div>
+          <div class="gbd-goal-sub">${g.completed ? '✅ Completed' : g.current+' / '+g.target+' '+escHtml(g.unit||'')}</div>
+        </div>
+        <button class="gb-icon-btn goalEditBtn" data-id="${g.id}" title="Edit">✎</button>
+      </div>
+      <div class="gb-progress-track"><div class="gb-progress-fill" style="width:${pct}%;background:${g.color}"></div></div>
+      <div class="gb-progress-label"><span>${pct}%</span><span>${g.target-g.current>0 ? (g.target-g.current)+' '+escHtml(g.unit||'')+' to go' : 'Goal reached'}</span></div>
+      ${g.notes ? '<div class="gb-notes">'+escHtml(g.notes)+'</div>' : ''}
+      ${!g.completed ? `<div class="gb-inline-actions">
+        <button class="gb-small-btn primary goalAddProgressBtn" data-id="${g.id}">+1 progress</button>
+        <button class="gb-small-btn goalCompleteBtn" data-id="${g.id}">Mark complete</button>
+      </div>` : ''}
+      ${linked.length ? `<div class="gbd-linked-habits">
+        <div class="gbd-linked-label">Habits supporting this goal</div>
+        ${linked.map(h=>gbdHabitRowHTML(h)).join('')}
+      </div>` : ''}
+    </div>`;
+  }).join('');
+
+  const unlinkedHtml = unlinkedHabits.length ? `
+    <div class="gbd-goal-card gbd-general-habits">
+      <div class="gbd-goal-head">
+        <div class="gb-card-icon" style="background:var(--bg-elev);color:var(--ink-soft);">✅</div>
+        <div style="flex:1;min-width:0;">
+          <div class="gbd-goal-title">General habits</div>
+          <div class="gbd-goal-sub">Not tied to a specific goal</div>
+        </div>
+      </div>
+      <div class="gbd-linked-habits" style="margin-top:2px;">
+        ${unlinkedHabits.map(h=>gbdHabitRowHTML(h)).join('')}
+      </div>
+    </div>` : '';
+
+  box.innerHTML = goalHtml + unlinkedHtml;
+
+  box.querySelectorAll('.goalEditBtn').forEach(b=>b.addEventListener('click', ()=>openGoalModal(state.goals.find(g=>g.id===b.dataset.id))));
+  box.querySelectorAll('.goalAddProgressBtn').forEach(b=>b.addEventListener('click', ()=>{
+    const g = state.goals.find(x=>x.id===b.dataset.id);
+    g.current = Math.min(g.target, g.current+1);
+    if(!state.goalLog[g.id]) state.goalLog[g.id] = {};
+    state.goalLog[g.id][isoToday()] = true;
+    logCompletion('goal', g.title, 0);
+    if(g.current>=g.target) g.completed = true;
+    saveState(); renderGoalsHabits(); renderStatStrip(); checkAchievements();
+  }));
+  box.querySelectorAll('.goalCompleteBtn').forEach(b=>b.addEventListener('click', ()=>{
+    const g = state.goals.find(x=>x.id===b.dataset.id);
+    g.completed = true; g.current = g.target;
+    logCompletion('goal', g.title, 0);
+    saveState(); renderGoalsHabits(); renderStatStrip(); checkAchievements();
+  }));
+  box.querySelectorAll('.habitEditBtn').forEach(b=>b.addEventListener('click', ()=>openHabitModal(state.habits.find(h=>h.id===b.dataset.id))));
+  box.querySelectorAll('.habitToggleBtn').forEach(b=>{
+    if(b.disabled) return;
+    b.addEventListener('click', ()=>{
+      const h = state.habits.find(x=>x.id===b.dataset.id);
+      if(!state.habitLog[h.id]) state.habitLog[h.id] = {};
+      const iso = isoToday();
+      if(state.habitLog[h.id][iso]){ delete state.habitLog[h.id][iso]; }
+      else { state.habitLog[h.id][iso] = true; logCompletion('habit', h.title, 0); }
+      saveState(); renderGoalsHabits(); renderStatStrip(); checkAchievements();
+    });
+  });
+}
+
+function renderWeeklyInsights(){
+  const box = document.getElementById('weeklyInsightsContent');
+  if(!box) return;
+  const tasksCompleted = state.completionLog.filter(e=>e.type==='event').length;
+  const habitsCompleted = state.completionLog.filter(e=>e.type==='habit').length;
+  box.innerHTML = `
+    <div class="gbd-insight-chips">
+      <div class="gbd-insight-chip"><div class="gbd-insight-num">${studyHoursTotal()}</div><div class="gbd-insight-label">Study Hours</div></div>
+      <div class="gbd-insight-chip"><div class="gbd-insight-num">${tasksCompleted}</div><div class="gbd-insight-label">Tasks Done</div></div>
+      <div class="gbd-insight-chip"><div class="gbd-insight-num">${habitsCompleted}</div><div class="gbd-insight-label">Habits Done</div></div>
+      <div class="gbd-insight-chip"><div class="gbd-insight-num">${averageCompletionRate()}%</div><div class="gbd-insight-label">Avg (30d)</div></div>
+    </div>
+    <div class="gbd-chart-card">
+      <div class="gbd-chart-title">This week</div>
+      ${barChartSVG(last7DaysData(), 640, 120, 'var(--indigo)')}
+    </div>
+  `;
+}
+
+function renderAchievementProgress(){
+  const box = document.getElementById('achievementProgressContent');
+  if(!box) return;
+  const unlockedCount = ACHIEVEMENTS.filter(a=>state.achievementsUnlocked[a.id]).length;
+  const pct = Math.round((unlockedCount/ACHIEVEMENTS.length)*100);
+  const badges = ACHIEVEMENTS.map(a=>{
+    const unlockedDate = state.achievementsUnlocked[a.id];
+    return `<div class="gbd-ach-badge ${unlockedDate?'':'locked'}" title="${escHtml(a.desc)}">
+      <div class="gbd-ach-emoji">${a.emoji}</div>
+      <div class="gbd-ach-name">${escHtml(a.name)}</div>
+    </div>`;
+  }).join('');
+  box.innerHTML = `
+    <div class="gbd-ach-overview">
+      <div class="gbd-ach-count">${unlockedCount} / ${ACHIEVEMENTS.length} unlocked</div>
+      <div class="gb-progress-track"><div class="gb-progress-fill" style="width:${pct}%;background:var(--gradient-accent)"></div></div>
+    </div>
+    <div class="gbd-ach-grid">${badges}</div>
+  `;
+}
+
+function renderGetBetterDashboard(){
+  const dateLine = document.getElementById('gbdDateLine');
+  if(dateLine) dateLine.textContent = new Date().toLocaleDateString(undefined, {weekday:'long', month:'long', day:'numeric'});
+  renderStatStrip();
+  renderGoalsHabits();
+  renderRoutines();
+  renderWeeklyInsights();
+  renderAchievementProgress();
+}
+// Lighter refresh for goal/habit edits: only the two things a goal/habit change
+// can actually affect (the Goals & Habits list itself, and today's progress/XP/
+// streak in the stat strip). Skips re-rendering Routines, Weekly Insights, and
+// the Achievement grid, which is what made every Save feel laggy once a user
+// had a lot of goals, habits, and routines on screen at once.
+function renderGetBetterQuick(){
+  renderStatStrip();
+  renderGoalsHabits();
+}
+
+(function setupGbdToggle(){
+  const btnRoutines = document.getElementById('gbdToggleRoutines');
+  const btnGoals = document.getElementById('gbdToggleGoals');
+  const btnHome = document.getElementById('gbdHomeBtn');
+  const goalsSection = document.getElementById('gbdGoalsHabitsSection');
+  const routinesSection = document.getElementById('gbdRoutinesSection');
+  const homeOnlyEls = document.querySelectorAll('.gbd-home-only');
+  if(!btnRoutines || !btnGoals || !btnHome || !goalsSection || !routinesSection) return;
+  function setMode(mode){ // 'home' | 'routine' | 'goals'
+    goalsSection.style.display = (mode==='home' || mode==='goals') ? '' : 'none';
+    routinesSection.style.display = (mode==='home' || mode==='routine') ? '' : 'none';
+    homeOnlyEls.forEach(el=>{ el.style.display = mode==='home' ? '' : 'none'; });
+    [btnHome, btnRoutines, btnGoals].forEach(b=>{ b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+    const activeBtn = mode==='home' ? btnHome : mode==='routine' ? btnRoutines : btnGoals;
+    activeBtn.classList.add('active');
+    activeBtn.setAttribute('aria-selected','true');
+  }
+  btnHome.addEventListener('click', ()=>setMode('home'));
+  btnRoutines.addEventListener('click', ()=>setMode('routine'));
+  btnGoals.addEventListener('click', ()=>setMode('goals'));
+  window.gbdShowRoutinesTab = ()=>setMode('routine');
+  window.gbdShowGoalsTab = ()=>setMode('goals');
+  window.gbdShowHomeTab = ()=>setMode('home');
+  setMode('home');
+})();
 
 /* ================= PREMIUM UI SYSTEM ================= */
 
@@ -4537,20 +4943,17 @@ function showTextRevealModal(desc, text){
       } else if(kind==='habit'){
         const gbBtn = document.querySelector('.bn-item[data-view="getbetter"]');
         if(gbBtn) gbBtn.click();
-        const tab = document.querySelector('.gb-tab[data-gb="habits"]');
-        if(tab) tab.click();
+        if(window.gbdShowGoalsTab) window.gbdShowGoalsTab();
         setTimeout(()=>{ const b = document.getElementById('addHabitBtn'); if(b) b.click(); }, 0);
       } else if(kind==='goal'){
         const gbBtn = document.querySelector('.bn-item[data-view="getbetter"]');
         if(gbBtn) gbBtn.click();
-        const tab = document.querySelector('.gb-tab[data-gb="goals"]');
-        if(tab) tab.click();
+        if(window.gbdShowGoalsTab) window.gbdShowGoalsTab();
         setTimeout(()=>{ const b = document.getElementById('addGoalBtn'); if(b) b.click(); }, 0);
       } else if(kind==='routine'){
         const gbBtn = document.querySelector('.bn-item[data-view="getbetter"]');
         if(gbBtn) gbBtn.click();
-        const tab = document.querySelector('.gb-tab[data-gb="routines"]');
-        if(tab) tab.click();
+        if(window.gbdShowRoutinesTab) window.gbdShowRoutinesTab();
         setTimeout(()=>{ const b = document.getElementById('addRoutineBtn'); if(b) b.click(); }, 0);
       } else if(kind==='note'){
         openNoteModal();
