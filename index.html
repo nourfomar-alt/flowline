@@ -104,8 +104,7 @@
 
   /* ---------- LOGO ---------- */
   .flow-logo-row{display:flex;align-items:center;gap:10px;}
-  .flow-logo{width:30px;height:30px;flex-shrink:0;filter:drop-shadow(0 4px 14px rgba(139,92,246,0.45));animation:logoGlow 4s ease-in-out infinite;}
-  @keyframes logoGlow{0%,100%{filter:drop-shadow(0 4px 14px rgba(139,92,246,0.35));}50%{filter:drop-shadow(0 4px 22px rgba(6,182,212,0.55));}}
+  .flow-logo{width:30px;height:30px;flex-shrink:0;filter:drop-shadow(0 4px 14px rgba(139,92,246,0.4));}
   .flow-wordmark{font-weight:800;font-size:20px;letter-spacing:-0.01em;background:var(--gradient-accent);-webkit-background-clip:text;background-clip:text;color:transparent;}
 
   header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:14px;}
@@ -650,14 +649,24 @@
 
   .gbd-ach-overview{background:var(--surface-solid, var(--surface));border:1px solid var(--line);border-radius:16px;padding:16px 18px;box-shadow:var(--shadow);margin-bottom:14px;}
   .gbd-ach-count{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:8px;}
-  .gbd-ach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;}
-  .gbd-ach-badge{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px 8px;text-align:center;box-shadow:var(--shadow);transition:transform .2s ease;}
+  .gbd-ach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;}
+  .gbd-ach-badge{background:var(--surface-solid, var(--surface));border:1px solid var(--line);border-radius:16px;padding:16px 14px;text-align:center;box-shadow:var(--shadow);transition:transform .2s ease;}
   .gbd-ach-badge:hover{transform:translateY(-2px);}
-  .gbd-ach-badge.locked{opacity:.4;filter:grayscale(1);}
-  .gbd-ach-emoji{font-size:26px;margin-bottom:6px;}
-  .gbd-ach-name{font-size:10.5px;font-weight:700;color:var(--ink);line-height:1.3;}
+  .gbd-ach-badge.locked{opacity:.55;}
+  .gbd-ach-badge.locked .gbd-ach-emoji{filter:grayscale(1);opacity:.6;}
+  .gbd-ach-badge:not(.locked){border-color:rgba(99,102,241,0.35);box-shadow:0 8px 22px rgba(99,102,241,0.16);}
+  .gbd-ach-emoji{font-size:30px;margin-bottom:8px;}
+  .gbd-ach-name{font-size:12.5px;font-weight:800;color:var(--ink);line-height:1.3;margin-bottom:4px;}
+  .gbd-ach-desc{font-size:10.5px;color:var(--ink-soft);line-height:1.4;min-height:28px;}
+  .gbd-ach-date{font-size:9.5px;font-weight:700;color:var(--indigo);margin-top:8px;text-transform:uppercase;letter-spacing:.03em;}
+  .gbd-ach-date.locked-tag{color:var(--ink-soft);}
 
   @media (max-width:640px){
+    .gbd-view-switch{gap:8px;}
+    .gbd-toggle{gap:2px;padding:3px;}
+    .gbd-toggle-btn{padding:8px 11px;font-size:12.5px;}
+    .gbd-home-btn{width:36px;height:36px;}
+    .gbd-home-btn svg{width:16px;height:16px;}
     .gbd-stat-strip{grid-template-columns:repeat(2,1fr);gap:10px;}
     .gbd-stat-progress{grid-column:1/-1;}
     .gbd-stat-card{padding:14px;gap:10px;}
@@ -891,8 +900,8 @@
   /* ---------- SPLASH ---------- */
   #splashScreen{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;background:#0B1020;transition:opacity .5s ease, visibility .5s ease;}
   #splashScreen.hide{opacity:0;visibility:hidden;pointer-events:none;}
-  #splashScreen .splash-logo{width:84px;height:84px;animation:splashPulse 1.8s ease-in-out infinite;}
-  @keyframes splashPulse{0%,100%{filter:drop-shadow(0 0 16px rgba(139,92,246,0.55));transform:scale(1);}50%{filter:drop-shadow(0 0 32px rgba(6,182,212,0.7));transform:scale(1.05);}}
+  #splashScreen .splash-logo{width:84px;height:84px;filter:drop-shadow(0 0 22px rgba(139,92,246,0.6));animation:splashPulse 1.8s ease-in-out infinite;}
+  @keyframes splashPulse{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.06);opacity:.85;}}
   #splashScreen .splash-word{font-family:'Inter',sans-serif;font-weight:800;font-size:22px;letter-spacing:.08em;background:var(--gradient-accent);-webkit-background-clip:text;background-clip:text;color:transparent;}
 
   /* ---------- SIDEBAR (desktop) — premium floating glass ---------- */
@@ -1326,7 +1335,8 @@
   <div class="gbd-view-switch">
     <div class="gbd-toggle" id="gbdToggle" role="tablist">
       <button class="gbd-toggle-btn" id="gbdToggleRoutines" type="button" role="tab" aria-selected="false">Routine</button>
-      <button class="gbd-toggle-btn" id="gbdToggleGoals" type="button" role="tab" aria-selected="false">Growth</button>
+      <button class="gbd-toggle-btn" id="gbdToggleGoals" type="button" role="tab" aria-selected="false">Goals</button>
+      <button class="gbd-toggle-btn" id="gbdToggleAwards" type="button" role="tab" aria-selected="false">Awards</button>
     </div>
     <button class="gbd-home-btn" id="gbdHomeBtn" type="button" role="tab" aria-selected="true" title="See everything">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
@@ -1339,7 +1349,7 @@
   <!-- Goals & Habits: separate sub-tabs -->
   <section class="gbd-section" id="gbdGoalsHabitsSection">
     <div class="gbd-section-head">
-      <h2>Growth</h2>
+      <h2>Goals</h2>
       <div class="gbd-head-actions">
         <button class="gbd-btn-ghost" id="addHabitBtn" type="button">+ Habit</button>
         <button class="gbd-btn-primary" id="addGoalBtn" type="button">+ Goal</button>
@@ -1382,9 +1392,9 @@
   </section>
 
   <!-- Achievement Progress -->
-  <section class="gbd-section gbd-section-last gbd-home-only">
+  <section class="gbd-section gbd-section-last" id="gbdAwardsSection" style="display:none;">
     <div class="gbd-section-head">
-      <h2>Achievement Progress</h2>
+      <h2>Awards</h2>
     </div>
     <div id="achievementProgressContent"></div>
   </section>
@@ -2490,7 +2500,8 @@ function renderChecklist(){
     cb.addEventListener('change', e=>{
       const ev = state.events.find(x=>x.id===e.target.dataset.id);
       ev.done = e.target.checked;
-      if(ev.done) logCompletion('event', catById(ev.cat).name, timeToMin(ev.end)-timeToMin(ev.start));
+      if(ev.done) logCompletion('event', catById(ev.cat).name, timeToMin(ev.end)-timeToMin(ev.start), ev.id);
+      else unlogCompletion('event', ev.id, isoToday());
       saveState();
       renderAll();
       checkAchievements();
@@ -2769,7 +2780,8 @@ function renderDayPanel(){
       const ev = state.events.find(x=>x.id===el.dataset.id);
       if(!ev) return;
       ev.done = !ev.done;
-      if(ev.done) logCompletion('event', catById(ev.cat).name, timeToMin(ev.end)-timeToMin(ev.start));
+      if(ev.done) logCompletion('event', catById(ev.cat).name, timeToMin(ev.end)-timeToMin(ev.start), ev.id);
+      else unlogCompletion('event', ev.id, isoToday());
       saveState(); renderAll(); checkAchievements(); renderDayPanel();
     });
   });
@@ -2795,8 +2807,8 @@ function renderDayPanel(){
       if(!h) return;
       const hIso = el.dataset.iso;
       if(!state.habitLog[h.id]) state.habitLog[h.id] = {};
-      if(state.habitLog[h.id][hIso]){ delete state.habitLog[h.id][hIso]; }
-      else { state.habitLog[h.id][hIso] = true; logCompletion('habit', h.title, 0); }
+      if(state.habitLog[h.id][hIso]){ delete state.habitLog[h.id][hIso]; unlogCompletion('habit', h.id, hIso); }
+      else { state.habitLog[h.id][hIso] = true; logCompletion('habit', h.title, 0, h.id); }
       saveState(); checkAchievements(); renderDayPanel();
     });
   });
@@ -3545,6 +3557,10 @@ document.querySelectorAll('.bn-item').forEach(btn=>{
     const view = btn.dataset.view;
     document.getElementById('plannerView').style.display = view==='planner' ? 'block' : 'none';
     document.getElementById('getBetterView').style.display = view==='getbetter' ? 'block' : 'none';
+    // Both views share one page scroll (they're just display:none toggled), so without
+    // this a scrolled-down view left the OTHER view mid-scroll the next time it's shown —
+    // landing you in the middle of the page instead of the top. Always start fresh.
+    window.scrollTo(0, 0);
     if(view==='getbetter') renderGetBetter();
   });
 });
@@ -3720,9 +3736,21 @@ const GBD_ICON_SPARKLE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentCo
 function isoToday(){ return formatDateISO(new Date()); }
 function isoDaysAgo(n){ return formatDateISO(addDays(new Date(), -n)); }
 
-function logCompletion(type, catName, minutes){
-  state.completionLog.push({date: isoToday(), type, cat: catName||'', minutes: minutes||0});
+function logCompletion(type, catName, minutes, refId){
+  state.completionLog.push({date: isoToday(), type, cat: catName||'', minutes: minutes||0, refId: refId||null});
   if(state.completionLog.length > 5000) state.completionLog = state.completionLog.slice(-5000);
+}
+// Removes the most recent logged completion for a given type+item+day — used when a
+// habit/routine step is un-checked, so toggling done → undone → done repeatedly can't
+// inflate XP. Only removes one matching entry (the one the un-check corresponds to).
+function unlogCompletion(type, refId, date){
+  for(let i=state.completionLog.length-1; i>=0; i--){
+    const e = state.completionLog[i];
+    if(e.type===type && e.refId===refId && e.date===(date||isoToday())){
+      state.completionLog.splice(i,1);
+      return;
+    }
+  }
 }
 
 /* ---------- shared small UI builders ---------- */
@@ -3957,8 +3985,8 @@ function renderHabits(){
       const h = state.habits.find(x=>x.id===b.dataset.id);
       if(!state.habitLog[h.id]) state.habitLog[h.id] = {};
       const iso = isoToday();
-      if(state.habitLog[h.id][iso]){ delete state.habitLog[h.id][iso]; }
-      else { state.habitLog[h.id][iso] = true; logCompletion('habit', h.title, 0); }
+      if(state.habitLog[h.id][iso]){ delete state.habitLog[h.id][iso]; unlogCompletion('habit', h.id, iso); }
+      else { state.habitLog[h.id][iso] = true; logCompletion('habit', h.title, 0, h.id); }
       saveState(); renderHabits(); checkAchievements();
     });
   });
@@ -4273,7 +4301,8 @@ function renderSteps(r){
     cb.addEventListener('change', ()=>{
       cb.closest('.gb-step').classList.toggle('done', cb.checked);
       setStepDone(cb.dataset.routine, cb.dataset.step, isoToday(), cb.checked);
-      if(cb.checked) logCompletion('routine', r.title, 5);
+      if(cb.checked) logCompletion('routine', r.title, 5, r.id+':'+cb.dataset.step);
+      else unlogCompletion('routine', r.id+':'+cb.dataset.step, isoToday());
       saveState();
       renderRoutines();
       if(typeof renderStatStrip==='function') renderStatStrip();
@@ -4613,13 +4642,33 @@ function renderStreaks(){
 
 /* ================= ACHIEVEMENTS ================= */
 const ACHIEVEMENTS = [
-  {id:'first_goal', emoji:'🥇', name:'First Goal Completed', desc:'Complete your first goal', check: ()=> state.goals.some(g=>g.completed)},
+  {id:'first_goal', emoji:'🥇', name:'First Goal', desc:'Complete your first goal', check: ()=> state.goals.some(g=>g.completed)},
+  {id:'goal_5', emoji:'🎯', name:'Goal Getter', desc:'Complete 5 goals in total', check: ()=> state.goals.filter(g=>g.completed).length>=5},
+  {id:'goal_10', emoji:'🏅', name:'Goal Crusher', desc:'Complete 10 goals in total', check: ()=> state.goals.filter(g=>g.completed).length>=10},
+  {id:'first_habit', emoji:'✅', name:'Habit Starter', desc:'Create your first habit', check: ()=> state.habits.length>=1},
+  {id:'habit_5', emoji:'🌱', name:'Growing Strong', desc:'Track 5 habits at the same time', check: ()=> state.habits.length>=5},
   {id:'streak7', emoji:'🔥', name:'7 Day Streak', desc:'Complete every task 7 days in a row', check: ()=> (state.stats.streak||0)>=7},
   {id:'streak30', emoji:'⚡', name:'30 Day Streak', desc:'Complete every task 30 days in a row', check: ()=> (state.stats.streak||0)>=30},
+  {id:'streak100', emoji:'💎', name:'Unstoppable', desc:'Complete every task 100 days in a row', check: ()=> (state.stats.streak||0)>=100},
+  {id:'habit_streak21', emoji:'🌟', name:'21 Days Strong', desc:'Take any single habit to a 21-day streak', check: ()=> state.habits.some(h=>computeHabitStreaks(h).current>=21)},
+  {id:'habit_streak50', emoji:'🚀', name:'Habit Master', desc:'Take any single habit to a 50-day streak', check: ()=> state.habits.some(h=>computeHabitStreaks(h).current>=50)},
+  {id:'first_routine', emoji:'☀️', name:'Routine Starter', desc:'Create your first routine', check: ()=> state.routines.length>=1},
+  {id:'routine_5', emoji:'🧭', name:'Well Organized', desc:'Create 5 routines', check: ()=> state.routines.length>=5},
+  {id:'routine_steps100', emoji:'🪜', name:'Step by Step', desc:'Complete 100 routine steps in total', check: ()=> state.completionLog.filter(e=>e.type==='routine').length>=100},
+  {id:'level_5', emoji:'🎮', name:'Level 5', desc:'Reach Level 5', check: ()=> gbdXP().level>=5},
+  {id:'level_10', emoji:'🌌', name:'Level 10', desc:'Reach Level 10', check: ()=> gbdXP().level>=10},
+  {id:'xp_2000', emoji:'💰', name:'XP Collector', desc:'Earn 2,000 total XP', check: ()=> gbdXP().xp>=2000},
   {id:'study100', emoji:'📚', name:'100 Study Hours', desc:'Log 100 hours in a Study category', check: ()=> studyHoursTotal()>=100},
+  {id:'study500', emoji:'🎓', name:'Scholar', desc:'Log 500 hours in a Study category', check: ()=> studyHoursTotal()>=500},
   {id:'workout50', emoji:'🏋️', name:'50 Workouts', desc:'Check off a "workout" habit 50 times', check: ()=> state.habits.filter(h=>h.title.toLowerCase().includes('workout')).reduce((sum,h)=>sum+Object.keys(state.habitLog[h.id]||{}).length,0)>=50},
+  {id:'active7', emoji:'🌤️', name:'Getting Started', desc:'Have activity logged on 7 different days', check: ()=> new Set(state.completionLog.map(e=>e.date)).size>=7},
+  {id:'active30', emoji:'🗓️', name:'One Month In', desc:'Have activity logged on 30 different days', check: ()=> new Set(state.completionLog.map(e=>e.date)).size>=30},
   {id:'active365', emoji:'📅', name:'365 Days Active', desc:'Have activity logged on 365 different days', check: ()=> new Set(state.completionLog.map(e=>e.date)).size>=365},
   {id:'productivity_master', emoji:'🏆', name:'Productivity Master', desc:'Average 90%+ completion over 30 days', check: ()=> averageCompletionRate()>=90},
+  {id:'perfect_day', emoji:'💯', name:'Perfect Day', desc:"Hit 100% of today's progress", check: ()=> (typeof gbdTodayProgress==='function') && gbdTodayProgress().total>0 && gbdTodayProgress().pct>=100},
+  {id:'early_bird', emoji:'🌅', name:'Early Bird', desc:'Complete an event that starts before 7 AM', check: ()=> state.events.some(e=>e.done && e.start && e.start<'07:00')},
+  {id:'night_owl', emoji:'🌙', name:'Night Owl', desc:'Complete an event that starts after 9 PM', check: ()=> state.events.some(e=>e.done && e.start && e.start>='21:00')},
+  {id:'all_rounder', emoji:'🧩', name:'All-Rounder', desc:'Have a goal, a habit, and a routine going at once', check: ()=> state.goals.length>=1 && state.habits.length>=1 && state.routines.length>=1},
 ];
 function checkAchievements(){
   let anyNew = false;
@@ -4899,12 +4948,13 @@ function renderHabitsOnly(){
       const willBeDone = !state.habitLog[h.id][iso];
       if(willBeDone){
         state.habitLog[h.id][iso] = true;
-        logCompletion('habit', h.title, 0);
+        logCompletion('habit', h.title, 0, h.id);
         b.classList.add('pop','done');
         b.textContent = '\u2713';
         setTimeout(()=>{ saveState(); renderGoalsHabits(); renderStatStrip(); checkAchievements(); }, 260);
       } else {
         delete state.habitLog[h.id][iso];
+        unlogCompletion('habit', h.id, iso);
         saveState(); renderGoalsHabits(); renderStatStrip(); checkAchievements();
       }
     });
@@ -4972,8 +5022,8 @@ function openGoalDetail(g){
       const h = state.habits.find(x=>x.id===b.dataset.id);
       if(!state.habitLog[h.id]) state.habitLog[h.id] = {};
       const iso = isoToday();
-      if(state.habitLog[h.id][iso]){ delete state.habitLog[h.id][iso]; }
-      else { state.habitLog[h.id][iso] = true; logCompletion('habit', h.title, 0); }
+      if(state.habitLog[h.id][iso]){ delete state.habitLog[h.id][iso]; unlogCompletion('habit', h.id, iso); }
+      else { state.habitLog[h.id][iso] = true; logCompletion('habit', h.title, 0, h.id); }
       saveState(); renderGoalsHabits(); renderStatStrip(); checkAchievements();
       openGoalDetail(state.goals.find(x=>x.id===g.id));
     });
@@ -5045,8 +5095,8 @@ function openHabitDetail(h){
   if(toggleBtn && !toggleBtn.disabled) toggleBtn.addEventListener('click', ()=>{
     if(!state.habitLog[h.id]) state.habitLog[h.id] = {};
     const iso = isoToday();
-    if(state.habitLog[h.id][iso]){ delete state.habitLog[h.id][iso]; }
-    else { state.habitLog[h.id][iso] = true; logCompletion('habit', h.title, 0); }
+    if(state.habitLog[h.id][iso]){ delete state.habitLog[h.id][iso]; unlogCompletion('habit', h.id, iso); }
+    else { state.habitLog[h.id][iso] = true; logCompletion('habit', h.title, 0, h.id); }
     saveState(); renderGoalsHabits(); renderStatStrip(); checkAchievements();
     openHabitDetail(h);
   });
@@ -5086,9 +5136,11 @@ function renderAchievementProgress(){
   const pct = Math.round((unlockedCount/ACHIEVEMENTS.length)*100);
   const badges = ACHIEVEMENTS.map(a=>{
     const unlockedDate = state.achievementsUnlocked[a.id];
-    return `<div class="gbd-ach-badge ${unlockedDate?'':'locked'}" title="${escHtml(a.desc)}">
+    return `<div class="gbd-ach-badge ${unlockedDate?'':'locked'}">
       <div class="gbd-ach-emoji">${a.emoji}</div>
       <div class="gbd-ach-name">${escHtml(a.name)}</div>
+      <div class="gbd-ach-desc">${escHtml(a.desc)}</div>
+      ${unlockedDate ? `<div class="gbd-ach-date">Unlocked ${new Date(unlockedDate+'T00:00:00').toLocaleDateString(undefined,{month:'short',day:'numeric'})}</div>` : '<div class="gbd-ach-date locked-tag">Locked</div>'}
     </div>`;
   }).join('');
   box.innerHTML = `
@@ -5122,26 +5174,32 @@ function renderGetBetterQuick(){
 (function setupGbdToggle(){
   const btnRoutines = document.getElementById('gbdToggleRoutines');
   const btnGoals = document.getElementById('gbdToggleGoals');
+  const btnAwards = document.getElementById('gbdToggleAwards');
   const btnHome = document.getElementById('gbdHomeBtn');
   const goalsSection = document.getElementById('gbdGoalsHabitsSection');
   const routinesSection = document.getElementById('gbdRoutinesSection');
+  const awardsSection = document.getElementById('gbdAwardsSection');
   const homeOnlyEls = document.querySelectorAll('.gbd-home-only');
-  if(!btnRoutines || !btnGoals || !btnHome || !goalsSection || !routinesSection) return;
-  function setMode(mode){ // 'home' | 'routine' | 'goals'
+  if(!btnRoutines || !btnGoals || !btnAwards || !btnHome || !goalsSection || !routinesSection || !awardsSection) return;
+  function setMode(mode){ // 'home' | 'routine' | 'goals' | 'awards'
     goalsSection.style.display = (mode==='home' || mode==='goals') ? '' : 'none';
     routinesSection.style.display = (mode==='home' || mode==='routine') ? '' : 'none';
+    awardsSection.style.display = mode==='awards' ? '' : 'none';
     homeOnlyEls.forEach(el=>{ el.style.display = mode==='home' ? '' : 'none'; });
-    [btnHome, btnRoutines, btnGoals].forEach(b=>{ b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
-    const activeBtn = mode==='home' ? btnHome : mode==='routine' ? btnRoutines : btnGoals;
+    [btnHome, btnRoutines, btnGoals, btnAwards].forEach(b=>{ b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+    const activeBtn = mode==='home' ? btnHome : mode==='routine' ? btnRoutines : mode==='awards' ? btnAwards : btnGoals;
     activeBtn.classList.add('active');
     activeBtn.setAttribute('aria-selected','true');
+    if(mode==='awards' && typeof renderAchievementProgress==='function') renderAchievementProgress();
   }
   btnHome.addEventListener('click', ()=>setMode('home'));
   btnRoutines.addEventListener('click', ()=>setMode('routine'));
   btnGoals.addEventListener('click', ()=>setMode('goals'));
+  btnAwards.addEventListener('click', ()=>setMode('awards'));
   window.gbdShowRoutinesTab = ()=>setMode('routine');
   window.gbdShowGoalsTab = ()=>setMode('goals');
   window.gbdShowHomeTab = ()=>setMode('home');
+  window.gbdShowAwardsTab = ()=>setMode('awards');
   setMode('home');
 
   // Goals / Habits sub-tabs, nested inside the Growth section
