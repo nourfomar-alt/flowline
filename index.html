@@ -563,6 +563,8 @@
   .gbd-subtoggle{display:inline-flex;gap:4px;padding:3px;background:var(--bg-elev);border:1px solid var(--line);border-radius:12px;margin-bottom:16px;}
   .gbd-subtoggle-btn{border:none;background:transparent;color:var(--ink-soft);font-family:'Inter',sans-serif;font-weight:700;font-size:12.5px;padding:7px 16px;border-radius:9px;cursor:pointer;transition:background .18s ease,color .18s ease;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
   .gbd-subtoggle-btn.active{background:var(--surface);color:var(--ink);box-shadow:var(--shadow);}
+  .gbd-daybound-row{display:flex;align-items:center;gap:8px;margin-bottom:14px;font-size:12px;color:var(--ink-soft);font-weight:600;}
+  .gbd-daybound-row select{padding:6px 10px;border-radius:9px;border:1px solid var(--line);font-family:inherit;font-size:12px;font-weight:700;background:var(--surface);color:var(--ink);cursor:pointer;}
   .gbd-toggle-btn:active{transform:scale(.96);}
 
   .gbd-stat-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:28px;}
@@ -742,6 +744,9 @@
   .bell-btn.active{opacity:1;filter:drop-shadow(0 0 5px var(--purple));}
   .bell-btn:active{transform:scale(0.85);}
   .modal-titlebar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+  .ev-more-toggle{display:flex;align-items:center;gap:5px;background:transparent;border:none;color:var(--indigo);font-family:inherit;font-weight:700;font-size:13px;padding:8px 2px;cursor:pointer;margin-bottom:4px;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+  .ev-more-toggle span{transition:transform .2s ease;display:inline-block;}
+  .ev-more-toggle.open span{transform:rotate(180deg);}
   .modal-titlebar h3{margin:0 !important;}
 
   /* ---------- DAY PANEL (expanded day view) ---------- */
@@ -1380,6 +1385,17 @@
         <option value="days">Sort: Most days</option>
       </select>
     </div>
+    <div class="gbd-daybound-row">
+      <span>Day resets at</span>
+      <select id="routineDayResetSelect">
+        <option value="0">12:00 AM</option>
+        <option value="1">1:00 AM</option>
+        <option value="2">2:00 AM</option>
+        <option value="3">3:00 AM</option>
+        <option value="4">4:00 AM</option>
+        <option value="5">5:00 AM</option>
+      </select>
+    </div>
     <div id="routinesList" class="gbd-routine-list"></div>
   </section>
 
@@ -1422,10 +1438,6 @@
       <label>Category</label>
       <select id="evCat"></select>
     </div>
-    <div class="field">
-      <label><input type="checkbox" id="evRepeat" style="width:auto;display:inline-block;vertical-align:middle;margin-right:6px;">Repeat this every week</label>
-      <div style="font-size:11px;color:var(--ink-soft);margin-top:4px;">Leave unchecked to add it for just this one day. Check it for routines like prayer times or a weekly class.</div>
-    </div>
     <div class="field" id="evDateField">
       <label>Date</label>
       <input type="date" id="evDate">
@@ -1452,16 +1464,23 @@
         <input type="time" id="evEnd" value="10:00">
       </div>
     </div>
-    <div class="field">
-      <label>Notes <span style="font-weight:400;color:var(--ink-soft);">(optional)</span></label>
-      <textarea id="evNotes" rows="2" placeholder="Any details, links, or reminders..." style="width:100%;padding:9px 11px;border-radius:8px;border:1px solid var(--line);font-family:inherit;font-size:14px;resize:vertical;"></textarea>
-    </div>
-    <div class="field">
-      <label><input type="checkbox" id="evGlow" style="width:auto;display:inline-block;vertical-align:middle;margin-right:6px;">Highlight this task</label>
-      <div style="font-size:11px;color:var(--ink-soft);margin-top:4px;">Adds a soft glow so it stands out — good for anything urgent.</div>
-    </div>
-    <div class="field">
-      <label><input type="checkbox" id="evPin" style="width:auto;display:inline-block;vertical-align:middle;margin-right:6px;">Pin to top of checklist</label>
+    <button type="button" class="ev-more-toggle" id="evMoreToggle">More options <span id="evMoreChevron">▾</span></button>
+    <div id="evMoreOptions" style="display:none;">
+      <div class="field">
+        <label><input type="checkbox" id="evRepeat" style="width:auto;display:inline-block;vertical-align:middle;margin-right:6px;">Repeat this every week</label>
+        <div style="font-size:11px;color:var(--ink-soft);margin-top:4px;">Leave unchecked to add it for just this one day. Check it for routines like prayer times or a weekly class.</div>
+      </div>
+      <div class="field">
+        <label>Notes <span style="font-weight:400;color:var(--ink-soft);">(optional)</span></label>
+        <textarea id="evNotes" rows="2" placeholder="Any details, links, or reminders..." style="width:100%;padding:9px 11px;border-radius:8px;border:1px solid var(--line);font-family:inherit;font-size:14px;resize:vertical;"></textarea>
+      </div>
+      <div class="field">
+        <label><input type="checkbox" id="evGlow" style="width:auto;display:inline-block;vertical-align:middle;margin-right:6px;">Highlight this task</label>
+        <div style="font-size:11px;color:var(--ink-soft);margin-top:4px;">Adds a soft glow so it stands out — good for anything urgent.</div>
+      </div>
+      <div class="field">
+        <label><input type="checkbox" id="evPin" style="width:auto;display:inline-block;vertical-align:middle;margin-right:6px;">Pin to top of checklist</label>
+      </div>
     </div>
     <div class="modal-actions">
       <button class="danger" id="deleteBtn" style="display:none;">Delete</button>
@@ -1844,6 +1863,7 @@ function loadState(){
       if(parsed.settings.notifTiming===undefined) parsed.settings.notifTiming = 10;
       if(parsed.settings.notifPromptDismissed===undefined) parsed.settings.notifPromptDismissed = false;
       if(parsed.settings.notifEnabled===undefined) parsed.settings.notifEnabled = true;
+      if(parsed.settings.routineDayResetHour===undefined) parsed.settings.routineDayResetHour = 0;
       return parsed;
     }
   }catch(e){}
@@ -1856,7 +1876,7 @@ function loadState(){
       {id:'school', name:'School', color:'#8B5CF6'},
     ],
     events: [],
-    settings: { startHour: 0, endHour: 24, reminderMinutes: 10, notifTiming: 10, notifPromptDismissed: false, notifEnabled: true },
+    settings: { startHour: 0, endHour: 24, reminderMinutes: 10, notifTiming: 10, notifPromptDismissed: false, notifEnabled: true, routineDayResetHour: 0 },
     stats: { streak: 0, lastStreakDate: null, longestStreak: 0 },
     goals: [], habits: [], routines: [], notes: [],
     habitLog: {}, goalLog: {}, routineStepLog: {},
@@ -3338,8 +3358,21 @@ function openModal(ev, presetDay, presetHour, presetDate){
     document.getElementById('duplicateBtn').style.display = 'none';
   }
   updateRepeatFieldVisibility();
+  setEvMoreOptionsOpen(!!(ev && (ev.repeat || ev.notes || ev.glow || ev.pinned)));
   overlay.classList.add('show');
 }
+function setEvMoreOptionsOpen(open){
+  const box = document.getElementById('evMoreOptions');
+  const toggle = document.getElementById('evMoreToggle');
+  if(!box || !toggle) return;
+  box.style.display = open ? 'block' : 'none';
+  toggle.classList.toggle('open', open);
+  toggle.firstChild.textContent = open ? 'Fewer options ' : 'More options ';
+}
+document.getElementById('evMoreToggle').addEventListener('click', ()=>{
+  const box = document.getElementById('evMoreOptions');
+  setEvMoreOptionsOpen(box.style.display==='none');
+});
 function closeModal(){ document.getElementById('overlay').classList.remove('show'); editingId=null; }
 
 document.getElementById('cancelBtn').addEventListener('click', closeModal);
@@ -3736,6 +3769,18 @@ const GBD_ICON_SPARKLE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentCo
 function isoToday(){ return formatDateISO(new Date()); }
 function isoDaysAgo(n){ return formatDateISO(addDays(new Date(), -n)); }
 
+// Routines default to resetting at midnight, but late-night/early-morning users can push
+// that back (up to 5 AM) so a routine started before bed still counts as the same day
+// instead of quietly rolling over. Only routine due-dates / step-checks use this — events,
+// habits, and everything else keep the normal midnight boundary.
+function routineNow(){
+  const resetHour = state.settings.routineDayResetHour || 0;
+  const d = new Date();
+  if(resetHour>0 && d.getHours()<resetHour) d.setDate(d.getDate()-1);
+  return d;
+}
+function routineTodayISO(){ return formatDateISO(routineNow()); }
+
 function logCompletion(type, catName, minutes, refId){
   state.completionLog.push({date: isoToday(), type, cat: catName||'', minutes: minutes||0, refId: refId||null});
   if(state.completionLog.length > 5000) state.completionLog = state.completionLog.slice(-5000);
@@ -4067,7 +4112,7 @@ function setStepDone(routineId, stepId, iso, val){
 }
 function routineTodayProgress(r){
   if(!r.steps || r.steps.length===0) return {done:0, total:0, pct:0};
-  const iso = isoToday();
+  const iso = routineTodayISO();
   const done = r.steps.filter(s=>stepDoneOn(r.id, s.id, iso)).length;
   return {done, total: r.steps.length, pct: Math.round(done/r.steps.length*100)};
 }
@@ -4184,6 +4229,8 @@ function renderRoutines(){
 
   if(titleEl) titleEl.textContent = routinesManagerMode ? 'Manage Routines' : "Today's Routines";
   if(toggleBtn) toggleBtn.textContent = routinesManagerMode ? '← Back to today' : '⚙ Manage all';
+  const resetSelect = document.getElementById('routineDayResetSelect');
+  if(resetSelect) resetSelect.value = String(state.settings.routineDayResetHour || 0);
   if(managerBar) managerBar.style.display = routinesManagerMode ? 'flex' : 'none';
 
   if(state.routines.length===0){ box.innerHTML = `<div class="gbd-empty">
@@ -4193,7 +4240,7 @@ function renderRoutines(){
   </div>`; return; }
 
   // ---- filter: today-only unless in manager mode ----
-  let list = routinesManagerMode ? state.routines.slice() : state.routines.filter(r=>routineIsDueOnDate(r, new Date()));
+  let list = routinesManagerMode ? state.routines.slice() : state.routines.filter(r=>routineIsDueOnDate(r, routineNow()));
 
   // ---- search (manager mode only) ----
   if(routinesManagerMode){
@@ -4272,11 +4319,17 @@ document.getElementById('routinesManageToggleBtn').addEventListener('click', ()=
 });
 document.getElementById('routineSearchInput').addEventListener('input', ()=>renderRoutines());
 document.getElementById('routineSortSelect').addEventListener('change', ()=>renderRoutines());
+document.getElementById('routineDayResetSelect').addEventListener('change', (e)=>{
+  state.settings.routineDayResetHour = Number(e.target.value);
+  saveState();
+  renderRoutines();
+  if(typeof renderStatStrip==='function') renderStatStrip();
+});
 
 function renderSteps(r){
   const listEl = document.getElementById('steps-'+r.id)?.querySelector('[data-role="stepList"]');
   if(!listEl) return;
-  const iso = isoToday();
+  const iso = routineTodayISO();
   listEl.innerHTML = (r.steps||[]).map((s,i)=>`
     <div class="gb-step" draggable="${IS_TOUCH_DEVICE ? 'false' : 'true'}" data-step="${s.id}">
       ${IS_TOUCH_DEVICE ? '' : '<span class="gb-step-drag">⠿</span>'}
@@ -4300,9 +4353,10 @@ function renderSteps(r){
     if(cb.checked) cb.closest('.gb-step').classList.add('done');
     cb.addEventListener('change', ()=>{
       cb.closest('.gb-step').classList.toggle('done', cb.checked);
-      setStepDone(cb.dataset.routine, cb.dataset.step, isoToday(), cb.checked);
+      const stepIso = routineTodayISO();
+      setStepDone(cb.dataset.routine, cb.dataset.step, stepIso, cb.checked);
       if(cb.checked) logCompletion('routine', r.title, 5, r.id+':'+cb.dataset.step);
-      else unlogCompletion('routine', r.id+':'+cb.dataset.step, isoToday());
+      else unlogCompletion('routine', r.id+':'+cb.dataset.step, stepIso);
       saveState();
       renderRoutines();
       if(typeof renderStatStrip==='function') renderStatStrip();
@@ -4748,15 +4802,17 @@ function gbdXP(){
 function gbdTodayProgress(){
   const dateObj = new Date();
   const iso = isoToday();
+  const routineDate = routineNow();
+  const routineIso = routineTodayISO();
   const evs = state.events.filter(e=>eventOccursOnDate(e, dateObj));
   const dueHabits = state.habits.filter(h=>habitIsDueOnDate(h, dateObj));
-  const dueRoutines = state.routines.filter(r=>routineIsDueOnDate(r, dateObj));
+  const dueRoutines = state.routines.filter(r=>routineIsDueOnDate(r, routineDate));
   let total = evs.length + dueHabits.length;
   let done = evs.filter(e=>e.done).length + dueHabits.filter(h=>habitDoneOn(h, iso)).length;
   dueRoutines.forEach(r=>{
     const steps = r.steps || [];
     total += steps.length;
-    done += steps.filter(s=>stepDoneOn(r.id, s.id, iso)).length;
+    done += steps.filter(s=>stepDoneOn(r.id, s.id, routineIso)).length;
   });
   const pct = total ? Math.round((done/total)*100) : 0;
   return { done, total, pct };
