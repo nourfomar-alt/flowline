@@ -533,12 +533,12 @@
   @media (max-width:979.98px){
     body{padding-top:calc(50px + env(safe-area-inset-top));}
   }
-  @keyframes bnSlideUp{from{opacity:0;}to{opacity:1;}}
+  @keyframes bnSlideUp{from{opacity:0;transform:translate(-50%, 24px) scale(.96);}to{opacity:1;transform:translate(-50%, 0) scale(1);}}
   .bottom-nav{
-    position:fixed; left:50% !important; right:auto !important; margin-left:0 !important; bottom:calc(14px + env(safe-area-inset-bottom)); z-index:60;
-    transform:translateX(-50%) !important;
+    position:fixed; left:50%; bottom:calc(14px + env(safe-area-inset-bottom)); z-index:60;
+    transform:translateX(-50%);
     display:flex; justify-content:center; gap:4px;
-    width:min(420px, calc(100vw - 28px)); max-width:420px; box-sizing:border-box;
+    width:calc(100% - 28px); max-width:420px;
     background:
       linear-gradient(165deg, rgba(255,255,255,0.10), rgba(255,255,255,0.01) 45%),
       var(--surface);
@@ -956,11 +956,14 @@
   .streak-sub-row{display:flex;justify-content:space-between;font-size:12px;padding:7px 0;border-top:1px solid var(--line);font-weight:500;}
 
   /* ---------- SPLASH ---------- */
-  #splashScreen{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;background:#0B1020;transition:opacity .5s ease, visibility .5s ease;}
+  #splashScreen{position:fixed;inset:0;z-index:100000;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;background:#0B1020;transition:opacity .5s ease, visibility .5s ease;}
   #splashScreen.hide{opacity:0;visibility:hidden;pointer-events:none;}
   #splashScreen .splash-logo{width:84px;height:84px;filter:drop-shadow(0 0 22px rgba(139,92,246,0.6));animation:splashPulse 1.8s ease-in-out infinite;}
   @keyframes splashPulse{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.06);opacity:.85;}}
   #splashScreen .splash-word{font-family:'Inter',sans-serif;font-weight:800;font-size:22px;letter-spacing:.08em;background:var(--gradient-accent);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  /* CSS-only failsafe: the splash cannot cover the app forever if JavaScript startup fails. */
+  #splashScreen{animation:flowlineSplashFailsafe .01s linear 4s forwards;}
+  @keyframes flowlineSplashFailsafe{to{opacity:0;visibility:hidden;pointer-events:none;}}
 
   /* ---------- SIDEBAR (desktop) — premium floating glass ---------- */
   @keyframes sbSlideIn{from{opacity:0;transform:translateX(-22px) scale(.98);}to{opacity:1;transform:none;}}
@@ -1071,11 +1074,6 @@
   .app-sidebar.collapsed .sb-focus-info,
   .app-sidebar.collapsed .sb-focus-play{display:none;}
 
-  /* Keep bottom navigation centered in the usable content area as the sidebar opens/closes. */
-  @media (min-width:980px){
-    .bottom-nav{left:calc(50% + 166px) !important; transition:left .4s cubic-bezier(.16,1,.3,1), transform .3s ease;}
-    body.sidebar-collapsed .bottom-nav{left:calc(50% + 70px) !important;}
-  }
   @media (min-width:980px){
     .app-sidebar{display:flex;}
     body{padding-left:332px;padding-bottom:24px;transition:padding-left .4s cubic-bezier(.16,1,.3,1);}
@@ -1221,6 +1219,55 @@
     .skel-block, .dp-card, .toast, .quickadd-menu, .notif-prompt, .daypanel{ animation-duration:.001s !important; transition-duration:.001s !important; }
   }
 </style>
+
+/* Flowline tablet navigation visibility fix */
+<style id="flowline-bottom-nav-visibility-fix">
+/* Hard fix: do not let a stuck splash overlay hide the app. The app can render without this decorative screen. */
+#splashScreen { display:none !important; animation:none !important; opacity:0 !important; visibility:hidden !important; pointer-events:none !important; }
+
+/* Keep the Planner / Get Better switch visible and centered in the usable content area. */
+#bottomNav.bottom-nav {
+  display:flex !important;
+  position:fixed !important;
+  left:50% !important;
+  right:auto !important;
+  bottom:calc(14px + env(safe-area-inset-bottom)) !important;
+  transform:translateX(-50%) !important;
+  transition:left .24s ease, width .24s ease !important;
+  z-index:999 !important;
+  width:min(420px, calc(100% - 28px)) !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  pointer-events:auto !important;
+}
+@media (min-width:980px) {
+  /* 332px is the expanded sidebar's content offset; 140px is the collapsed offset. */
+  #bottomNav.bottom-nav { left:calc((100vw + 332px)/2) !important; }
+  body.sidebar-collapsed #bottomNav.bottom-nav { left:calc((100vw + 140px)/2) !important; }
+}
+@media (max-width:979.98px) {
+  #bottomNav.bottom-nav { left:50% !important; width:min(420px, calc(100% - 28px)) !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #bottomNav.bottom-nav { transition:none !important; }
+}
+
+/* Mobile/tablet overlay scrolling fix: keep tall dialogs scrollable themselves,
+   rather than allowing touch scrolling to pass through to the page behind. */
+html { -webkit-text-size-adjust: 100%; }
+.overlay { overflow-y: auto; overflow-x: hidden; align-items: flex-start; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; touch-action: pan-y; }
+.overlay.show { pointer-events: auto; }
+.overlay .modal { flex: 0 0 auto; max-height: calc(100dvh - 32px); max-height: calc(100vh - 32px); overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; touch-action: pan-y; box-sizing: border-box; margin: auto 0; }
+.overlay .modal input, .overlay .modal select, .overlay .modal textarea, .overlay .modal button { touch-action: manipulation; }
+.settings-modal { width: min(520px, 100%); max-height: calc(100dvh - 24px); max-height: calc(100vh - 24px); overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+.flow-ai-modal { max-height: calc(100dvh - 24px); max-height: calc(100vh - 24px); overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+#daypanel { overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+@media (max-width: 700px), (max-height: 600px) {
+  .overlay { padding: 12px; align-items: flex-start; }
+  .overlay .modal { max-height: calc(100dvh - 24px); max-height: calc(100vh - 24px); padding: 20px; border-radius: 18px; margin: auto 0; }
+  .settings-modal { width: 100%; }
+}
+</style>
 </head>
 <body>
 <div id="splashScreen">
@@ -1245,7 +1292,7 @@
       if (splash && splash.parentNode) splash.parentNode.removeChild(splash);
     }, 600);
   }
-  window.setTimeout(revealFlowline, 2500);
+  window.setTimeout(revealFlowline, 4200);
   window.addEventListener('error', function () { revealFlowline(); });
   window.addEventListener('unhandledrejection', function () { revealFlowline(); });
 })();
@@ -5841,7 +5888,19 @@ if('Notification' in window && Notification.permission==='granted') rescheduleAl
 
 
 /* Refresh active routine elapsed labels without rerendering or saving on every tick. */
-setInterval(()=>{if(!state.routineSessions)return;Object.entries(state.routineSessions).forEach(([id,session])=>{if(!session||!session.active||!session.startedAt)return;const el=document.getElementById('routineElapsed-'+id);if(!el)return;const sec=(session.elapsed||0)+Math.max(0,Math.floor((Date.now()-session.startedAt)/1000));el.textContent=String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0')+' elapsed';});},1000);
+setInterval(()=>{
+  // Background tabs are throttled by browsers; skip DOM work while hidden.
+  if(document.hidden || !state.routineSessions) return;
+  const sessions = state.routineSessions;
+  for(const id in sessions){
+    const session = sessions[id];
+    if(!session || !session.active || !session.startedAt) continue;
+    const el = document.getElementById('routineElapsed-' + id);
+    if(!el) continue;
+    const sec = (session.elapsed || 0) + Math.max(0, Math.floor((Date.now() - session.startedAt) / 1000));
+    el.textContent = String(Math.floor(sec / 60)).padStart(2, '0') + ':' + String(sec % 60).padStart(2, '0') + ' elapsed';
+  }
+}, 1000);
 
 /* ================= FLOWLINE AI: secure backend + approval-based actions ================= */
 let flowAIPending = null;
