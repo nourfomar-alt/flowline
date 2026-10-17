@@ -1220,8 +1220,8 @@
   }
 </style>
 
-/* Flowline tablet navigation visibility fix */
 <style id="flowline-bottom-nav-visibility-fix">
+/* Flowline tablet navigation visibility fix */
 /* Hard fix: do not let a stuck splash overlay hide the app. The app can render without this decorative screen. */
 #splashScreen { display:none !important; animation:none !important; opacity:0 !important; visibility:hidden !important; pointer-events:none !important; }
 
@@ -1268,6 +1268,45 @@ html { -webkit-text-size-adjust: 100%; }
   .settings-modal { width: 100%; }
 }
 </style>
+
+<style id="flowline-popup-exit-controls">
+/* Popup exit controls: consistent close button and backdrop dismissal on touch devices */
+.overlay .modal{position:relative;}
+.flow-popup-close{position:absolute;top:10px;right:10px;z-index:5;width:40px;height:40px;border:1px solid var(--line);border-radius:12px;background:var(--bg-elev);color:var(--ink);font:700 23px/1 system-ui,sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer;touch-action:manipulation;}
+.flow-popup-close:focus-visible{outline:2px solid var(--purple);outline-offset:2px;}
+.overlay .modal h3:first-child{padding-right:42px;}
+@media(max-width:800px){.overlay{overscroll-behavior:contain}.overlay .modal{max-height:calc(100dvh - 28px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}.flow-popup-close{position:sticky;float:right;top:0;margin-bottom:-40px;}}
+</style>
+
+<style id="flowline-settings-mobile-fix">
+/* Keep the floating app navigation out of the way while a modal is open. */
+body:has(.overlay.show) #bottomNav { display:none !important; }
+/* Settings stays scrollable, with Save/Cancel always reachable at the bottom. */
+#settingsOverlay.show { align-items:flex-start; }
+#settingsOverlay .settings-modal {
+  display:flex; flex-direction:column; gap:0;
+  max-height:calc(100vh - 24px); max-height:calc(100dvh - 24px);
+  padding-bottom:12px;
+}
+#settingsOverlay .settings-modal .modal-actions {
+  position:sticky; bottom:-12px; z-index:3;
+  margin:12px -20px -12px; padding:12px 20px calc(12px + env(safe-area-inset-bottom));
+  background:var(--surface);
+  border-top:1px solid var(--line);
+  box-shadow:0 -8px 18px rgba(20,10,60,.08);
+}
+@media(max-width:800px){
+  #settingsOverlay .settings-modal .modal-actions { margin-left:-20px; margin-right:-20px; }
+}
+
+/* Final mobile settings safety: keep action buttons visible and above the app navigation. */
+@media(max-width:800px){
+  #settingsOverlay{align-items:flex-start;padding:12px 10px calc(18px + env(safe-area-inset-bottom));}
+  #settingsOverlay .settings-modal{width:100%;max-height:calc(100dvh - 24px - env(safe-area-inset-bottom));overflow-y:auto;padding-bottom:calc(18px + env(safe-area-inset-bottom));}
+  #settingsOverlay .modal-actions{position:sticky;bottom:calc(-1 * (18px + env(safe-area-inset-bottom)));background:var(--bg-elev);padding:12px 0 calc(10px + env(safe-area-inset-bottom));margin-top:12px;border-top:1px solid var(--line);z-index:3;}
+}
+</style>
+
 </head>
 <body>
 <div id="splashScreen">
@@ -1647,7 +1686,7 @@ html { -webkit-text-size-adjust: 100%; }
 <div class="overlay" id="settingsOverlay">
   <div class="modal settings-modal">
     <h3>Settings</h3>
-    <div class="field"><label for="settingsUsername">Your name</label><input type="text" id="settingsUsername" maxlength="40" placeholder="e.g. Noureldien"></div>
+    <div class="field"><label for="settingsUsername">Username</label><input type="text" id="settingsUsername" maxlength="40" autocomplete="nickname" placeholder="e.g. Nour"><div style="font-size:11px;color:var(--ink-soft);margin-top:4px;">Used in your daily greeting, like “Good Morning, Nour”.</div></div>
     <div class="field"><label for="settingsAIEndpoint">AI backend endpoint</label><input type="url" id="settingsAIEndpoint" placeholder="https://flowline-ai.YOUR-SUBDOMAIN.workers.dev"><div style="font-size:11px;color:var(--ink-soft);margin-top:4px;">Optional until you deploy the secure backend. Never paste an API key here.</div></div>
     <div class="row2">
       <div class="field">
@@ -1718,7 +1757,7 @@ html { -webkit-text-size-adjust: 100%; }
     <div class="modal-actions">
       <div style="flex:1"></div>
       <button class="btn btn-ghost" id="settingsCancelBtn" style="margin-right:8px;">Cancel</button>
-      <button class="btn btn-primary" id="settingsSaveBtn">Save</button>
+      <button class="btn btn-primary" id="settingsSaveBtn" type="button" style="min-height:44px;min-width:96px;">Save</button>
     </div>
   </div>
 </div>
@@ -3392,6 +3431,20 @@ function applyAccentColor(color){
 }
 if(state.settings.accentColor) applyAccentColor(state.settings.accentColor);
 
+// Changing the default planner view applies it immediately, not only after reload.
+// The same value is persisted so the selected view is also used on the next visit.
+const defaultViewSelect = document.getElementById('settingsDefaultTab');
+if(defaultViewSelect){
+  defaultViewSelect.addEventListener('change', ()=>{
+    const nextView = defaultViewSelect.value;
+    if(!['today','week','month','year'].includes(nextView)) return;
+    state.settings.defaultTab = nextView;
+    saveState();
+    const tab = document.querySelector('.tab[data-tab="'+nextView+'"]');
+    if(tab) tab.click();
+  });
+}
+
 document.getElementById('settingsBtn').addEventListener('click', ()=>{
   populateHourSelect(document.getElementById('settingsStartHour'), state.settings.startHour);
   populateHourSelect(document.getElementById('settingsEndHour'), state.settings.endHour);
@@ -3433,16 +3486,31 @@ document.getElementById('settingsResetBtn').addEventListener('click', async ()=>
   location.reload();
 });
 document.getElementById('settingsSaveBtn').addEventListener('click', ()=>{
-  const s = Number(document.getElementById('settingsStartHour').value);
-  const e = Number(document.getElementById('settingsEndHour').value);
-  if(e <= s){ showToast('The end time must be after the start time.', 'error'); return; }
-  state.settings.startHour = s;
-  state.settings.endHour = e;
+  const startSelect = document.getElementById('settingsStartHour');
+  const endSelect = document.getElementById('settingsEndHour');
+  const requestedStart = Number(startSelect.value);
+  const requestedEnd = Number(endSelect.value);
+  const hoursValid = Number.isFinite(requestedStart) && Number.isFinite(requestedEnd) && requestedStart >= 0 && requestedEnd <= 24 && requestedEnd > requestedStart;
+
+  // Save independent settings even if the weekly-view hour range is invalid.
+  // Previously one invalid range cancelled every setting, making Settings feel broken.
   state.settings.defaultTab = document.getElementById('settingsDefaultTab').value;
   state.settings.reminderMinutes = Number(document.getElementById('settingsReminderMin').value);
   state.settings.username = document.getElementById('settingsUsername').value.trim().slice(0,40);
   state.settings.aiEndpoint = document.getElementById('settingsAIEndpoint').value.trim();
-  try{ if(state.settings.aiEndpoint && new URL(state.settings.aiEndpoint).protocol!=='https:') throw new Error(); }catch(err){showToast('Enter a valid HTTPS AI backend URL.', 'error');return;}
+  if(state.settings.aiEndpoint){
+    try{
+      const endpoint = new URL(state.settings.aiEndpoint);
+      if(endpoint.protocol !== 'https:') throw new Error('https');
+    }catch(err){
+      showToast('AI backend URL must be a valid HTTPS URL. Clear it if you are not using an AI backend.', 'error', 5000);
+      return;
+    }
+  }
+  if(hoursValid){
+    state.settings.startHour = requestedStart;
+    state.settings.endHour = requestedEnd;
+  }
   state.settings.notificationPrefs = {
     task:document.getElementById('settingsTaskNotif').checked,
     routine:document.getElementById('settingsRoutineNotif').checked,
@@ -3454,18 +3522,33 @@ document.getElementById('settingsSaveBtn').addEventListener('click', ()=>{
   };
   const chosenAccent = document.getElementById('accentSwatches').dataset.selected;
   if(chosenAccent){ state.settings.accentColor = chosenAccent; applyAccentColor(chosenAccent); }
-  saveState();
-  applyHourSettings();
 
   const chosenTheme = document.getElementById('settingsThemeSelect').value;
-  if(chosenTheme !== currentTheme()){
-    document.documentElement.setAttribute('data-theme', chosenTheme);
-    try{ localStorage.setItem('planner_theme', chosenTheme); }catch(err){}
-    applyThemeIcon();
-  }
+  document.documentElement.setAttribute('data-theme', chosenTheme);
+  try{ localStorage.setItem('planner_theme', chosenTheme); }catch(err){}
+  applyThemeIcon();
 
+  const saved = saveState();
+  if(!saved) return;
+  applyHourSettings();
+  const selectedDefaultView = document.querySelector('.tab[data-tab="'+state.settings.defaultTab+'"]');
+  if(selectedDefaultView) selectedDefaultView.click();
   document.getElementById('settingsOverlay').classList.remove('show');
+  renderGreeting();
   renderAll();
+  if(!hoursValid){
+    showToast('Other settings saved. Choose an end time later than the start time to update weekly view hours.', 'info', 5000);
+    return;
+  }
+  showToast('Settings saved.', 'success', 1800);
+});
+
+// Close ordinary modal overlays when tapping the dimmed backdrop (mobile + desktop).
+document.querySelectorAll('.overlay').forEach(overlay=>{
+  if(overlay.id==='confirmOverlay') return;
+  overlay.addEventListener('click', event=>{
+    if(event.target===overlay) overlay.classList.remove('show');
+  });
 });
 
 /* ---------- REMINDER POPOVER ---------- */
@@ -3980,11 +4063,24 @@ function renderAll(){
   renderChecklist();
 }
 renderAll();
-setInterval(renderArc, 60000);
+// Keep the live clock lightweight: one interval, and skip work while the page is hidden.
+setInterval(()=>{ if(!document.hidden) renderArc(); }, 60000);
 renderGreeting();
-if(state.settings.defaultTab && state.settings.defaultTab !== 'week'){
-  const targetTab = document.querySelector('.tab[data-tab="'+state.settings.defaultTab+'"]');
+
+// Apply the saved default view after the planner has finished wiring up its tab handlers.
+// This also tolerates older/corrupt values by falling back to Week.
+function applySavedDefaultView(){
+  const allowedViews = ['week','today','month','year'];
+  const preferredView = state && state.settings && allowedViews.includes(state.settings.defaultTab)
+    ? state.settings.defaultTab : 'week';
+  const targetTab = document.querySelector('.tab[data-tab="'+preferredView+'"]');
   if(targetTab) targetTab.click();
+  positionTabsThumb();
+}
+if(document.readyState === 'complete') {
+  requestAnimationFrame(applySavedDefaultView);
+} else {
+  window.addEventListener('load', ()=>requestAnimationFrame(applySavedDefaultView), {once:true});
 }
 
 /* ======================================================================
@@ -6012,6 +6108,33 @@ document.getElementById('flowAIApply').addEventListener('click',()=>{
 
 /* ================= AI DAILY BRIEFING / ANALYSIS SHORTCUTS ================= */
 window.flowlineAIBriefing=()=>{openFlowAI();flowAIMode='briefing';document.getElementById('flowAIInput').value='Give me a concise daily briefing based on my current plan, deadlines, available time, routines, habits, and focus stats. Include useful recommendations but do not change anything.';};
+
+</script>
+<script>
+
+/* Accessible close controls for standard popup dialogs. Backdrop taps close only when the backdrop itself is tapped. */
+(function initPopupDismissControls(){
+  const init = () => {
+    document.querySelectorAll('.overlay').forEach(overlay => {
+      const modal = overlay.querySelector('.modal');
+      if (!modal || overlay.id === 'confirmOverlay' || modal.querySelector('.flow-popup-close')) return;
+      const close = document.createElement('button');
+      close.type = 'button'; close.className = 'flow-popup-close';
+      close.setAttribute('aria-label', 'Close dialog'); close.title = 'Close'; close.textContent = '×';
+      close.addEventListener('click', () => {
+        overlay.classList.remove('show');
+        if (overlay.id === 'overlay' && typeof closeModal === 'function') closeModal();
+      });
+      modal.insertBefore(close, modal.firstChild);
+      overlay.addEventListener('click', event => {
+        if (event.target !== overlay) return;
+        overlay.classList.remove('show');
+        if (overlay.id === 'overlay' && typeof closeModal === 'function') closeModal();
+      });
+    });
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initPopupDismissControls, {once:true}); else init();
+})();
 
 </script>
 </body>
