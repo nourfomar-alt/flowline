@@ -1307,6 +1307,25 @@ body:has(.overlay.show) #bottomNav { display:none !important; }
 }
 </style>
 
+
+<style id="flowline-mobile-settings-final-fix">
+/* Mobile settings: keep close control anchored to the modal, never in the scroll flow. */
+.flow-popup-close{position:absolute !important;float:none !important;top:10px !important;right:10px !important;margin:0 !important;}
+#settingsOverlay .settings-modal{position:relative;box-sizing:border-box;scroll-padding-bottom:110px;}
+#settingsOverlay .settings-modal > h3:first-child{padding-right:54px;padding-top:4px;}
+@media(max-width:800px){
+  #settingsOverlay{align-items:flex-start;justify-content:center;padding:env(safe-area-inset-top, 8px) 10px calc(10px + env(safe-area-inset-bottom));}
+  #settingsOverlay .settings-modal{width:100%;max-width:560px;max-height:calc(100vh - 20px);max-height:calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px) - 20px);overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y;padding:58px 20px calc(120px + env(safe-area-inset-bottom));}
+  #settingsOverlay .settings-modal .modal-actions{position:sticky;bottom:calc(-1 * (120px + env(safe-area-inset-bottom)));margin:14px -20px calc(-1 * (120px + env(safe-area-inset-bottom)));padding:12px 20px calc(12px + env(safe-area-inset-bottom));background:var(--bg-elev);border-top:1px solid var(--line);box-shadow:0 -8px 18px rgba(20,10,60,.12);}
+  #settingsOverlay .settings-modal .field{margin-bottom:16px;}
+  #settingsOverlay .settings-modal input,#settingsOverlay .settings-modal select,#settingsOverlay .settings-modal button{font-size:16px;}
+  .overlay .modal{scrollbar-width:thin;}
+  /* Avoid expensive animated transitions while scrolling long settings on mobile. */
+  #settingsOverlay *,#settingsOverlay *::before,#settingsOverlay *::after{scroll-behavior:auto !important;}
+}
+@media(prefers-reduced-motion:reduce){.overlay,.overlay .modal{scroll-behavior:auto!important;transition:none!important;animation:none!important;}}
+</style>
+
 </head>
 <body>
 <div id="splashScreen">
@@ -3445,6 +3464,7 @@ if(defaultViewSelect){
   });
 }
 
+
 document.getElementById('settingsBtn').addEventListener('click', ()=>{
   populateHourSelect(document.getElementById('settingsStartHour'), state.settings.startHour);
   populateHourSelect(document.getElementById('settingsEndHour'), state.settings.endHour);
@@ -4063,19 +4083,17 @@ function renderAll(){
   renderChecklist();
 }
 renderAll();
-// Keep the live clock lightweight: one interval, and skip work while the page is hidden.
 setInterval(()=>{ if(!document.hidden) renderArc(); }, 60000);
 renderGreeting();
 
 // Apply the saved default view after the planner has finished wiring up its tab handlers.
-// This also tolerates older/corrupt values by falling back to Week.
 function applySavedDefaultView(){
   const allowedViews = ['week','today','month','year'];
   const preferredView = state && state.settings && allowedViews.includes(state.settings.defaultTab)
     ? state.settings.defaultTab : 'week';
   const targetTab = document.querySelector('.tab[data-tab="'+preferredView+'"]');
   if(targetTab) targetTab.click();
-  positionTabsThumb();
+  if(typeof positionTabsThumb === 'function') positionTabsThumb();
 }
 if(document.readyState === 'complete') {
   requestAnimationFrame(applySavedDefaultView);
