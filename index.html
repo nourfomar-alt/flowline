@@ -236,6 +236,59 @@
   .mini-day.blank{visibility:hidden;}
   @media (max-width:640px){ .year-grid{grid-template-columns:repeat(2,1fr);} }
 
+  /* Flowline AI + Focus workspace */
+  .greeting-ai-btn{margin-top:10px;font-size:11px;padding:7px 11px;}
+  .flow-ai-modal{width:min(760px,calc(100vw - 28px));max-height:min(90vh,900px);overflow:auto;}
+  .flow-ai-modal .modal-titlebar{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
+  .flow-ai-subtitle{font-size:12px;color:var(--ink-soft);line-height:1.5;margin-top:3px;}
+  .flow-ai-prompts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:15px 0;}
+  .flow-ai-prompts button{padding:11px 12px;text-align:left;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;transition:border-color .15s,transform .15s;}
+  .flow-ai-prompts button:hover{border-color:var(--purple);transform:translateY(-1px);}
+  .flow-ai-label{display:block;font-size:12px;font-weight:750;margin-bottom:6px;color:var(--ink);}
+  #flowAIInput,#flowAIProposal{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--bg-elev);color:var(--ink);font:inherit;resize:vertical;}
+  #flowAIInput:focus,#flowAIProposal:focus{outline:2px solid color-mix(in srgb,var(--purple) 45%,transparent);border-color:var(--purple);}
+  .flow-ai-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px;}
+  #flowAIStatus{font-size:11px;color:var(--ink-soft);flex:1;min-width:180px;}
+  .flow-ai-preview-head{display:flex;align-items:center;justify-content:space-between;margin-top:22px;padding-top:16px;border-top:1px solid var(--line);}
+  .flow-ai-badge{font-size:9px;font-weight:850;letter-spacing:.1em;padding:5px 8px;border-radius:7px;background:rgba(99,102,241,.12);color:var(--purple);}
+  .flow-ai-summary{font-size:13px;line-height:1.6;margin:10px 0;color:var(--ink);}
+  .flow-ai-action-cards{display:grid;gap:8px;}
+  .flow-ai-card{border:1px solid var(--line);border-radius:12px;padding:11px 12px;background:var(--surface);}
+  .flow-ai-card strong{display:block;font-size:13px;}
+  .flow-ai-card small{display:block;color:var(--ink-soft);font-size:11px;line-height:1.5;margin-top:4px;}
+  .flow-ai-edit{margin-top:12px;font-size:12px;color:var(--ink-soft);}
+  .flow-ai-edit summary{cursor:pointer;font-weight:700;margin-bottom:8px;}
+  .flow-ai-footer{font-size:10px;color:var(--ink-soft);line-height:1.5;border-top:1px solid var(--line);margin-top:16px;padding-top:12px;}
+  .flow-ai-feedback{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:12px;font-size:10px;color:var(--ink-soft);}
+  .flow-ai-feedback button{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:6px 9px;font:inherit;font-weight:700;cursor:pointer;}
+  .qa-ai-item{color:var(--purple)!important;font-weight:800!important;}
+  .gb-video-meta{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:8px 2px 2px;font-size:11px;color:var(--ink-soft);}
+  .gb-video-meta strong{font-size:12px;color:var(--ink);font-weight:750;max-width:78%;}
+  .routine-session-controls{display:flex;align-items:center;gap:7px;flex-wrap:wrap;padding:9px 0 10px;}
+  .routine-session-controls .gb-small-btn{font-size:10px;padding:6px 9px;}
+  .routineElapsed{font-size:10px;color:var(--ink-soft);font-variant-numeric:tabular-nums;margin-left:auto;}
+  .flow-notif-options{padding:10px 12px;border:1px solid var(--line);border-radius:12px;}
+  .flow-notif-options .switch-row{padding:7px 0;border-bottom:1px solid var(--line);}
+  .flow-notif-options .switch-row:last-of-type{border-bottom:0;}
+  .flow-focus-overlay{position:fixed;inset:0;z-index:1400;background:var(--bg);color:var(--ink);overflow:auto;padding:clamp(16px,4vw,42px);box-sizing:border-box;}
+  .flow-focus-top{display:flex;justify-content:space-between;align-items:center;max-width:1080px;margin:0 auto;}
+  .flow-focus-brand{font-weight:900;letter-spacing:-.04em;font-size:19px;}.flow-focus-brand span{font-size:10px;letter-spacing:.16em;color:var(--purple);margin-left:8px;}
+  .flow-focus-content{max-width:940px;margin:clamp(24px,5vh,55px) auto 0;text-align:center;}
+  .flow-focus-eyebrow,.flow-focus-section-title{font-size:10px;letter-spacing:.15em;font-weight:850;color:var(--ink-soft);}
+  .flow-focus-content h1{font-size:clamp(25px,4vw,42px);letter-spacing:-.04em;margin:12px 0 5px;}
+  .flow-focus-sub{color:var(--ink-soft);font-size:13px;margin:0;}
+  .flow-focus-timer{font-size:clamp(58px,12vw,100px);font-weight:850;letter-spacing:-.06em;font-variant-numeric:tabular-nums;margin:18px 0 0;line-height:1.1;}
+  .flow-focus-elapsed{font-size:12px;color:var(--ink-soft);margin-top:6px;}
+  .flow-focus-controls{display:flex;justify-content:center;gap:9px;margin:19px 0 30px;}
+  .flow-focus-grid{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:12px;text-align:left;}
+  .flow-focus-grid section{border:1px solid var(--line);background:var(--surface);border-radius:15px;padding:16px;min-width:0;}
+  .flow-focus-section-title{margin-bottom:11px;}
+  .flow-focus-task{font-size:15px;font-weight:750;line-height:1.5;}
+  .flow-focus-list{display:grid;gap:7px;}
+  .flow-focus-list-item{font-size:12px;padding:8px 9px;border-radius:9px;background:var(--bg-elev);line-height:1.4;}
+  .flow-focus-note{font-size:10px;color:var(--ink-soft);margin-top:18px;line-height:1.5;}
+  @media(max-width:650px){.flow-ai-prompts{grid-template-columns:1fr}.flow-focus-grid{grid-template-columns:1fr}.flow-ai-modal{padding:18px}.flow-ai-review-actions button{flex:1}.flow-focus-content{margin-top:30px}}
+
   #printArea{display:none;}
   @media print{
     body > *:not(#printArea){display:none !important;}
@@ -480,12 +533,12 @@
   @media (max-width:979.98px){
     body{padding-top:calc(50px + env(safe-area-inset-top));}
   }
-  @keyframes bnSlideUp{from{opacity:0;transform:translate(-50%, 24px) scale(.96);}to{opacity:1;transform:translate(-50%, 0) scale(1);}}
+  @keyframes bnSlideUp{from{opacity:0;}to{opacity:1;}}
   .bottom-nav{
-    position:fixed; left:50%; bottom:calc(14px + env(safe-area-inset-bottom)); z-index:60;
-    transform:translateX(-50%);
+    position:fixed; left:50% !important; right:auto !important; margin-left:0 !important; bottom:calc(14px + env(safe-area-inset-bottom)); z-index:60;
+    transform:translateX(-50%) !important;
     display:flex; justify-content:center; gap:4px;
-    width:calc(100% - 28px); max-width:420px;
+    width:min(420px, calc(100vw - 28px)); max-width:420px; box-sizing:border-box;
     background:
       linear-gradient(165deg, rgba(255,255,255,0.10), rgba(255,255,255,0.01) 45%),
       var(--surface);
@@ -1018,11 +1071,17 @@
   .app-sidebar.collapsed .sb-focus-info,
   .app-sidebar.collapsed .sb-focus-play{display:none;}
 
+  /* Keep bottom navigation centered in the usable content area as the sidebar opens/closes. */
+  @media (min-width:980px){
+    .bottom-nav{left:calc(50% + 166px) !important; transition:left .4s cubic-bezier(.16,1,.3,1), transform .3s ease;}
+    body.sidebar-collapsed .bottom-nav{left:calc(50% + 70px) !important;}
+  }
   @media (min-width:980px){
     .app-sidebar{display:flex;}
     body{padding-left:332px;padding-bottom:24px;transition:padding-left .4s cubic-bezier(.16,1,.3,1);}
     body.sidebar-collapsed{padding-left:140px;}
-    .bottom-nav{display:none;}
+    .bottom-nav{display:flex;}
+    body{padding-bottom:calc(100px + env(safe-area-inset-bottom));}
   }
 
   /* ---------- MOBILE: sidebar becomes a slide-in drawer (adds Focus Mode + branding to phones) ---------- */
@@ -1175,6 +1234,22 @@
   </svg>
   <div class="splash-word">FLOWLINE</div>
 </div>
+<script>
+/* Startup safety watchdog: never leave the splash screen covering the app if a later script fails. */
+(function () {
+  function revealFlowline() {
+    var splash = document.getElementById('splashScreen');
+    if (!splash) return;
+    splash.classList.add('hide');
+    window.setTimeout(function () {
+      if (splash && splash.parentNode) splash.parentNode.removeChild(splash);
+    }, 600);
+  }
+  window.setTimeout(revealFlowline, 2500);
+  window.addEventListener('error', function () { revealFlowline(); });
+  window.addEventListener('unhandledrejection', function () { revealFlowline(); });
+})();
+</script>
 <button class="mobile-menu-btn" id="mobileMenuBtn" title="Open menu" type="button">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
 </button>
@@ -1233,6 +1308,7 @@
     <div class="greeting-text" id="greetingText"></div>
     <div class="greeting-date" id="greetingDate"></div>
     <div class="greeting-quote" id="greetingQuote"></div>
+    <button class="btn btn-ghost greeting-ai-btn" id="dailyBriefingBtn" type="button">✦ AI daily briefing</button>
   </div>
 
   <header>
@@ -1522,8 +1598,10 @@
 <div id="printArea"></div>
 
 <div class="overlay" id="settingsOverlay">
-  <div class="modal">
+  <div class="modal settings-modal">
     <h3>Settings</h3>
+    <div class="field"><label for="settingsUsername">Your name</label><input type="text" id="settingsUsername" maxlength="40" placeholder="e.g. Noureldien"></div>
+    <div class="field"><label for="settingsAIEndpoint">AI backend endpoint</label><input type="url" id="settingsAIEndpoint" placeholder="https://flowline-ai.YOUR-SUBDOMAIN.workers.dev"><div style="font-size:11px;color:var(--ink-soft);margin-top:4px;">Optional until you deploy the secure backend. Never paste an API key here.</div></div>
     <div class="row2">
       <div class="field">
         <label>Show grid from</label>
@@ -1565,6 +1643,16 @@
       </div>
       <div class="switch-status" id="settingsNotifStatus"></div>
     </div>
+    <div class="field flow-notif-options">
+      <div class="switch-row"><label for="settingsTaskNotif">Task reminders</label><label class="switch"><input type="checkbox" id="settingsTaskNotif" checked><span class="switch-track"></span></label></div>
+      <div class="switch-row"><label for="settingsRoutineNotif">Routine reminders</label><label class="switch"><input type="checkbox" id="settingsRoutineNotif" checked><span class="switch-track"></span></label></div>
+      <div class="switch-row"><label for="settingsHabitNotif">Habit reminders</label><label class="switch"><input type="checkbox" id="settingsHabitNotif" checked><span class="switch-track"></span></label></div>
+      <div class="switch-row"><label for="settingsDeadlineNotif">Exam / deadline reminders</label><label class="switch"><input type="checkbox" id="settingsDeadlineNotif" checked><span class="switch-track"></span></label></div>
+      <div class="switch-row"><label for="settingsFocusNotif">Focus reminders</label><label class="switch"><input type="checkbox" id="settingsFocusNotif"><span class="switch-track"></span></label></div>
+      <div class="switch-row"><label for="settingsAINotif">AI recommendations</label><label class="switch"><input type="checkbox" id="settingsAINotif" checked><span class="switch-track"></span></label></div>
+      <div class="switch-row"><label for="settingsBriefingNotif">Daily briefing</label><label class="switch"><input type="checkbox" id="settingsBriefingNotif" checked><span class="switch-track"></span></label></div>
+      <div style="font-size:11px;color:var(--ink-soft);margin-top:6px;">Individual categories are saved as preferences. Browser delivery depends on permission and whether Flowline is open.</div>
+    </div>
     <div class="field">
       <label>Remind me before each task</label>
       <select id="settingsReminderMin">
@@ -1594,9 +1682,12 @@
     <div class="field">
       <label>What do you want to share?</label>
       <select id="shareScope">
-        <option value="day">One specific day</option>
-        <option value="week">This whole week</option>
-        <option value="month">A specific month</option>
+        <option value="day">Daily plan</option>
+        <option value="week">Weekly plan</option>
+        <option value="month">Monthly plan</option>
+        <option value="progress">Progress summary</option>
+        <option value="routines">My routines</option>
+        <option value="achievements">Achievements</option>
       </select>
     </div>
     <div class="field" id="shareDayField">
@@ -1803,6 +1894,7 @@
 <div class="quickadd-backdrop" id="quickAddBackdrop"></div>
 <div class="quickadd-wrap" id="quickAddWrap">
   <div class="quickadd-menu" id="quickAddMenu">
+    <button class="qa-item qa-ai-item" data-qa="ai">✦ <span>AI Assistant</span></button>
     <button class="qa-item" data-qa="note">📝 <span>Note</span></button>
     <button class="qa-item" data-qa="routine">🌤 <span>Routine</span></button>
     <button class="qa-item" data-qa="goal">🎯 <span>Goal</span></button>
@@ -1812,6 +1904,43 @@
   <button class="quickadd-fab" id="quickAddFab" title="Quick add" type="button">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
   </button>
+</div>
+
+<!-- FLOWLINE AI: real-provider integration (requires a configured secure backend endpoint) -->
+<div class="overlay" id="flowAIOverlay" style="z-index:1200;">
+  <div class="modal flow-ai-modal" role="dialog" aria-modal="true" aria-labelledby="flowAITitle">
+    <div class="modal-titlebar"><div><h3 id="flowAITitle">Flowline AI</h3><div class="flow-ai-subtitle">Plan, organize, and improve your day — with your approval.</div></div><button class="btn btn-ghost" id="flowAIClose" type="button" aria-label="Close AI">✕</button></div>
+    <div class="flow-ai-prompts" id="flowAIPrompts">
+      <button type="button" data-mode="create" data-prompt="Plan my day around my existing schedule, priorities, and free time.">📅 Optimize my day</button>
+      <button type="button" data-mode="create" data-prompt="Create a practical upper-body strength routine with suitable measurements for each exercise.">💪 Build a workout</button>
+      <button type="button" data-mode="analysis" data-prompt="Analyze my workload, deadlines, unfinished tasks, routines, and focus time. Suggest improvements without changing anything.">📊 Analyze my Flowline</button>
+      <button type="button" data-mode="briefing" data-prompt="Give me a concise morning briefing based on my plan for today, my priorities, and available time.">☀️ Daily briefing</button>
+      <button type="button" data-mode="habit_support" data-prompt="Help me understand and reduce an unwanted habit. Ask me what the habit is and what tends to trigger it, then suggest compassionate, practical interventions. Include a dua or Islamic reminder only if I request religious support.">🫶 Habit support</button>
+    </div>
+    <label for="flowAIInput" class="flow-ai-label">What do you need help with?</label>
+    <textarea id="flowAIInput" rows="3" placeholder="e.g. I have two exams next week. Make a realistic study plan around my current schedule…"></textarea>
+    <div class="flow-ai-actions"><button class="btn btn-primary" id="flowAIGenerate" type="button">Generate with AI ↗</button><span id="flowAIStatus" role="status">AI is not configured yet.</span></div>
+    <div id="flowAIResultWrap" style="display:none;">
+      <div class="flow-ai-preview-head"><div><strong>Review before applying</strong><div class="flow-ai-subtitle">Nothing changes until you approve it.</div></div><span class="flow-ai-badge">PREVIEW</span></div>
+      <div id="flowAIResultSummary" class="flow-ai-summary"></div>
+      <div id="flowAIActionCards" class="flow-ai-action-cards"></div>
+      <details class="flow-ai-edit"><summary>Edit proposal data</summary><textarea id="flowAIProposal" rows="9" spellcheck="false" aria-label="Editable AI proposal JSON"></textarea><div class="flow-ai-subtitle">Edit the JSON if needed. The proposal is validated before anything is added.</div></details>
+      <div class="flow-ai-actions flow-ai-review-actions"><button class="btn btn-ghost" id="flowAIRegenerate" type="button">↻ Regenerate</button><button class="btn btn-ghost" id="flowAICancelProposal" type="button">Cancel</button><button class="btn btn-primary" id="flowAIApply" type="button">Approve & add to Flowline</button></div>
+      <div class="flow-ai-feedback"><span>Help Flowline improve future suggestions:</span><button type="button" id="flowAIFeedbackYes">👍 Useful</button><button type="button" id="flowAIFeedbackNo">👎 Not useful</button></div>
+    </div>
+    <div class="flow-ai-footer">Your existing Flowline data is sent to the AI backend only when you request an AI action. Do not include highly sensitive information.</div>
+  </div>
+</div>
+
+<!-- Dedicated focus workspace -->
+<div class="flow-focus-overlay" id="flowFocusOverlay" aria-modal="true" role="dialog" aria-labelledby="flowFocusHeading" style="display:none;">
+  <div class="flow-focus-top"><div class="flow-focus-brand">◈ Flowline <span>FOCUS</span></div><button class="btn btn-ghost" id="flowFocusExit" type="button">Exit focus ✕</button></div>
+  <div class="flow-focus-content"><div class="flow-focus-eyebrow">ONE THING AT A TIME</div><h1 id="flowFocusHeading">Make space for deep work.</h1><p class="flow-focus-sub">Your day, without the noise.</p>
+    <div class="flow-focus-timer" id="flowFocusTimer">25:00</div><div class="flow-focus-elapsed" id="flowFocusElapsed">0 minutes focused today</div>
+    <div class="flow-focus-controls"><button class="btn btn-primary" id="flowFocusStart" type="button">▶ Start session</button><button class="btn btn-ghost" id="flowFocusReset" type="button">↻ Reset</button></div>
+    <div class="flow-focus-grid"><section><div class="flow-focus-section-title">CURRENT TASK</div><div id="flowFocusCurrent" class="flow-focus-task">Choose one priority and begin.</div></section><section><div class="flow-focus-section-title">TODAY'S PLAN</div><div id="flowFocusToday" class="flow-focus-list"></div></section><section><div class="flow-focus-section-title">UP NEXT</div><div id="flowFocusUpcoming" class="flow-focus-list"></div></section></div>
+    <div class="flow-focus-note">Focus Mode simplifies Flowline; browser-based pages cannot block other apps or websites. Use your device's app/site limits for that.</div>
+  </div>
 </div>
 
 <!-- QUICK NOTE MODAL -->
@@ -1864,6 +1993,12 @@ function loadState(){
       if(parsed.settings.notifPromptDismissed===undefined) parsed.settings.notifPromptDismissed = false;
       if(parsed.settings.notifEnabled===undefined) parsed.settings.notifEnabled = true;
       if(parsed.settings.routineDayResetHour===undefined) parsed.settings.routineDayResetHour = 0;
+      if(parsed.settings.username===undefined) parsed.settings.username = '';
+      if(parsed.settings.aiEndpoint===undefined) parsed.settings.aiEndpoint = '';
+      if(!parsed.settings.notificationPrefs) parsed.settings.notificationPrefs = {task:true,routine:true,habit:true,deadline:true,focus:false,ai:true,briefing:true};
+      if(!parsed.focusStats) parsed.focusStats = {totalSeconds:0, sessions:[], todaySeconds:0, date:''};
+      if(!parsed.routineSessions) parsed.routineSessions = {};
+      Object.values(parsed.routineSessions).forEach(session=>{if(session&&session.active){session.active=false;session.startedAt=0;}}); // a closed tab should not accrue routine time
       return parsed;
     }
   }catch(e){}
@@ -1876,7 +2011,8 @@ function loadState(){
       {id:'school', name:'School', color:'#8B5CF6'},
     ],
     events: [],
-    settings: { startHour: 0, endHour: 24, reminderMinutes: 10, notifTiming: 10, notifPromptDismissed: false, notifEnabled: true, routineDayResetHour: 0 },
+    settings: { startHour: 0, endHour: 24, reminderMinutes: 10, notifTiming: 10, notifPromptDismissed: false, notifEnabled: true, routineDayResetHour: 0, username:'', aiEndpoint:'', notificationPrefs:{task:true,routine:true,habit:true,deadline:true,focus:false,ai:true,briefing:true} },
+    focusStats: {totalSeconds:0,sessions:[],todaySeconds:0,date:''}, routineSessions: {},
     stats: { streak: 0, lastStreakDate: null, longestStreak: 0 },
     goals: [], habits: [], routines: [], notes: [],
     habitLog: {}, goalLog: {}, routineStepLog: {},
@@ -2435,7 +2571,8 @@ function renderGreeting(){
   const now = new Date();
   const hour = now.getHours();
   const greeting = hour<12 ? 'Good Morning' : hour<18 ? 'Good Afternoon' : 'Good Evening';
-  document.getElementById('greetingText').textContent = greeting;
+  const displayName = (state.settings && state.settings.username || '').trim();
+  document.getElementById('greetingText').textContent = greeting + (displayName ? ', ' + displayName : '');
   const opts = {weekday:'long', month:'long', day:'numeric'};
   document.getElementById('greetingDate').textContent = now.toLocaleDateString(undefined,opts);
   const dayOfYear = Math.floor((now - new Date(now.getFullYear(),0,0))/86400000);
@@ -3089,10 +3226,14 @@ function shareDayLines(dateObj){
 }
 function buildShareDayText(dateObj){
   const opts = {weekday:'long', month:'long', day:'numeric'};
-  return `📅 ${dateObj.toLocaleDateString(undefined,opts)}\n${'─'.repeat(22)}\n${shareDayLines(dateObj)}`;
+  const evs=state.events.filter(e=>eventOccursOnDate(e,dateObj));
+  const done=evs.filter(e=>e.done).length;
+  const name=(state.settings.username||'').trim();
+  return `◈ FLOWLINE${name?' · '+name.toUpperCase():''}\nPLAN. FOCUS. FLOW.\n📅 ${dateObj.toLocaleDateString(undefined,opts)} · ${done}/${evs.length} complete\n${'─'.repeat(28)}\n${shareDayLines(dateObj)}\n\nMade with Flowline`;
 }
 function buildShareWeekText(){
-  let text = `📅 My Week\n${'═'.repeat(22)}\n`;
+  const name=(state.settings.username||'').trim();
+  let text = `◈ FLOWLINE${name?' · '+name.toUpperCase():''}\nPLAN. FOCUS. FLOW.\n📅 My Week\n${'═'.repeat(28)}\n`;
   for(let d=0; d<7; d++){
     const dateObj = addDays(viewedWeekStart, d);
     text += `\n${DAY_NAMES[d]} ${dateObj.getDate()}\n${'─'.repeat(22)}\n${shareDayLines(dateObj)}\n`;
@@ -3113,6 +3254,28 @@ function buildShareMonthText(targetDate){
     }
   }
   return text;
+}
+
+function buildShareProgressText(){
+  const doneEvents=(state.completionLog||[]).filter(e=>e.type==='event').length;
+  const doneHabits=(state.completionLog||[]).filter(e=>e.type==='habit').length;
+  const doneRoutineSteps=(state.completionLog||[]).filter(e=>e.type==='routine').length;
+  const goals=(state.goals||[]).filter(g=>g.completed).length;
+  const focus=Math.floor(((state.focusStats||{}).totalSeconds||0)/60);
+  const name=(state.settings.username||'').trim();
+  return `◈ FLOWLINE${name?' · '+name.toUpperCase():''}\nMY PROGRESS\n${'═'.repeat(26)}\n📋 Tasks completed: ${doneEvents}\n🔥 Habits completed: ${doneHabits}\n🌤 Routine steps: ${doneRoutineSteps}\n🎯 Goals completed: ${goals}\n⏱ Focus time: ${Math.floor(focus/60)}h ${focus%60}m\n\nSmall steps add up. · Flowline`;
+}
+function buildShareRoutinesText(){
+  const name=(state.settings.username||'').trim();
+  const routines=state.routines||[];
+  const body=routines.length?routines.map(r=>`${r.icon||'🌤'} ${r.title}\n${(r.steps||[]).map((st,i)=>`   ${i+1}. ${st.title}${st.notes?' — '+st.notes:''}`).join('\n')||'   No steps added yet.'}`).join('\n\n'):'No routines created yet.';
+  return `◈ FLOWLINE${name?' · '+name.toUpperCase():''}\nMY ROUTINES\n${'═'.repeat(26)}\n${body}\n\nPlan. Focus. Flow.`;
+}
+function buildShareAchievementsText(){
+  const unlocked=ACHIEVEMENTS.filter(a=>state.achievementsUnlocked&&state.achievementsUnlocked[a.id]);
+  const name=(state.settings.username||'').trim();
+  const body=unlocked.length?unlocked.map(a=>`🏅 ${a.emoji||'⭐'} ${a.name}${state.achievementsUnlocked[a.id]?' · unlocked '+state.achievementsUnlocked[a.id]:''}`).join('\n'):'Keep showing up — your next achievement is waiting.';
+  return `◈ FLOWLINE${name?' · '+name.toUpperCase():''}\nACHIEVEMENTS · ${unlocked.length}/${ACHIEVEMENTS.length}\n${'═'.repeat(26)}\n${body}\n\nProgress, not perfection.`;
 }
 
 async function shareOrCopy(title, text){
@@ -3138,12 +3301,15 @@ document.getElementById('shareGoBtn').addEventListener('click', ()=>{
     text = buildShareDayText(new Date(y, m-1, d));
   }
   else if(scope==='week') text = buildShareWeekText();
-  else {
+  else if(scope==='month'){
     const [y,m] = document.getElementById('shareMonthSelect').value.split('-').map(Number);
     text = buildShareMonthText(new Date(y, m, 1));
-  }
+  }else if(scope==='progress')text=buildShareProgressText();
+  else if(scope==='routines')text=buildShareRoutinesText();
+  else if(scope==='achievements')text=buildShareAchievementsText();
   document.getElementById('shareOverlay').classList.remove('show');
-  shareOrCopy('My Week', text);
+  const titles={day:'My Daily Plan',week:'My Weekly Plan',month:'My Monthly Plan',progress:'My Flowline Progress',routines:'My Flowline Routines',achievements:'My Flowline Achievements'};
+  shareOrCopy(titles[scope]||'My Flowline', text);
 });
 
 /* ---------- THEME ---------- */
@@ -3185,6 +3351,10 @@ document.getElementById('settingsBtn').addEventListener('click', ()=>{
   document.getElementById('settingsDefaultTab').value = state.settings.defaultTab || 'week';
   document.getElementById('settingsThemeSelect').value = currentTheme();
   document.getElementById('settingsReminderMin').value = state.settings.reminderMinutes ?? 10;
+  document.getElementById('settingsUsername').value = state.settings.username || '';
+  document.getElementById('settingsAIEndpoint').value = state.settings.aiEndpoint || '';
+  const np = state.settings.notificationPrefs || {};
+  [['Task','task',true],['Routine','routine',true],['Habit','habit',true],['Deadline','deadline',true],['Focus','focus',false],['AI','ai',true],['Briefing','briefing',true]].forEach(([label,key,def])=>{const el=document.getElementById('settings'+label+'Notif');if(el)el.checked=np[key]===undefined?def:!!np[key];});
   renderNotifToggle();
 
   const activeAccent = state.settings.accentColor || ACCENT_OPTIONS[0];
@@ -3223,6 +3393,18 @@ document.getElementById('settingsSaveBtn').addEventListener('click', ()=>{
   state.settings.endHour = e;
   state.settings.defaultTab = document.getElementById('settingsDefaultTab').value;
   state.settings.reminderMinutes = Number(document.getElementById('settingsReminderMin').value);
+  state.settings.username = document.getElementById('settingsUsername').value.trim().slice(0,40);
+  state.settings.aiEndpoint = document.getElementById('settingsAIEndpoint').value.trim();
+  try{ if(state.settings.aiEndpoint && new URL(state.settings.aiEndpoint).protocol!=='https:') throw new Error(); }catch(err){showToast('Enter a valid HTTPS AI backend URL.', 'error');return;}
+  state.settings.notificationPrefs = {
+    task:document.getElementById('settingsTaskNotif').checked,
+    routine:document.getElementById('settingsRoutineNotif').checked,
+    habit:document.getElementById('settingsHabitNotif').checked,
+    deadline:document.getElementById('settingsDeadlineNotif').checked,
+    focus:document.getElementById('settingsFocusNotif').checked,
+    ai:document.getElementById('settingsAINotif').checked,
+    briefing:document.getElementById('settingsBriefingNotif').checked
+  };
   const chosenAccent = document.getElementById('accentSwatches').dataset.selected;
   if(chosenAccent){ state.settings.accentColor = chosenAccent; applyAccentColor(chosenAccent); }
   saveState();
@@ -4168,7 +4350,17 @@ function initYoutubePlayer(stepId, videoId){
       videoId,
       playerVars: { rel: 0, playsinline: 1 },
       events: {
-        onReady: (e)=>{ if(savedTime>2) e.target.seekTo(savedTime, true); },
+        onReady: (e)=>{
+          if(savedTime>2) e.target.seekTo(savedTime, true);
+          const meta=document.getElementById('ytmeta-'+stepId);
+          if(meta){
+            const info=typeof e.target.getVideoData==='function'?e.target.getVideoData():{};
+            const title=info&&info.title?info.title:'YouTube tutorial';
+            const duration=typeof e.target.getDuration==='function'?e.target.getDuration():0;
+            const durationText=duration>0?(' · '+Math.floor(duration/60)+':'+String(Math.floor(duration%60)).padStart(2,'0')):'';
+            meta.innerHTML='<strong>'+escHtml(title)+'</strong><span>'+escHtml('YouTube'+durationText)+'</span>';
+          }
+        },
         onStateChange: (e)=>{
           if(e.data===YT.PlayerState.PLAYING){
             clearInterval(window['ytint_'+stepId]);
@@ -4193,7 +4385,7 @@ function stepMediaHTML(routine, step){
   if(m.type==='youtube'){
     const vid = extractYoutubeId(m.url);
     if(!vid) return '<div class="gb-notes">Couldn\'t read that YouTube link.</div>';
-    return `<div class="gb-step-media"><div class="gb-media-frame" id="frame-${step.id}"><div id="yt-${step.id}" data-yt="${vid}" data-step="${step.id}"></div><button class="gb-fullscreen-btn fsBtn" data-frame="frame-${step.id}">⛶</button></div></div>`;
+    return `<div class="gb-step-media"><div class="gb-media-frame" id="frame-${step.id}"><div id="yt-${step.id}" data-yt="${vid}" data-step="${step.id}"></div><button class="gb-fullscreen-btn fsBtn" data-frame="frame-${step.id}">⛶</button></div><div class="gb-video-meta" id="ytmeta-${step.id}"><strong>${escHtml(step.title)}</strong><span>Video details load when available · YouTube</span></div></div>`;
   }
   if(m.type==='video'){
     return `<div class="gb-step-media"><div class="gb-media-frame" id="frame-${step.id}"><video id="vid-${step.id}" src="${m.data}" controls playsinline data-step="${step.id}"></video><button class="gb-fullscreen-btn fsBtn" data-frame="frame-${step.id}">⛶</button></div></div>`;
@@ -4283,6 +4475,12 @@ function renderRoutines(){
           <button class="gb-icon-btn gb-chevron${isOpen?' open':''}" data-role="chevron" title="${isOpen?'Collapse':'Expand'}">▾</button>
         </div>
       </div>
+      <div class="routine-session-controls" data-routine-session="${r.id}">
+        <button type="button" class="gb-small-btn routineSessionToggle" data-id="${r.id}">▶ Start routine</button>
+        <button type="button" class="gb-small-btn routineSkipBtn" data-id="${r.id}">Skip next step</button>
+        <button type="button" class="gb-small-btn routineRestartBtn" data-id="${r.id}">↻ Restart</button>
+        <span class="routineElapsed" id="routineElapsed-${r.id}">00:00 elapsed</span>
+      </div>
       <div class="gb-progress-track"><div class="gb-progress-fill" style="width:${prog.pct}%;background:${r.color}"></div></div>
       <div id="steps-${r.id}" class="gb-steps-wrap${isOpen?' open':''}">
         <div class="gb-steps-wrap-inner">
@@ -4292,6 +4490,15 @@ function renderRoutines(){
       </div>
     `;
     box.appendChild(card);
+    const sessionToggle=card.querySelector('.routineSessionToggle');
+    const session=(state.routineSessions||{})[r.id]||{active:false,elapsed:0,startedAt:0};
+    sessionToggle.textContent=session.active?'Ⅱ Pause routine':((session.elapsed||0)>0?'▶ Resume routine':'▶ Start routine');
+    const elapsedNow=(session.elapsed||0)+(session.active&&session.startedAt?Math.max(0,Math.floor((Date.now()-session.startedAt)/1000)):0);
+    const elapsedEl=card.querySelector('.routineElapsed');
+    elapsedEl.textContent=String(Math.floor(elapsedNow/60)).padStart(2,'0')+':'+String(elapsedNow%60).padStart(2,'0')+' elapsed';
+    sessionToggle.addEventListener('click',e=>{e.stopPropagation();state.routineSessions=state.routineSessions||{};const cur=state.routineSessions[r.id]||{active:false,elapsed:0,startedAt:0};if(cur.active){cur.elapsed=(cur.elapsed||0)+Math.max(0,Math.floor((Date.now()-(cur.startedAt||Date.now()))/1000));cur.active=false;cur.startedAt=0;}else{cur.active=true;cur.startedAt=Date.now();}state.routineSessions[r.id]=cur;saveState();renderRoutines();});
+    card.querySelector('.routineSkipBtn').addEventListener('click',e=>{e.stopPropagation();const iso=routineTodayISO();const next=(r.steps||[]).find(st=>!stepDoneOn(r.id,st.id,iso));if(!next){showToast('All steps are already complete.','info');return;}setStepDone(r.id,next.id,iso,true);logCompletion('routine',r.title,5,r.id+':'+next.id);saveState();renderRoutines();if(typeof renderStatStrip==='function')renderStatStrip();showToast('Skipped to the next step by marking “'+next.title+'” complete.','success');});
+    card.querySelector('.routineRestartBtn').addEventListener('click',async e=>{e.stopPropagation();if(!(await showConfirm('Reset today’s progress for this routine and restart its timer?',{title:'Restart routine?'})))return;const iso=routineTodayISO();(r.steps||[]).forEach(st=>{delete state.routineStepLog[r.id+':'+st.id+':'+iso];unlogCompletion('routine',r.id+':'+st.id,iso);});state.routineSessions=state.routineSessions||{};state.routineSessions[r.id]={active:false,elapsed:0,startedAt:0};saveState();renderRoutines();if(typeof renderStatStrip==='function')renderStatStrip();});
 
     card.querySelector('[data-role="toggleOpen"]').addEventListener('click', (e)=>{
       if(e.target.closest('.routineEditBtn') || e.target.closest('.routineDupBtn')) return;
@@ -4593,9 +4800,15 @@ function renderStats(){
   const goalsCompleted = state.goals.filter(g=>g.completed).length;
   const routinesCompleted = state.completionLog.filter(e=>e.type==='routine').length;
   const productivity = todayEvs.length ? Math.round(todayEvs.filter(e=>e.done).length/todayEvs.length*100) : 0;
+  const focusStats=state.focusStats||{};
+  const focusTotalMin=Math.floor((focusStats.totalSeconds||0)/60);
+  const focusTodayMin=focusStats.date===formatDateISO(new Date())?Math.floor((focusStats.todaySeconds||0)/60):0;
+  const focusLabel=focusTotalMin>=60?(Math.floor(focusTotalMin/60)+'h '+(focusTotalMin%60?focusTotalMin%60+'m':'' )).trim():focusTotalMin+'m';
 
   const cards = [
     {num: studyHoursTotal(), label: 'Study Hours'},
+    {num: focusLabel, label: 'Total Focus Time'},
+    {num: focusTodayMin+'m', label: 'Focus Today'},
     {num: tasksCompleted, label: 'Tasks Completed'},
     {num: habitsCompleted, label: 'Habits Completed'},
     {num: goalsCompleted, label: 'Goals Completed'},
@@ -5391,7 +5604,9 @@ function showTextRevealModal(desc, text){
     btn.addEventListener('click', ()=>{
       const kind = btn.dataset.qa;
       closeQuickAdd();
-      if(kind==='task'){
+      if(kind==='ai'){
+        openFlowAI();
+      } else if(kind==='task'){
         const plannerBtn = document.querySelector('.bn-item[data-view="planner"]');
         if(plannerBtn) plannerBtn.click();
         openModal(null);
@@ -5498,6 +5713,8 @@ function scheduleReminder(ev){
   if(!ev || ev.done) return;
   if(!('Notification' in window) || Notification.permission!=='granted') return;
   if(state.settings.notifEnabled===false) return;
+  const isDeadline = /exam|deadline|due date/i.test((ev.title||'')+' '+((state.categories.find(c=>c.id===ev.cat)||{}).name||''));
+  if(state.settings.notificationPrefs && (isDeadline ? state.settings.notificationPrefs.deadline===false : state.settings.notificationPrefs.task===false)) return;
   if(ev.reminder==='none') return;
   const offsetMin = (ev.reminder!==undefined && ev.reminder!==null && ev.reminder!=='') ? Number(ev.reminder) : (state.settings.notifTiming ?? state.settings.reminderMinutes ?? 10);
   const occ = nextEventOccurrence(ev);
@@ -5621,6 +5838,122 @@ if('Notification' in window && Notification.permission==='granted') rescheduleAl
   if(!el) return;
   setTimeout(()=>{ el.classList.add('hide'); setTimeout(()=>{ el.remove(); }, 550); }, 700);
 })();
+
+
+/* Refresh active routine elapsed labels without rerendering or saving on every tick. */
+setInterval(()=>{if(!state.routineSessions)return;Object.entries(state.routineSessions).forEach(([id,session])=>{if(!session||!session.active||!session.startedAt)return;const el=document.getElementById('routineElapsed-'+id);if(!el)return;const sec=(session.elapsed||0)+Math.max(0,Math.floor((Date.now()-session.startedAt)/1000));el.textContent=String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0')+' elapsed';});},1000);
+
+/* ================= FLOWLINE AI: secure backend + approval-based actions ================= */
+let flowAIPending = null;
+let flowAIMode = 'create';
+let flowAILastRequest = '';
+function openFlowAI(){
+  flowAIMode='create';
+  const ov=document.getElementById('flowAIOverlay'); if(!ov)return;
+  document.getElementById('flowAIStatus').textContent = state.settings.aiEndpoint ? 'Connected endpoint configured. Ready when you are.' : 'AI backend not configured. Add your secure endpoint in Settings.';
+  ov.classList.add('show'); setTimeout(()=>document.getElementById('flowAIInput').focus(),120);
+}
+function closeFlowAI(){document.getElementById('flowAIOverlay').classList.remove('show');}
+document.getElementById('flowAIClose').addEventListener('click',closeFlowAI);
+document.getElementById('flowAIOverlay').addEventListener('click',e=>{if(e.target.id==='flowAIOverlay')closeFlowAI();});
+document.querySelectorAll('.flow-ai-prompts [data-prompt]').forEach(b=>b.addEventListener('click',()=>{flowAIMode=b.dataset.mode||'create';document.getElementById('flowAIInput').value=b.dataset.prompt;document.getElementById('flowAIInput').focus();}));
+function flowAISnapshot(){
+  const today=formatDateISO(new Date());
+  const events=(state.events||[]).map(e=>({title:e.title,date:e.repeat?'weekly day '+e.day:e.date,start:e.start,end:e.end,category:(state.categories.find(c=>c.id===e.cat)||{}).name||e.cat,done:!!e.done,notes:e.notes||''}));
+  return {today,username:state.settings.username||'',events:events.slice(0,160),categories:(state.categories||[]).map(c=>({name:c.name,id:c.id})),routines:(state.routines||[]).map(r=>({title:r.title,days:r.days,steps:(r.steps||[]).map(st=>({title:st.title,notes:st.notes||''})).slice(0,20)})).slice(0,80),habits:(state.habits||[]).map(h=>({title:h.title,frequency:h.freq,days:h.days})).slice(0,80),goals:(state.goals||[]).map(g=>({title:g.title,target:g.target,current:g.current,unit:g.unit,notes:g.notes||''})).slice(0,80),focusStats:{...(state.focusStats||{totalSeconds:0}),todaySeconds:(state.focusStats&&state.focusStats.date===today)?(state.focusStats.todaySeconds||0):0},preferences:{...(state.settings.notificationPrefs||{}),aiFeedback:(state.settings.aiFeedback||[]).slice(-12)}};
+}
+async function requestFlowAI(mode='create'){
+  const endpoint=(state.settings.aiEndpoint||'').trim();
+  if(!endpoint){showToast('Set your secure AI backend endpoint in Settings first. No fake AI fallback is used.', 'error', 5000);document.getElementById('flowAIStatus').textContent='Not connected — configure the backend endpoint in Settings.';return;}
+  const input=document.getElementById('flowAIInput').value.trim();
+  flowAILastRequest=input||'Daily briefing / Flowline analysis';
+  if(!input && mode==='create'){showToast('Tell Flowline AI what you need first.','error');return;}
+  const gen=document.getElementById('flowAIGenerate'), status=document.getElementById('flowAIStatus');
+  gen.disabled=true;gen.textContent='Thinking…';status.textContent='Analyzing your request and relevant Flowline data…';
+  try{
+    const response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({mode,request:input||'Analyze my current Flowline data and provide a concise daily briefing.',context:flowAISnapshot()})});
+    const body=await response.json().catch(()=>({}));
+    if(!response.ok)throw new Error(body.error||('AI service returned HTTP '+response.status+'. Check the backend deployment and its logs.'));
+    let proposal=body.proposal||body.result||body;
+    if(typeof proposal==='string'){proposal=proposal.trim().replace(/^```(?:json)?\s*/i,'').replace(/\s*```$/,'');proposal=JSON.parse(proposal);}
+    if(!proposal || typeof proposal!=='object')throw new Error('The AI returned an invalid proposal. Please regenerate.');
+    proposal.summary=String(proposal.summary||'AI proposal ready for review.');
+    if(!Array.isArray(proposal.actions))proposal.actions=[];
+    flowAIPending=proposal; renderFlowAIPreview(proposal); status.textContent='Preview ready. Nothing has been changed yet.';
+  }catch(err){status.textContent='Could not get a valid AI response.';showToast('AI unavailable: '+(err.message||'unknown error'), 'error', 6500);}
+  finally{gen.disabled=false;gen.textContent='Generate with AI ↗';}
+}
+function renderFlowAIPreview(proposal){
+  document.getElementById('flowAIResultWrap').style.display='block';
+  document.getElementById('flowAIResultSummary').textContent=proposal.summary+(proposal.recommendations&&proposal.recommendations.length?'\n\nRecommendations: '+proposal.recommendations.join(' · '):'');
+  const cards=document.getElementById('flowAIActionCards');
+  cards.innerHTML=(proposal.actions||[]).map((a,i)=>{const type=String(a.type||'event');let detail='';if(type==='event'||type==='task')detail=[a.date||'Today',a.start&&a.end?(a.start+'–'+a.end):'',a.category||''].filter(Boolean).join(' · ');else if(type==='routine')detail=(a.steps||[]).map(st=>st.title+(st.measurement?' — '+st.measurement:'')).join(' • ');else if(type==='habit')detail='Habit · '+(a.frequency||'daily');else if(type==='goal')detail='Goal'+(a.target?' · target '+a.target+(a.unit?' '+a.unit:''):'');else detail=String(a.notes||a.text||'');return '<div class="flow-ai-card"><strong>'+escHtml((i+1)+'. '+(a.title||'Untitled item'))+' <span style="font-size:10px;color:var(--purple);font-weight:700;">'+escHtml(type.toUpperCase())+'</span></strong><small>'+escHtml(detail||'Ready to add after approval.')+'</small></div>';}).join('') || '<div class="flow-ai-card"><strong>Advice only — no changes proposed</strong><small>Review the analysis above. No items will be added.</small></div>';
+  document.getElementById('flowAIProposal').value=JSON.stringify(proposal,null,2);
+  document.getElementById('flowAIApply').style.display=(proposal.actions||[]).length?'':'none';
+}
+document.getElementById('flowAIGenerate').addEventListener('click',()=>requestFlowAI(flowAIMode));
+document.getElementById('flowAIRegenerate').addEventListener('click',()=>requestFlowAI(flowAIMode));
+document.getElementById('flowAICancelProposal').addEventListener('click',()=>{flowAIPending=null;document.getElementById('flowAIResultWrap').style.display='none';document.getElementById('flowAIStatus').textContent='Proposal cancelled. No changes made.';});
+function saveFlowAIFeedback(helpful){
+  state.settings.aiFeedback=state.settings.aiFeedback||[];
+  state.settings.aiFeedback.push({date:new Date().toISOString(),request:String(flowAILastRequest||'').slice(0,300),summary:String((flowAIPending&&flowAIPending.summary)||'').slice(0,500),helpful:!!helpful});
+  state.settings.aiFeedback=state.settings.aiFeedback.slice(-40);saveState();
+  showToast(helpful?'Thanks — future AI suggestions can use this feedback.':'Thanks — Flowline will use this feedback to adjust future suggestions.','success',3500);
+}
+document.getElementById('flowAIFeedbackYes').addEventListener('click',()=>saveFlowAIFeedback(true));
+document.getElementById('flowAIFeedbackNo').addEventListener('click',()=>saveFlowAIFeedback(false));
+document.getElementById('flowAIApply').addEventListener('click',()=>{
+  let proposal;try{proposal=JSON.parse(document.getElementById('flowAIProposal').value);}catch(e){showToast('Proposal JSON is invalid. Fix it before applying.','error');return;}
+  if(!proposal||!Array.isArray(proposal.actions)){showToast('Proposal must contain an actions array.','error');return;}
+  if(proposal.actions.length>80){showToast('This proposal contains too many items. Split it into smaller plans.','error');return;}
+  let added=0;const today=formatDateISO(new Date());const studyCat=state.categories.find(c=>/study|school/i.test(c.name))||state.categories[0];
+  for(const raw of proposal.actions){const a=raw||{};const title=String(a.title||'').trim().slice(0,180);if(!title)continue;const type=String(a.type||'event').toLowerCase();
+    if(type==='event'||type==='task'||type==='planner'){
+      const validTime=v=>/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(String(v||''));const start=validTime(a.start)?a.start:'09:00';let end=validTime(a.end)?a.end:'10:00';if(timeToMin(end)<=timeToMin(start)){const mins=Math.min(1439,timeToMin(start)+60);end=String(Math.floor(mins/60)).padStart(2,'0')+':'+String(mins%60).padStart(2,'0');if(timeToMin(end)<=timeToMin(start))continue;}
+      const cat=state.categories.find(c=>c.id===a.category||c.name.toLowerCase()===String(a.category||'').toLowerCase())||studyCat;
+      const date=/^\d{4}-\d{2}-\d{2}$/.test(a.date||'')?a.date:today;
+      state.events.push({id:uid(),title,cat:cat?cat.id:'',repeat:false,date,start,end,done:false,notes:String(a.notes||'').slice(0,1000),glow:false,pinned:!!a.pinned,reminder:'none'});added++;
+    }else if(type==='routine'){
+      const steps=Array.isArray(a.steps)?a.steps.slice(0,50).map(st=>({id:uid(),title:String(st.title||'').trim().slice(0,180),notes:[st.measurement,st.notes].filter(Boolean).map(x=>String(x).slice(0,500)).join(' · '),media:{type:'none'}})).filter(st=>st.title):[];
+      state.routines.push({id:uid(),title,days:Array.isArray(a.days)?a.days.filter(n=>Number.isInteger(n)&&n>=0&&n<=6):[0,1,2,3,4,5,6],icon:['🌤','💪','🏋️','📚','🎯','🔥','✅','💧','🧘','🌅','🙏','📝','⭐'].includes(a.icon)?a.icon:'🌤',color:GB_COLORS.includes(a.color)?a.color:GB_COLORS[3],steps});added++;
+    }else if(type==='habit'){
+      state.habits.push({id:uid(),title,freq:['daily','weekly','monthly'].includes(a.frequency)?a.frequency:'daily',days:Array.isArray(a.days)?a.days.filter(n=>Number.isInteger(n)&&n>=0&&n<=6):[0,1,2,3,4,5,6],monthDay:1,icon:['🌤','💪','🏋️','📚','🎯','🔥','✅','💧','🧘','🌅','🙏','📝','⭐'].includes(a.icon)?a.icon:'✅',color:GB_COLORS.includes(a.color)?a.color:GB_COLORS[1],goalId:null});added++;
+    }else if(type==='goal'){
+      const target=Math.max(1,Number(a.target)||1),current=Math.max(0,Math.min(target,Number(a.current)||0));state.goals.push({id:uid(),title,target,current,unit:String(a.unit||'').slice(0,40),notes:String(a.notes||'').slice(0,500),icon:['🌤','💪','🏋️','📚','🎯','🔥','✅','💧','🧘','🌅','🙏','📝','⭐'].includes(a.icon)?a.icon:'🎯',color:GB_COLORS.includes(a.color)?a.color:GB_COLORS[0],completed:current>=target});added++;
+    }else if(type==='note'){
+      state.notes=state.notes||[];state.notes.push({id:uid(),text:String(a.text||a.notes||title).slice(0,4000),createdAt:new Date().toISOString()});added++;
+    }
+  }
+  saveState();if(typeof renderAll==='function')renderAll();if(typeof renderGetBetterQuick==='function')renderGetBetterQuick();
+  closeFlowAI();showToast(added?('Approved — added '+added+' item'+(added===1?'':'s')+' to Flowline.'):'No supported items to add. Advice was not applied.',added?'success':'info',5000);flowAIPending=null;
+});
+
+/* ================= FOCUS WORKSPACE + SESSION STATISTICS ================= */
+(function(){
+  const overlay=document.getElementById('flowFocusOverlay');if(!overlay)return;
+  const total=25*60;let remaining=total,running=false,timer=null,sessionStart=0,focusSessionAccumulated=0;
+  function todayISO(){return formatDateISO(new Date());}
+  function ensureStats(){if(!state.focusStats)state.focusStats={totalSeconds:0,sessions:[],todaySeconds:0,date:todayISO()};if(state.focusStats.date!==todayISO()){state.focusStats.date=todayISO();state.focusStats.todaySeconds=0;}}
+  function fmt(sec){sec=Math.max(0,Math.floor(sec));return String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0');}
+  function render(){ensureStats();document.getElementById('flowFocusTimer').textContent=fmt(remaining);document.getElementById('flowFocusElapsed').textContent=Math.floor((state.focusStats.todaySeconds||0)/60)+' minutes focused today';document.getElementById('flowFocusStart').textContent=running?'Ⅱ Pause session':'▶ Start session';}
+  function currentEvents(){const today=todayISO();return (state.events||[]).filter(e=>e.repeat?weekdayIndexFromDate(new Date())===e.day:e.date===today).sort((a,b)=>timeToMin(a.start)-timeToMin(b.start));}
+  function renderPlan(){const evs=currentEvents();const now=new Date();const nowMin=now.getHours()*60+now.getMinutes();const current=evs.find(e=>!e.done&&timeToMin(e.start)<=nowMin&&timeToMin(e.end)>nowMin)||evs.find(e=>!e.done)||null;document.getElementById('flowFocusCurrent').textContent=current?(current.title+' · '+current.start+'–'+current.end):'No scheduled task left today. Choose one important task and add it to your planner.';document.getElementById('flowFocusToday').innerHTML=evs.length?evs.map(e=>'<div class="flow-focus-list-item">'+(e.done?'✓ ':'')+escHtml(e.start+' · '+e.title)+'</div>').join(''):'<div class="flow-focus-list-item">Nothing scheduled yet.</div>';const up=evs.filter(e=>!e.done&&timeToMin(e.start)>nowMin).slice(0,3);document.getElementById('flowFocusUpcoming').innerHTML=up.length?up.map(e=>'<div class="flow-focus-list-item">'+escHtml(e.start+' · '+e.title)+'</div>').join(''):'<div class="flow-focus-list-item">No upcoming tasks.</div>';}
+  function finishSession(completed){if(timer){clearInterval(timer);timer=null;}running=false;const elapsed=sessionStart?Math.max(0,Math.floor((Date.now()-sessionStart)/1000)):0;focusSessionAccumulated+=elapsed;ensureStats();if(elapsed>0){state.focusStats.totalSeconds=(state.focusStats.totalSeconds||0)+elapsed;state.focusStats.todaySeconds=(state.focusStats.todaySeconds||0)+elapsed;state.focusStats.sessions=state.focusStats.sessions||[];state.focusStats.sessions.push({date:todayISO(),seconds:elapsed,completed:!!completed});state.focusStats.sessions=state.focusStats.sessions.slice(-200);}sessionStart=0;saveState();render();if(typeof renderStats==='function')renderStats();if(completed){const totalFocused=focusSessionAccumulated;focusSessionAccumulated=0;const todays=(state.events||[]).filter(e=>e.repeat?weekdayIndexFromDate(new Date())===e.day:e.date===todayISO());const done=todays.filter(e=>e.done).length;const left=todays.length-done;showToast('Focus session complete · '+Math.floor(totalFocused/60)+' min focused · '+done+' task'+(done===1?'':'s')+' completed · '+left+' remaining.','success',6000);}}
+  function tick(){remaining=Math.max(0,remaining-1);render();if(remaining<=0)finishSession(true);}
+  function open(){ensureStats();renderPlan();render();overlay.style.display='block';document.body.style.overflow='hidden';}
+  function exit(){if(running)finishSession(false);if(focusSessionAccumulated>0){showToast('Focus session ended · '+Math.floor(focusSessionAccumulated/60)+' min recorded.','info',4000);focusSessionAccumulated=0;}overlay.style.display='none';document.body.style.overflow='';}
+  document.getElementById('flowFocusStart').addEventListener('click',()=>{if(running){finishSession(false);return;}running=true;sessionStart=Date.now();timer=setInterval(tick,1000);render();});
+  document.getElementById('flowFocusReset').addEventListener('click',()=>{if(running)finishSession(false);focusSessionAccumulated=0;remaining=total;render();});
+  document.getElementById('flowFocusExit').addEventListener('click',exit);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&overlay.style.display==='block')exit();});
+  const card=document.getElementById('sbFocusCard');if(card){card.addEventListener('dblclick',open);const info=card.querySelector('.sb-focus-info');if(info){info.style.cursor='pointer';info.title='Open full Focus Mode';info.addEventListener('click',open);}}
+  // Keep the existing sidebar timer; its title opens this full focus workspace.
+  window.openFlowFocus=open;
+})();
+
+/* ================= AI DAILY BRIEFING / ANALYSIS SHORTCUTS ================= */
+window.flowlineAIBriefing=()=>{openFlowAI();flowAIMode='briefing';document.getElementById('flowAIInput').value='Give me a concise daily briefing based on my current plan, deadlines, available time, routines, habits, and focus stats. Include useful recommendations but do not change anything.';};
+
 </script>
 </body>
 </html>
