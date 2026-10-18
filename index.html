@@ -238,7 +238,11 @@
 
   /* Flowline AI + Focus workspace */
   .greeting-ai-btn{margin-top:10px;font-size:11px;padding:7px 11px;}
-  .flow-ai-modal{width:min(760px,calc(100vw - 28px));max-height:min(90vh,900px);overflow:auto;}
+  .flow-ai-modal{width:min(760px,calc(100vw - 28px));max-height:min(90vh,900px);max-height:min(90dvh,900px);overflow:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;box-sizing:border-box;}
+  .flow-ai-modal,.flow-ai-modal *{min-width:0;}
+  .flow-ai-modal .modal-titlebar>div{flex:1;min-width:0;}
+  .flow-ai-modal .modal-titlebar button{flex-shrink:0;}
+  .flow-ai-modal [hidden]{display:none!important;}
   .flow-ai-modal .modal-titlebar{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
   .flow-ai-subtitle{font-size:12px;color:var(--ink-soft);line-height:1.5;margin-top:3px;}
   .flow-ai-prompts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:15px 0;}
@@ -259,6 +263,9 @@
   .flow-ai-edit{margin-top:12px;font-size:12px;color:var(--ink-soft);}
   .flow-ai-edit summary{cursor:pointer;font-weight:700;margin-bottom:8px;}
   .flow-ai-footer{font-size:10px;color:var(--ink-soft);line-height:1.5;border-top:1px solid var(--line);margin-top:16px;padding-top:12px;}
+  .flow-ai-chat{display:grid;gap:8px;margin:12px 0;max-height:240px;overflow:auto;padding:2px;}
+  .flow-ai-chat-message{padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);font-size:13px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere;}
+  .flow-ai-chat-message.user{background:color-mix(in srgb,var(--purple) 10%,var(--surface));}
   .flow-ai-feedback{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:12px;font-size:10px;color:var(--ink-soft);}
   .flow-ai-feedback button{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:6px 9px;font:inherit;font-weight:700;cursor:pointer;}
   .qa-ai-item{color:var(--purple)!important;font-weight:800!important;}
@@ -287,7 +294,8 @@
   .flow-focus-list{display:grid;gap:7px;}
   .flow-focus-list-item{font-size:12px;padding:8px 9px;border-radius:9px;background:var(--bg-elev);line-height:1.4;}
   .flow-focus-note{font-size:10px;color:var(--ink-soft);margin-top:18px;line-height:1.5;}
-  @media(max-width:650px){.flow-ai-prompts{grid-template-columns:1fr}.flow-focus-grid{grid-template-columns:1fr}.flow-ai-modal{padding:18px}.flow-ai-review-actions button{flex:1}.flow-focus-content{margin-top:30px}}
+  @media(max-width:650px){.flow-ai-prompts{grid-template-columns:1fr}.flow-focus-grid{grid-template-columns:1fr}.flow-ai-modal{width:calc(100vw - 20px);max-height:calc(100dvh - 20px);padding:14px;border-radius:18px}.flow-ai-review-actions button{flex:1}.flow-focus-content{margin-top:30px}#flowAIStatus{min-width:0;flex-basis:100%}.flow-ai-chat{max-height:30dvh}.flow-ai-modal .modal-titlebar{gap:8px}.flow-ai-modal .modal-titlebar h3{font-size:18px}}
+  @media(max-width:360px){.flow-ai-modal{width:calc(100vw - 12px);padding:11px}.flow-ai-actions>.btn{width:100%}.flow-ai-feedback{align-items:flex-start}.flow-ai-feedback span{flex-basis:100%}}
 
   #printArea{display:none;}
   @media print{
@@ -1706,7 +1714,8 @@ body:has(.overlay.show) #bottomNav { display:none !important; }
   <div class="modal settings-modal">
     <h3>Settings</h3>
     <div class="field"><label for="settingsUsername">Username</label><input type="text" id="settingsUsername" maxlength="40" autocomplete="nickname" placeholder="e.g. Nour"><div style="font-size:11px;color:var(--ink-soft);margin-top:4px;">Used in your daily greeting, like “Good Morning, Nour”.</div></div>
-    <div class="field"><label for="settingsAIEndpoint">AI backend endpoint</label><input type="url" id="settingsAIEndpoint" placeholder="https://flowline-ai.YOUR-SUBDOMAIN.workers.dev"><div style="font-size:11px;color:var(--ink-soft);margin-top:4px;">Optional until you deploy the secure backend. Never paste an API key here.</div></div>
+    <div class="field"><label for="settingsGeminiKey">Gemini API key</label><input type="password" id="settingsGeminiKey" autocomplete="off" placeholder="Paste your Gemini API key"><div style="font-size:11px;color:var(--ink-soft);margin-top:4px;">Connect directly to Gemini without a backend URL. The key is stored in this browser only; anyone with access to this device/browser data may be able to retrieve it. For a public website, a secure backend is safer.</div><label style="display:flex;align-items:center;gap:8px;margin-top:8px;font-weight:500;"><input type="checkbox" id="settingsShowGeminiKey" style="width:auto;"> Show API key</label></div>
+    <div class="field"><label>AI suggestions shown in the assistant</label><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px;"><label><input type="checkbox" id="aiPromptOptimize"> Optimize my day</label><label><input type="checkbox" id="aiPromptWorkout"> Build a workout</label><label><input type="checkbox" id="aiPromptAnalyze"> Analyze my Flowline</label><label><input type="checkbox" id="aiPromptBriefing"> Daily briefing</label><label><input type="checkbox" id="aiPromptHabit"> Habit support</label></div><div style="font-size:11px;color:var(--ink-soft);margin-top:4px;">Choose which quick suggestions appear in AI Assistant.</div></div>
     <div class="row2">
       <div class="field">
         <label>Show grid from</label>
@@ -2011,29 +2020,29 @@ body:has(.overlay.show) #bottomNav { display:none !important; }
   </button>
 </div>
 
-<!-- FLOWLINE AI: real-provider integration (requires a configured secure backend endpoint) -->
+<!-- FLOWLINE AI: direct Gemini integration; API key is configured in Settings -->
 <div class="overlay" id="flowAIOverlay" style="z-index:1200;">
   <div class="modal flow-ai-modal" role="dialog" aria-modal="true" aria-labelledby="flowAITitle">
-    <div class="modal-titlebar"><div><h3 id="flowAITitle">Flowline AI</h3><div class="flow-ai-subtitle">Plan, organize, and improve your day — with your approval.</div></div><button class="btn btn-ghost" id="flowAIClose" type="button" aria-label="Close AI">✕</button></div>
+    <div class="modal-titlebar"><div><h3 id="flowAITitle">Flowline AI</h3><div class="flow-ai-subtitle">Plan, organize, and improve your day — with your approval.</div></div><button class="btn btn-ghost flow-popup-close" id="flowAIClose" type="button" aria-label="Close AI">✕</button></div>
     <div class="flow-ai-prompts" id="flowAIPrompts">
-      <button type="button" data-mode="create" data-prompt="Plan my day around my existing schedule, priorities, and free time.">📅 Optimize my day</button>
-      <button type="button" data-mode="create" data-prompt="Create a practical upper-body strength routine with suitable measurements for each exercise.">💪 Build a workout</button>
-      <button type="button" data-mode="analysis" data-prompt="Analyze my workload, deadlines, unfinished tasks, routines, and focus time. Suggest improvements without changing anything.">📊 Analyze my Flowline</button>
-      <button type="button" data-mode="briefing" data-prompt="Give me a concise morning briefing based on my plan for today, my priorities, and available time.">☀️ Daily briefing</button>
-      <button type="button" data-mode="habit_support" data-prompt="Help me understand and reduce an unwanted habit. Ask me what the habit is and what tends to trigger it, then suggest compassionate, practical interventions. Include a dua or Islamic reminder only if I request religious support.">🫶 Habit support</button>
+      <button type="button" data-prompt-key="optimize" data-mode="create" data-prompt="Plan my day around my existing schedule, priorities, and free time.">📅 Optimize my day</button>
+      <button type="button" data-prompt-key="workout" data-mode="create" data-prompt="Create a practical upper-body strength routine with suitable measurements for each exercise.">💪 Build a workout</button>
+      <button type="button" data-prompt-key="analyze" data-mode="analysis" data-prompt="Analyze my workload, deadlines, unfinished tasks, routines, and focus time. Suggest improvements without changing anything.">📊 Analyze my Flowline</button>
+      <button type="button" data-prompt-key="briefing" data-mode="briefing" data-prompt="Give me a concise morning briefing based on my plan for today, my priorities, and available time.">☀️ Daily briefing</button>
+      <button type="button" data-prompt-key="habit" data-mode="habit_support" data-prompt="Help me understand and reduce an unwanted habit. Ask me what the habit is and what tends to trigger it, then suggest compassionate, practical interventions. Include a dua or Islamic reminder only if I request religious support.">🫶 Habit support</button>
     </div>
-    <label for="flowAIInput" class="flow-ai-label">What do you need help with?</label>
+    <div id="flowAIChat" class="flow-ai-chat" aria-live="polite" style="display:none"></div><label for="flowAIInput" class="flow-ai-label">What do you need help with?</label>
     <textarea id="flowAIInput" rows="3" placeholder="e.g. I have two exams next week. Make a realistic study plan around my current schedule…"></textarea>
-    <div class="flow-ai-actions"><button class="btn btn-primary" id="flowAIGenerate" type="button">Generate with AI ↗</button><span id="flowAIStatus" role="status">AI is not configured yet.</span></div>
+    <div class="flow-ai-actions"><button class="btn btn-primary" id="flowAIGenerate" type="button">Send to Flowline AI ↗</button><span id="flowAIStatus" role="status">AI is not configured yet.</span></div>
     <div id="flowAIResultWrap" style="display:none;">
       <div class="flow-ai-preview-head"><div><strong>Review before applying</strong><div class="flow-ai-subtitle">Nothing changes until you approve it.</div></div><span class="flow-ai-badge">PREVIEW</span></div>
       <div id="flowAIResultSummary" class="flow-ai-summary"></div>
       <div id="flowAIActionCards" class="flow-ai-action-cards"></div>
       <details class="flow-ai-edit"><summary>Edit proposal data</summary><textarea id="flowAIProposal" rows="9" spellcheck="false" aria-label="Editable AI proposal JSON"></textarea><div class="flow-ai-subtitle">Edit the JSON if needed. The proposal is validated before anything is added.</div></details>
-      <div class="flow-ai-actions flow-ai-review-actions"><button class="btn btn-ghost" id="flowAIRegenerate" type="button">↻ Regenerate</button><button class="btn btn-ghost" id="flowAICancelProposal" type="button">Cancel</button><button class="btn btn-primary" id="flowAIApply" type="button">Approve & add to Flowline</button></div>
+      <div class="flow-ai-actions flow-ai-review-actions"><button class="btn btn-ghost" id="flowAIRegenerate" type="button">↻ Regenerate</button><button class="btn btn-ghost" id="flowAICancelProposal" type="button">Cancel</button><button class="btn btn-primary" id="flowAIApply" type="button">Add to app</button></div>
       <div class="flow-ai-feedback"><span>Help Flowline improve future suggestions:</span><button type="button" id="flowAIFeedbackYes">👍 Useful</button><button type="button" id="flowAIFeedbackNo">👎 Not useful</button></div>
     </div>
-    <div class="flow-ai-footer">Your existing Flowline data is sent to the AI backend only when you request an AI action. Do not include highly sensitive information.</div>
+    <div class="flow-ai-footer">Your selected Flowline data is sent directly to Google Gemini when you send a message. Avoid highly sensitive information. Your API key is stored in this browser.</div>
   </div>
 </div>
 
@@ -2099,7 +2108,7 @@ function loadState(){
       if(parsed.settings.notifEnabled===undefined) parsed.settings.notifEnabled = true;
       if(parsed.settings.routineDayResetHour===undefined) parsed.settings.routineDayResetHour = 0;
       if(parsed.settings.username===undefined) parsed.settings.username = '';
-      if(parsed.settings.aiEndpoint===undefined) parsed.settings.aiEndpoint = '';
+      if(parsed.settings.aiEndpoint===undefined) parsed.settings.aiEndpoint = ''; if(parsed.settings.geminiApiKey===undefined) parsed.settings.geminiApiKey=''; if(!parsed.settings.aiPromptPrefs) parsed.settings.aiPromptPrefs={optimize:true,workout:true,analyze:true,briefing:true,habit:true};
       if(!parsed.settings.notificationPrefs) parsed.settings.notificationPrefs = {task:true,routine:true,habit:true,deadline:true,focus:false,ai:true,briefing:true};
       if(!parsed.focusStats) parsed.focusStats = {totalSeconds:0, sessions:[], todaySeconds:0, date:''};
       if(!parsed.routineSessions) parsed.routineSessions = {};
@@ -2116,7 +2125,7 @@ function loadState(){
       {id:'school', name:'School', color:'#8B5CF6'},
     ],
     events: [],
-    settings: { startHour: 0, endHour: 24, reminderMinutes: 10, notifTiming: 10, notifPromptDismissed: false, notifEnabled: true, routineDayResetHour: 0, username:'', aiEndpoint:'', notificationPrefs:{task:true,routine:true,habit:true,deadline:true,focus:false,ai:true,briefing:true} },
+    settings: { startHour: 0, endHour: 24, reminderMinutes: 10, notifTiming: 10, notifPromptDismissed: false, notifEnabled: true, routineDayResetHour: 0, username:'', aiEndpoint:'', geminiApiKey:'', aiPromptPrefs:{optimize:true,workout:true,analyze:true,briefing:true,habit:true}, notificationPrefs:{task:true,routine:true,habit:true,deadline:true,focus:false,ai:true,briefing:true} },
     focusStats: {totalSeconds:0,sessions:[],todaySeconds:0,date:''}, routineSessions: {},
     stats: { streak: 0, lastStreakDate: null, longestStreak: 0 },
     goals: [], habits: [], routines: [], notes: [],
@@ -3465,6 +3474,7 @@ if(defaultViewSelect){
 }
 
 
+document.getElementById('settingsShowGeminiKey').addEventListener('change',e=>{document.getElementById('settingsGeminiKey').type=e.target.checked?'text':'password';});
 document.getElementById('settingsBtn').addEventListener('click', ()=>{
   populateHourSelect(document.getElementById('settingsStartHour'), state.settings.startHour);
   populateHourSelect(document.getElementById('settingsEndHour'), state.settings.endHour);
@@ -3472,7 +3482,9 @@ document.getElementById('settingsBtn').addEventListener('click', ()=>{
   document.getElementById('settingsThemeSelect').value = currentTheme();
   document.getElementById('settingsReminderMin').value = state.settings.reminderMinutes ?? 10;
   document.getElementById('settingsUsername').value = state.settings.username || '';
-  document.getElementById('settingsAIEndpoint').value = state.settings.aiEndpoint || '';
+  document.getElementById('settingsGeminiKey').value = state.settings.geminiApiKey || '';
+  const ap=state.settings.aiPromptPrefs||{optimize:true,workout:true,analyze:true,briefing:true,habit:true};
+  [['aiPromptOptimize','optimize'],['aiPromptWorkout','workout'],['aiPromptAnalyze','analyze'],['aiPromptBriefing','briefing'],['aiPromptHabit','habit']].forEach(([id,k])=>{const el=document.getElementById(id);if(el)el.checked=ap[k]!==false;});
   const np = state.settings.notificationPrefs || {};
   [['Task','task',true],['Routine','routine',true],['Habit','habit',true],['Deadline','deadline',true],['Focus','focus',false],['AI','ai',true],['Briefing','briefing',true]].forEach(([label,key,def])=>{const el=document.getElementById('settings'+label+'Notif');if(el)el.checked=np[key]===undefined?def:!!np[key];});
   renderNotifToggle();
@@ -3517,16 +3529,10 @@ document.getElementById('settingsSaveBtn').addEventListener('click', ()=>{
   state.settings.defaultTab = document.getElementById('settingsDefaultTab').value;
   state.settings.reminderMinutes = Number(document.getElementById('settingsReminderMin').value);
   state.settings.username = document.getElementById('settingsUsername').value.trim().slice(0,40);
-  state.settings.aiEndpoint = document.getElementById('settingsAIEndpoint').value.trim();
-  if(state.settings.aiEndpoint){
-    try{
-      const endpoint = new URL(state.settings.aiEndpoint);
-      if(endpoint.protocol !== 'https:') throw new Error('https');
-    }catch(err){
-      showToast('AI backend URL must be a valid HTTPS URL. Clear it if you are not using an AI backend.', 'error', 5000);
-      return;
-    }
-  }
+  state.settings.geminiApiKey = document.getElementById('settingsGeminiKey').value.trim();
+  state.settings.aiEndpoint = ''; // direct Gemini mode; no backend URL required
+  state.settings.aiPromptPrefs = {optimize:document.getElementById('aiPromptOptimize').checked,workout:document.getElementById('aiPromptWorkout').checked,analyze:document.getElementById('aiPromptAnalyze').checked,briefing:document.getElementById('aiPromptBriefing').checked,habit:document.getElementById('aiPromptHabit').checked};
+  applyFlowAIPromptPrefs();
   if(hoursValid){
     state.settings.startHour = requestedStart;
     state.settings.endHour = requestedEnd;
@@ -6020,10 +6026,18 @@ setInterval(()=>{
 let flowAIPending = null;
 let flowAIMode = 'create';
 let flowAILastRequest = '';
+function applyFlowAIPromptPrefs(){
+  const prefs=state.settings.aiPromptPrefs||{optimize:true,workout:true,analyze:true,briefing:true,habit:true};
+  document.querySelectorAll('.flow-ai-prompts [data-prompt-key]').forEach(button=>{
+    button.hidden=prefs[button.dataset.promptKey]===false;
+  });
+}
 function openFlowAI(){
+  applyFlowAIPromptPrefs();
   flowAIMode='create';
   const ov=document.getElementById('flowAIOverlay'); if(!ov)return;
-  document.getElementById('flowAIStatus').textContent = state.settings.aiEndpoint ? 'Connected endpoint configured. Ready when you are.' : 'AI backend not configured. Add your secure endpoint in Settings.';
+  document.getElementById('flowAIStatus').textContent = state.settings.geminiApiKey ? 'Gemini connected setting found. Ready to chat.' : 'Add your Gemini API key in Settings to start.';
+  const prefs=state.settings.aiPromptPrefs||{optimize:true,workout:true,analyze:true,briefing:true,habit:true}; document.querySelectorAll('.flow-ai-prompts [data-mode]').forEach(b=>{const map={ 'Plan my day around my existing schedule, priorities, and free time.':'optimize','Create a practical upper-body strength routine with suitable measurements for each exercise.':'workout','Analyze my workload, deadlines, unfinished tasks, routines, and focus time. Suggest improvements without changing anything.':'analyze','Give me a concise morning briefing based on my plan for today, my priorities, and available time.':'briefing','Help me understand and reduce an unwanted habit. Ask me what the habit is and what tends to trigger it, then suggest compassionate, practical interventions. Include a dua or Islamic reminder only if I request religious support.':'habit'}; const k=map[b.dataset.prompt]; b.style.display=(k && prefs[k]===false)?'none':'';});
   ov.classList.add('show'); setTimeout(()=>document.getElementById('flowAIInput').focus(),120);
 }
 function closeFlowAI(){document.getElementById('flowAIOverlay').classList.remove('show');}
@@ -6036,25 +6050,31 @@ function flowAISnapshot(){
   return {today,username:state.settings.username||'',events:events.slice(0,160),categories:(state.categories||[]).map(c=>({name:c.name,id:c.id})),routines:(state.routines||[]).map(r=>({title:r.title,days:r.days,steps:(r.steps||[]).map(st=>({title:st.title,notes:st.notes||''})).slice(0,20)})).slice(0,80),habits:(state.habits||[]).map(h=>({title:h.title,frequency:h.freq,days:h.days})).slice(0,80),goals:(state.goals||[]).map(g=>({title:g.title,target:g.target,current:g.current,unit:g.unit,notes:g.notes||''})).slice(0,80),focusStats:{...(state.focusStats||{totalSeconds:0}),todaySeconds:(state.focusStats&&state.focusStats.date===today)?(state.focusStats.todaySeconds||0):0},preferences:{...(state.settings.notificationPrefs||{}),aiFeedback:(state.settings.aiFeedback||[]).slice(-12)}};
 }
 async function requestFlowAI(mode='create'){
-  const endpoint=(state.settings.aiEndpoint||'').trim();
-  if(!endpoint){showToast('Set your secure AI backend endpoint in Settings first. No fake AI fallback is used.', 'error', 5000);document.getElementById('flowAIStatus').textContent='Not connected — configure the backend endpoint in Settings.';return;}
+  const apiKey=(state.settings.geminiApiKey||'').trim();
+  if(!apiKey){showToast('Add your Gemini API key in Settings first.','error',5000);document.getElementById('flowAIStatus').textContent='Not connected — add your Gemini API key in Settings.';return;}
   const input=document.getElementById('flowAIInput').value.trim();
-  flowAILastRequest=input||'Daily briefing / Flowline analysis';
-  if(!input && mode==='create'){showToast('Tell Flowline AI what you need first.','error');return;}
-  const gen=document.getElementById('flowAIGenerate'), status=document.getElementById('flowAIStatus');
-  gen.disabled=true;gen.textContent='Thinking…';status.textContent='Analyzing your request and relevant Flowline data…';
+  if(!input){showToast('Write a message first.','error');return;}
+  flowAILastRequest=input;
+  const gen=document.getElementById('flowAIGenerate'), status=document.getElementById('flowAIStatus'), chat=document.getElementById('flowAIChat');
+  gen.disabled=true;gen.textContent='Thinking…';status.textContent='Thinking with your Flowline data…';
+  chat.style.display='grid';
+  const userMsg=document.createElement('div');userMsg.className='flow-ai-chat-message user';userMsg.textContent='You: '+input;chat.appendChild(userMsg);
+  const systemPrompt=`You are Flowline AI, a practical productivity assistant. Respond conversationally and help with planning, studying, routines, habits, goals, and analysis. Use the user's current Flowline data where useful. Return ONLY valid JSON with this shape: {"summary":"conversational reply to the user","recommendations":["..."],"actions":[{"type":"event|task|routine|habit|goal|note","title":"...","date":"YYYY-MM-DD","start":"HH:MM","end":"HH:MM","category":"category name","notes":"...","steps":[{"title":"...","measurement":"..."}],"days":[0,1,2,3,4,5,6],"frequency":"daily","target":1,"current":0,"unit":""}]}. For ordinary chat/advice, use actions: []. Only create actions when the user clearly asks for something to be added/planned. Keep actions valid and realistic. Do not claim you changed the app; user must tap Add to app to apply actions. Recent conversation: ${Array.from(document.querySelectorAll('#flowAIChat .flow-ai-chat-message')).slice(-12).map(el=>el.textContent).join('\n')}\nCurrent Flowline context: ${JSON.stringify(flowAISnapshot())}\nLatest user message: ${input}`;
   try{
-    const response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({mode,request:input||'Analyze my current Flowline data and provide a concise daily briefing.',context:flowAISnapshot()})});
+    const response=await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent',{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':apiKey},body:JSON.stringify({contents:[{role:'user',parts:[{text:systemPrompt}]}],generationConfig:{responseMimeType:'application/json',temperature:0.45}})});
     const body=await response.json().catch(()=>({}));
-    if(!response.ok)throw new Error(body.error||('AI service returned HTTP '+response.status+'. Check the backend deployment and its logs.'));
-    let proposal=body.proposal||body.result||body;
-    if(typeof proposal==='string'){proposal=proposal.trim().replace(/^```(?:json)?\s*/i,'').replace(/\s*```$/,'');proposal=JSON.parse(proposal);}
-    if(!proposal || typeof proposal!=='object')throw new Error('The AI returned an invalid proposal. Please regenerate.');
-    proposal.summary=String(proposal.summary||'AI proposal ready for review.');
-    if(!Array.isArray(proposal.actions))proposal.actions=[];
-    flowAIPending=proposal; renderFlowAIPreview(proposal); status.textContent='Preview ready. Nothing has been changed yet.';
-  }catch(err){status.textContent='Could not get a valid AI response.';showToast('AI unavailable: '+(err.message||'unknown error'), 'error', 6500);}
-  finally{gen.disabled=false;gen.textContent='Generate with AI ↗';}
+    if(!response.ok){const detail=body.error&&body.error.message?body.error.message:('Google Gemini returned HTTP '+response.status);throw new Error(detail);}
+    const raw=body.candidates&&body.candidates[0]&&body.candidates[0].content&&body.candidates[0].content.parts?body.candidates[0].content.parts.map(p=>p.text||'').join(''):'';
+    if(!raw)throw new Error('Gemini returned an empty response. Check the key, model access, and API quota.');
+    let proposal=JSON.parse(raw.trim().replace(/^```(?:json)?\s*/i,'').replace(/\s*```$/,''));
+    if(!proposal||typeof proposal!=='object')throw new Error('Gemini returned an invalid response.');
+    proposal.summary=String(proposal.summary||'I’m ready to help. What would you like to work on next?');
+    if(!Array.isArray(proposal.actions))proposal.actions=[];if(!Array.isArray(proposal.recommendations))proposal.recommendations=[];
+    const aiMsg=document.createElement('div');aiMsg.className='flow-ai-chat-message';aiMsg.textContent='Flowline AI: '+proposal.summary+(proposal.recommendations.length?'\n\n'+proposal.recommendations.map(x=>'• '+x).join('\n'):'');chat.appendChild(aiMsg);chat.scrollTop=chat.scrollHeight;
+    flowAIPending=proposal;renderFlowAIPreview(proposal);status.textContent=proposal.actions.length?'Suggestion ready. Review it, then tap Add to app.':'Reply ready. Continue chatting or ask Flowline to create something to add.';
+    document.getElementById('flowAIInput').value='';
+  }catch(err){status.textContent='AI error: '+(err.message||'unknown error');showToast('Gemini error: '+(err.message||'unknown error'),'error',9000);}
+  finally{gen.disabled=false;gen.textContent='Send to Flowline AI ↗';}
 }
 function renderFlowAIPreview(proposal){
   document.getElementById('flowAIResultWrap').style.display='block';
@@ -6063,6 +6083,7 @@ function renderFlowAIPreview(proposal){
   cards.innerHTML=(proposal.actions||[]).map((a,i)=>{const type=String(a.type||'event');let detail='';if(type==='event'||type==='task')detail=[a.date||'Today',a.start&&a.end?(a.start+'–'+a.end):'',a.category||''].filter(Boolean).join(' · ');else if(type==='routine')detail=(a.steps||[]).map(st=>st.title+(st.measurement?' — '+st.measurement:'')).join(' • ');else if(type==='habit')detail='Habit · '+(a.frequency||'daily');else if(type==='goal')detail='Goal'+(a.target?' · target '+a.target+(a.unit?' '+a.unit:''):'');else detail=String(a.notes||a.text||'');return '<div class="flow-ai-card"><strong>'+escHtml((i+1)+'. '+(a.title||'Untitled item'))+' <span style="font-size:10px;color:var(--purple);font-weight:700;">'+escHtml(type.toUpperCase())+'</span></strong><small>'+escHtml(detail||'Ready to add after approval.')+'</small></div>';}).join('') || '<div class="flow-ai-card"><strong>Advice only — no changes proposed</strong><small>Review the analysis above. No items will be added.</small></div>';
   document.getElementById('flowAIProposal').value=JSON.stringify(proposal,null,2);
   document.getElementById('flowAIApply').style.display=(proposal.actions||[]).length?'':'none';
+  document.getElementById('flowAIApply').textContent='Add to app';
 }
 document.getElementById('flowAIGenerate').addEventListener('click',()=>requestFlowAI(flowAIMode));
 document.getElementById('flowAIRegenerate').addEventListener('click',()=>requestFlowAI(flowAIMode));
@@ -6135,7 +6156,7 @@ window.flowlineAIBriefing=()=>{openFlowAI();flowAIMode='briefing';document.getEl
   const init = () => {
     document.querySelectorAll('.overlay').forEach(overlay => {
       const modal = overlay.querySelector('.modal');
-      if (!modal || overlay.id === 'confirmOverlay' || modal.querySelector('.flow-popup-close')) return;
+      if (!modal || overlay.id === 'confirmOverlay' || overlay.id === 'flowAIOverlay' || modal.querySelector('.flow-popup-close')) return;
       const close = document.createElement('button');
       close.type = 'button'; close.className = 'flow-popup-close';
       close.setAttribute('aria-label', 'Close dialog'); close.title = 'Close'; close.textContent = '×';
