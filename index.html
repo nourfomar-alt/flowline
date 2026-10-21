@@ -1334,6 +1334,114 @@ body:has(.overlay.show) #bottomNav { display:none !important; }
 @media(prefers-reduced-motion:reduce){.overlay,.overlay .modal{scroll-behavior:auto!important;transition:none!important;animation:none!important;}}
 </style>
 
+
+<style id="flowline-ios-settings-redesign">
+/* Settings redesign: restrained, native-feeling hierarchy inspired by iOS Settings. */
+#settingsOverlay{background:rgba(16,20,28,.42)!important;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:24px 14px!important;align-items:center!important;}
+#settingsOverlay .settings-modal{--settings-ink:#1c1c1e;--settings-muted:#73737a;--settings-line:rgba(60,60,67,.14);width:min(680px,100%)!important;max-width:680px!important;max-height:min(860px,calc(100dvh - 48px))!important;overflow:auto!important;box-sizing:border-box!important;padding:30px 30px 18px!important;border:1px solid rgba(255,255,255,.58)!important;border-radius:26px!important;background:#f5f5f7!important;color:var(--settings-ink)!important;box-shadow:0 30px 90px rgba(0,0,0,.28),0 2px 8px rgba(0,0,0,.05)!important;scrollbar-width:thin;}
+#settingsOverlay .settings-modal h3{font-size:30px!important;line-height:1.12!important;letter-spacing:-.8px!important;font-weight:750!important;margin:0 0 7px!important;padding:0 44px 0 0!important;color:#1c1c1e!important;}
+#settingsOverlay .settings-intro{font-size:14px!important;line-height:1.5!important;color:#77777f!important;margin:0 0 24px!important;}
+#settingsOverlay .settings-group{margin:0 0 12px!important;border:1px solid rgba(60,60,67,.08)!important;border-radius:17px!important;background:#fff!important;overflow:hidden!important;box-shadow:0 1px 2px rgba(0,0,0,.025)!important;}
+#settingsOverlay .settings-group summary{list-style:none!important;display:flex!important;align-items:center!important;gap:14px!important;min-height:68px!important;padding:14px 18px!important;cursor:pointer!important;position:relative!important;background:#fff!important;transition:background .15s ease!important;}
+#settingsOverlay .settings-group summary::-webkit-details-marker{display:none!important;}
+#settingsOverlay .settings-group summary:hover{background:#fafafd!important;}
+#settingsOverlay .settings-group summary::after{content:"";width:8px;height:8px;border-top:1.8px solid #8e8e93;border-right:1.8px solid #8e8e93;transform:rotate(45deg);margin-left:auto;flex-shrink:0;transition:transform .18s ease;}
+#settingsOverlay .settings-group[open] summary::after{transform:rotate(135deg);}
+#settingsOverlay .settings-group summary span{font-size:15px!important;font-weight:650!important;letter-spacing:-.15px!important;color:#1c1c1e!important;}
+#settingsOverlay .settings-group summary small{font-size:12px!important;font-weight:450!important;line-height:1.4!important;color:#85858d!important;margin-left:auto!important;text-align:right!important;max-width:45%!important;}
+#settingsOverlay .settings-group-body{padding:2px 18px 18px!important;border-top:1px solid rgba(60,60,67,.09)!important;background:#fff!important;}
+#settingsOverlay .settings-group-body .field{margin:0!important;padding:14px 0!important;border-bottom:1px solid rgba(60,60,67,.09)!important;}
+#settingsOverlay .settings-group-body .field:last-child{border-bottom:0!important;}
+#settingsOverlay .settings-group-body label:not(.switch):not(.settings-inline-check){display:block!important;font-size:13px!important;font-weight:600!important;color:#333338!important;margin:0 0 8px!important;}
+#settingsOverlay .settings-group-body input:not([type=checkbox]),#settingsOverlay .settings-group-body select,#settingsOverlay .settings-group-body textarea{width:100%!important;min-height:43px!important;box-sizing:border-box!important;padding:10px 12px!important;border:1px solid #d8d8de!important;border-radius:11px!important;background:#f8f8fa!important;color:#1c1c1e!important;font:500 14px/1.4 -apple-system,BlinkMacSystemFont,"SF Pro Text",Inter,system-ui,sans-serif!important;box-shadow:none!important;outline:none!important;transition:border-color .16s ease,box-shadow .16s ease!important;}
+#settingsOverlay .settings-group-body input:focus,#settingsOverlay .settings-group-body select:focus,#settingsOverlay .settings-group-body textarea:focus{border-color:#0a84ff!important;box-shadow:0 0 0 3px rgba(10,132,255,.13)!important;}
+#settingsOverlay .settings-help{font-size:12px!important;line-height:1.5!important;color:#85858d!important;margin-top:7px!important;}
+#settingsOverlay .settings-check-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:0 16px!important;}
+#settingsOverlay .settings-check-grid label{display:flex!important;align-items:center!important;gap:9px!important;min-height:42px!important;margin:0!important;padding:7px 0!important;font-size:13px!important;font-weight:500!important;color:#3a3a40!important;border-bottom:1px solid rgba(60,60,67,.07)!important;}
+#settingsOverlay input[type=checkbox]{accent-color:#007aff!important;width:17px!important;height:17px!important;flex:0 0 auto!important;}
+#settingsOverlay .switch-row{min-height:48px!important;margin:0!important;border-bottom:1px solid rgba(60,60,67,.08)!important;}
+#settingsOverlay .switch-row:last-child{border-bottom:0!important;}
+#settingsOverlay .switch-row label{font-size:14px!important;font-weight:500!important;color:#333338!important;}
+#settingsOverlay .switch{width:46px!important;height:27px!important;}
+#settingsOverlay .switch-track{background:#d1d1d6!important;}
+#settingsOverlay .switch input:checked + .switch-track{background:#34c759!important;}
+#settingsOverlay .switch-track::before{width:23px!important;height:23px!important;left:2px!important;top:2px!important;box-shadow:0 1px 3px rgba(0,0,0,.18)!important;}
+#settingsOverlay .switch input:checked + .switch-track::before{transform:translateX(19px)!important;}
+#settingsOverlay .row2{gap:14px!important;}
+#settingsOverlay .settings-danger{margin:16px 0!important;text-align:center!important;}
+#settingsOverlay .settings-danger button{background:#fff!important;color:#ff3b30!important;border:1px solid rgba(255,59,48,.18)!important;border-radius:12px!important;padding:12px 16px!important;font-size:13px!important;font-weight:600!important;}
+#settingsOverlay .modal-actions{position:sticky!important;bottom:-18px!important;margin:18px -30px -18px!important;padding:15px 30px calc(12px + env(safe-area-inset-bottom))!important;background:rgba(245,245,247,.92)!important;backdrop-filter:blur(18px)!important;-webkit-backdrop-filter:blur(18px)!important;border-top:1px solid rgba(60,60,67,.12)!important;box-shadow:none!important;z-index:5!important;}
+#settingsOverlay #settingsCancelBtn{background:#e8e8ed!important;color:#007aff!important;border:0!important;border-radius:12px!important;font-weight:650!important;min-height:43px!important;padding:0 18px!important;}
+#settingsOverlay #settingsSaveBtn{background:#007aff!important;color:white!important;border:0!important;border-radius:12px!important;font-weight:650!important;min-height:43px!important;padding:0 22px!important;box-shadow:0 2px 5px rgba(0,122,255,.18)!important;}
+#settingsOverlay .flow-popup-close{background:#e8e8ed!important;color:#63636a!important;border:0!important;border-radius:50%!important;width:34px!important;height:34px!important;font-size:20px!important;}
+@media(max-width:700px){#settingsOverlay{padding:calc(10px + env(safe-area-inset-top)) 10px calc(10px + env(safe-area-inset-bottom))!important;}#settingsOverlay .settings-modal{padding:26px 16px 14px!important;border-radius:22px!important;max-height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 20px)!important;}#settingsOverlay .settings-modal h3{font-size:27px!important;}#settingsOverlay .settings-group summary{padding:13px 14px!important;gap:9px!important;}#settingsOverlay .settings-group summary small{max-width:40%!important;font-size:11px!important;}#settingsOverlay .settings-group-body{padding:2px 14px 15px!important;}#settingsOverlay .settings-check-grid{grid-template-columns:1fr!important;}#settingsOverlay .modal-actions{margin:18px -16px -14px!important;padding:12px 16px calc(10px + env(safe-area-inset-bottom))!important;bottom:-14px!important;}}
+@media(prefers-color-scheme:dark){html[data-theme="dark"] #settingsOverlay .settings-modal{background:#1c1c1e!important;color:#f5f5f7!important;--settings-line:rgba(84,84,88,.65);}html[data-theme="dark"] #settingsOverlay .settings-modal h3,html[data-theme="dark"] #settingsOverlay .settings-group summary span{color:#f5f5f7!important;}html[data-theme="dark"] #settingsOverlay .settings-intro,html[data-theme="dark"] #settingsOverlay .settings-help{color:#a1a1a8!important;}html[data-theme="dark"] #settingsOverlay .settings-group,html[data-theme="dark"] #settingsOverlay .settings-group summary,html[data-theme="dark"] #settingsOverlay .settings-group-body{background:#2c2c2e!important;}html[data-theme="dark"] #settingsOverlay .settings-group summary:hover{background:#363638!important;}html[data-theme="dark"] #settingsOverlay .settings-group-body label:not(.switch):not(.settings-inline-check),html[data-theme="dark"] #settingsOverlay .switch-row label,html[data-theme="dark"] #settingsOverlay .settings-check-grid label{color:#e5e5ea!important;}html[data-theme="dark"] #settingsOverlay .settings-group-body input:not([type=checkbox]),html[data-theme="dark"] #settingsOverlay .settings-group-body select,html[data-theme="dark"] #settingsOverlay .settings-group-body textarea{background:#1c1c1e!important;border-color:#48484a!important;color:#f5f5f7!important;}html[data-theme="dark"] #settingsOverlay .modal-actions{background:rgba(28,28,30,.94)!important;}html[data-theme="dark"] #settingsOverlay #settingsCancelBtn{background:#3a3a3c!important;}}
+</style>
+
+<style id="flowline-settings-content-repair">
+/* Settings content visibility repair: preserve native details behaviour and prevent blank accordion panels. */
+#settingsOverlay .settings-modal{color:#1c1c1e!important;background:#f2f2f7!important;}
+#settingsOverlay .settings-modal h3{display:block!important;color:#1c1c1e!important;margin:0 44px 5px 0!important;font-size:27px!important;line-height:1.2!important;font-weight:750!important;letter-spacing:-.6px!important;}
+#settingsOverlay .settings-intro{display:block!important;color:#77777f!important;}
+#settingsOverlay details.settings-group{display:block!important;visibility:visible!important;opacity:1!important;}
+#settingsOverlay details.settings-group>summary{display:flex!important;visibility:visible!important;min-height:70px!important;}
+#settingsOverlay details.settings-group:not([open])>.settings-group-body{display:none!important;}
+#settingsOverlay details.settings-group[open]>.settings-group-body{display:block!important;visibility:visible!important;opacity:1!important;height:auto!important;max-height:none!important;overflow:visible!important;}
+#settingsOverlay .settings-group-body .field,#settingsOverlay .settings-group-body .row2,#settingsOverlay .settings-group-body .switch-row,#settingsOverlay .settings-group-body .settings-help{visibility:visible!important;opacity:1!important;}
+#settingsOverlay .settings-group-body .field{display:block!important;}
+#settingsOverlay .settings-group-body label{color:#333338!important;}
+#settingsOverlay .settings-group-body .settings-help{color:#77777f!important;}
+#settingsOverlay .settings-danger{display:block!important;margin:18px 0!important;padding:14px!important;background:#fff!important;border:1px solid #ffd7d7!important;border-radius:14px!important;}
+#settingsOverlay #settingsResetBtn{display:block!important;width:100%!important;min-height:44px!important;border:0!important;border-radius:11px!important;background:#fff0f0!important;color:#c62828!important;font-weight:650!important;cursor:pointer!important;}
+#settingsOverlay .modal-actions{display:flex!important;align-items:center!important;gap:8px!important;}
+@media(prefers-color-scheme:dark){html[data-theme="dark"] #settingsOverlay .settings-modal{background:#1c1c1e!important;color:#f5f5f7!important;}html[data-theme="dark"] #settingsOverlay .settings-modal h3{color:#f5f5f7!important;}html[data-theme="dark"] #settingsOverlay .settings-danger{background:#2c2c2e!important;border-color:#633!important;}html[data-theme="dark"] #settingsOverlay #settingsResetBtn{background:#3a2022!important;color:#ff6961!important;}}
+</style>
+
+
+<style id="flowline-settings-hard-fix-v2">
+/* Hard override for the collapsed accordion rows that were rendering as thin white bars. */
+#settingsOverlay .settings-modal { display:block!important; height:auto!important; min-height:0!important; }
+#settingsOverlay details.settings-group {
+  display:block!important; position:relative!important; height:auto!important; min-height:68px!important;
+  max-height:none!important; flex:none!important; visibility:visible!important; opacity:1!important;
+  overflow:hidden!important; margin:0 0 12px!important; padding:0!important; line-height:normal!important;
+}
+#settingsOverlay details.settings-group > summary {
+  display:flex!important; box-sizing:border-box!important; position:relative!important;
+  width:100%!important; height:auto!important; min-height:68px!important; max-height:none!important;
+  padding:16px 18px!important; margin:0!important; overflow:visible!important; clip:auto!important;
+  align-items:center!important; justify-content:flex-start!important; gap:12px!important;
+  line-height:1.35!important; white-space:normal!important; color:#1c1c1e!important;
+}
+#settingsOverlay details.settings-group > summary > span {
+  display:block!important; flex:1 1 auto!important; min-width:0!important; height:auto!important;
+  max-height:none!important; overflow:visible!important; visibility:visible!important; opacity:1!important;
+  color:#1c1c1e!important; font-size:15px!important; line-height:1.35!important;
+}
+#settingsOverlay details.settings-group > summary > small {
+  display:block!important; flex:0 1 44%!important; height:auto!important; max-height:none!important;
+  overflow:visible!important; visibility:visible!important; opacity:1!important; line-height:1.35!important;
+  white-space:normal!important; color:#77777f!important;
+}
+#settingsOverlay details.settings-group:not([open]) > .settings-group-body { display:none!important; }
+#settingsOverlay details.settings-group[open] > .settings-group-body {
+  display:block!important; height:auto!important; min-height:0!important; max-height:none!important;
+  overflow:visible!important; visibility:visible!important; opacity:1!important; padding:8px 18px 18px!important;
+}
+#settingsOverlay .settings-group-body *, #settingsOverlay .settings-group-body .field,
+#settingsOverlay .settings-group-body .row2, #settingsOverlay .settings-group-body .switch-row {
+  max-height:none!important; visibility:visible!important; opacity:1!important;
+}
+#settingsOverlay .settings-group-body .field { display:block!important; height:auto!important; overflow:visible!important; }
+#settingsOverlay .settings-group-body .settings-check-grid { display:grid!important; grid-template-columns:repeat(2,minmax(0,1fr))!important; }
+@media(max-width:700px){
+ #settingsOverlay details.settings-group > summary {padding:15px 14px!important;gap:8px!important;}
+ #settingsOverlay details.settings-group > summary > small {flex-basis:38%!important;font-size:11px!important;}
+ #settingsOverlay details.settings-group[open] > .settings-group-body {padding:8px 14px 15px!important;}
+ #settingsOverlay .settings-group-body .settings-check-grid {grid-template-columns:1fr!important;}
+}
+</style>
+
 </head>
 <body>
 <div id="splashScreen">
@@ -1409,7 +1517,7 @@ body:has(.overlay.show) #bottomNav { display:none !important; }
     <div class="sb-focus-info">
       <div class="sb-focus-label">Focus Mode</div>
       <div class="sb-focus-title">Deep Work</div>
-      <div class="sb-focus-time">25:00 remaining</div>
+      <div class="sb-focus-time">00:00 elapsed</div>
     </div>
     <button class="sb-focus-play" id="sbFocusPlay" title="Start focus session" type="button"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20"/></svg></button>
   </div>
@@ -1421,7 +1529,7 @@ body:has(.overlay.show) #bottomNav { display:none !important; }
     <div class="greeting-text" id="greetingText"></div>
     <div class="greeting-date" id="greetingDate"></div>
     <div class="greeting-quote" id="greetingQuote"></div>
-    <button class="btn btn-ghost greeting-ai-btn" id="dailyBriefingBtn" type="button">✦ AI daily briefing</button>
+    <button class="btn btn-ghost greeting-ai-btn" id="aiAssistantBtn" type="button">✦ AI Assistant</button>
   </div>
 
   <header>
@@ -1713,75 +1821,45 @@ body:has(.overlay.show) #bottomNav { display:none !important; }
 <div class="overlay" id="settingsOverlay">
   <div class="modal settings-modal">
     <h3>Settings</h3>
-    <div class="field"><label for="settingsUsername">Username</label><input type="text" id="settingsUsername" maxlength="40" autocomplete="nickname" placeholder="e.g. Nour"><div style="font-size:11px;color:var(--ink-soft);margin-top:4px;">Used in your daily greeting, like “Good Morning, Nour”.</div></div>
-    <div class="field"><label for="settingsGeminiKey">Gemini API key</label><input type="password" id="settingsGeminiKey" autocomplete="off" placeholder="Paste your Gemini API key"><div style="font-size:11px;color:var(--ink-soft);margin-top:4px;">Connect directly to Gemini without a backend URL. The key is stored in this browser only; anyone with access to this device/browser data may be able to retrieve it. For a public website, a secure backend is safer.</div><label style="display:flex;align-items:center;gap:8px;margin-top:8px;font-weight:500;"><input type="checkbox" id="settingsShowGeminiKey" style="width:auto;"> Show API key</label></div>
-    <div class="field"><label>AI suggestions shown in the assistant</label><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px;"><label><input type="checkbox" id="aiPromptOptimize"> Optimize my day</label><label><input type="checkbox" id="aiPromptWorkout"> Build a workout</label><label><input type="checkbox" id="aiPromptAnalyze"> Analyze my Flowline</label><label><input type="checkbox" id="aiPromptBriefing"> Daily briefing</label><label><input type="checkbox" id="aiPromptHabit"> Habit support</label></div><div style="font-size:11px;color:var(--ink-soft);margin-top:4px;">Choose which quick suggestions appear in AI Assistant.</div></div>
-    <div class="row2">
-      <div class="field">
-        <label>Show grid from</label>
-        <select id="settingsStartHour"></select>
-      </div>
-      <div class="field">
-        <label>Until</label>
-        <select id="settingsEndHour"></select>
-      </div>
-    </div>
-    <div style="font-size:11px;color:var(--ink-soft);margin-bottom:14px;">Trims the weekly view to only the hours you actually use. Doesn't affect Today or Month.</div>
-    <div class="field">
-      <label>Open to this view by default</label>
-      <select id="settingsDefaultTab">
-        <option value="week">Week</option>
-        <option value="today">Today</option>
-        <option value="month">Month</option>
-        <option value="year">Year</option>
-      </select>
-    </div>
-    <div class="field">
-      <label>Appearance</label>
-      <select id="settingsThemeSelect">
-        <option value="light">Light</option>
-        <option value="dark">Dark</option>
-      </select>
-    </div>
-    <div class="field">
-      <label>Accent color</label>
-      <div id="accentSwatches" style="display:flex;gap:8px;"></div>
-    </div>
-    <div class="field">
-      <div class="switch-row">
-        <label for="settingsNotifToggle" style="margin-bottom:0;">Notifications</label>
-        <label class="switch">
-          <input type="checkbox" id="settingsNotifToggle">
-          <span class="switch-track"></span>
-        </label>
-      </div>
-      <div class="switch-status" id="settingsNotifStatus"></div>
-    </div>
-    <div class="field flow-notif-options">
+    <p class="settings-intro">Make Flowline work the way you do.</p>
+    <details class="settings-group" open><summary><span>Account & Privacy</span><small>Your profile and AI connection</small></summary><div class="settings-group-body">
+      <div class="field"><label for="settingsUsername">Username</label><input type="text" id="settingsUsername" maxlength="40" autocomplete="nickname" placeholder="e.g. Nour"><div class="settings-help">Used in your daily greeting.</div></div>
+      <div class="field"><label for="settingsGeminiKey">Gemini API Key</label><input type="password" id="settingsGeminiKey" autocomplete="off" placeholder="Paste your Gemini API Key"><div class="settings-help">Stored in this browser only. Anyone with access to this browser data may be able to retrieve it; a secure backend is safer for a public website.</div><label class="settings-inline-check"><input type="checkbox" id="settingsShowGeminiKey" style="width:auto;"> Show API key</label></div>
+      <div class="field"><label>AI quick actions</label><div class="settings-check-grid"><label><input type="checkbox" id="aiPromptOptimize"> Optimize my day</label><label><input type="checkbox" id="aiPromptWorkout"> Build a workout</label><label><input type="checkbox" id="aiPromptAnalyze"> Analyze my Flowline</label><label><input type="checkbox" id="aiPromptHabit"> Habit support</label></div><div class="settings-help">Choose which suggestions appear in AI Assistant.</div></div>
+    </div></details>
+    <details class="settings-group"><summary><span>Routine Settings</span><small>Planner hours and default view</small></summary><div class="settings-group-body">
+      <div class="row2"><div class="field"><label>Show grid from</label><select id="settingsStartHour"></select></div><div class="field"><label>Until</label><select id="settingsEndHour"></select></div></div>
+      <div class="settings-help">Trims the weekly view only.</div>
+      <div class="field"><label>Open to this view by default</label><select id="settingsDefaultTab"><option value="week">Week</option><option value="today">Today</option><option value="month">Month</option><option value="year">Year</option></select></div>
+      <div class="field"><label>Remind me before each task</label><select id="settingsReminderMin"><option value="0">At the exact time</option><option value="5">5 minutes before</option><option value="10">10 minutes before</option><option value="15">15 minutes before</option><option value="30">30 minutes before</option><option value="60">1 hour before</option></select><div class="settings-help">Applies to reminders in exported calendar files.</div></div>
+    </div></details>
+    <details class="settings-group"><summary><span>Habit Settings</span><small>Habit reminders and support</small></summary><div class="settings-group-body">
+      <div class="switch-row"><label for="settingsHabitNotif">Habit reminders</label><label class="switch"><input type="checkbox" id="settingsHabitNotif" checked><span class="switch-track"></span></label></div>
+      <div class="settings-help">AI habit support is available any time from AI Assistant.</div>
+    </div></details>
+    <details class="settings-group"><summary><span>Focus Mode</span><small>Choose your focus workspace</small></summary><div class="settings-group-body">
+      <div class="settings-help">Choose the panels available in your focus workspace. The timer counts up from 00:00 and your session is recorded. A website cannot block other phone apps; use your device’s Screen Time / Digital Wellbeing for that.</div>
+      <div class="settings-check-grid focus-choice-grid">
+        <label><input type="checkbox" id="focusShowCurrent" checked> Current task</label><label><input type="checkbox" id="focusShowToday" checked> Today's plan</label><label><input type="checkbox" id="focusShowUpcoming"> Up next</label><label><input type="checkbox" id="focusShowElapsed" checked> Time spent</label>
+        <label><input type="checkbox" id="focusShowHabits"> Habits</label><label><input type="checkbox" id="focusShowRoutines"> Routines</label><label><input type="checkbox" id="focusShowGoals"> Goals</label><label><input type="checkbox" id="focusShowAI"> AI Assistant</label>
+      </div><div class="settings-help">Only selected panels appear in Focus Mode. Unselected parts of Flowline stay behind the focus workspace until you choose Exit focus.</div>
+      <div class="field"><label>Focus background</label><select id="focusModeStyle"><option value="calm">Calm and minimal</option><option value="dark">Dark focus</option></select></div>
+      <div class="field" style="margin-top:16px"><button type="button" class="btn btn-primary" id="settingsEnterFocusBtn" style="width:100%">Enter Focus Mode →</button><div class="settings-help">Save your selections first, then enter a distraction-free workspace showing only the panels you chose.</div></div>
+    </div></details>
+    <details class="settings-group"><summary><span>Appearance</span><small>Theme and accent color</small></summary><div class="settings-group-body">
+      <div class="field"><label>Theme</label><select id="settingsThemeSelect"><option value="light">Light</option><option value="dark">Dark</option></select></div>
+      <div class="field"><label>Accent color</label><div id="accentSwatches" style="display:flex;gap:8px;flex-wrap:wrap;"></div></div>
+    </div></details>
+    <details class="settings-group"><summary><span>Notifications</span><small>Choose what Flowline reminds you about</small></summary><div class="settings-group-body">
+      <div class="field"><div class="switch-row"><label for="settingsNotifToggle" style="margin-bottom:0;">Notifications</label><label class="switch"><input type="checkbox" id="settingsNotifToggle"><span class="switch-track"></span></label></div><div class="switch-status" id="settingsNotifStatus"></div></div>
       <div class="switch-row"><label for="settingsTaskNotif">Task reminders</label><label class="switch"><input type="checkbox" id="settingsTaskNotif" checked><span class="switch-track"></span></label></div>
       <div class="switch-row"><label for="settingsRoutineNotif">Routine reminders</label><label class="switch"><input type="checkbox" id="settingsRoutineNotif" checked><span class="switch-track"></span></label></div>
-      <div class="switch-row"><label for="settingsHabitNotif">Habit reminders</label><label class="switch"><input type="checkbox" id="settingsHabitNotif" checked><span class="switch-track"></span></label></div>
       <div class="switch-row"><label for="settingsDeadlineNotif">Exam / deadline reminders</label><label class="switch"><input type="checkbox" id="settingsDeadlineNotif" checked><span class="switch-track"></span></label></div>
       <div class="switch-row"><label for="settingsFocusNotif">Focus reminders</label><label class="switch"><input type="checkbox" id="settingsFocusNotif"><span class="switch-track"></span></label></div>
       <div class="switch-row"><label for="settingsAINotif">AI recommendations</label><label class="switch"><input type="checkbox" id="settingsAINotif" checked><span class="switch-track"></span></label></div>
-      <div class="switch-row"><label for="settingsBriefingNotif">Daily briefing</label><label class="switch"><input type="checkbox" id="settingsBriefingNotif" checked><span class="switch-track"></span></label></div>
-      <div style="font-size:11px;color:var(--ink-soft);margin-top:6px;">Individual categories are saved as preferences. Browser delivery depends on permission and whether Flowline is open.</div>
-    </div>
-    <div class="field">
-      <label>Remind me before each task</label>
-      <select id="settingsReminderMin">
-        <option value="0">At the exact time</option>
-        <option value="5">5 minutes before</option>
-        <option value="10">10 minutes before</option>
-        <option value="15">15 minutes before</option>
-        <option value="30">30 minutes before</option>
-        <option value="60">1 hour before</option>
-      </select>
-      <div style="font-size:11px;color:var(--ink-soft);margin-top:4px;">Applies to reminders in the calendar file you export.</div>
-    </div>
-    <div style="border-top:1px solid var(--line);margin:14px 0 12px;padding-top:12px;">
-      <button id="settingsResetBtn" style="background:none;border:none;color:var(--exam);text-decoration:underline;cursor:pointer;font-size:12px;">Clear all data and start fresh</button>
-    </div>
+      <div class="settings-help">Browser notifications depend on permission and Flowline being open.</div>
+    </div></details>
+    <div class="settings-danger"><button id="settingsResetBtn" type="button">Clear all data and start fresh</button></div>
     <div class="modal-actions">
       <div style="flex:1"></div>
       <button class="btn btn-ghost" id="settingsCancelBtn" style="margin-right:8px;">Cancel</button>
@@ -1928,19 +2006,20 @@ body:has(.overlay.show) #bottomNav { display:none !important; }
     <div class="field"><label>Media</label>
       <select id="stepMediaType">
         <option value="none">None</option>
-        <option value="youtube">YouTube link</option>
+        <option value="youtube">YouTube video</option>
+        <option value="tiktok">TikTok video</option>
         <option value="video">Upload video</option>
         <option value="image">Upload image</option>
         <option value="pdf">Upload PDF</option>
         <option value="link">Link</option>
       </select>
     </div>
-    <div class="field" id="stepYoutubeField" style="display:none;"><label>YouTube URL</label><input type="text" id="stepYoutubeUrl" placeholder="https://youtube.com/watch?v=..."></div>
+    <div class="field" id="stepYoutubeField" style="display:none;"><label>Video URL</label><input type="text" id="stepYoutubeUrl" placeholder="YouTube or TikTok URL"></div>
     <div class="field" id="stepLinkField" style="display:none;"><label>URL</label><input type="text" id="stepLinkUrl" placeholder="https://..."></div>
     <div class="field" id="stepFileField" style="display:none;">
       <label>File</label>
       <input type="file" id="stepFileInput">
-      <div style="font-size:11px;color:var(--ink-soft);margin-top:4px;">Stored on this device only. Very large files may fail to save — a YouTube link is more reliable for long videos.</div>
+      <div style="font-size:11px;color:var(--ink-soft);margin-top:4px;">Saved in this browser on this device. For smooth performance, use YouTube for long videos; local video files must be small (max 2 MB), images max 1.5 MB, and PDFs max 2 MB.</div>
     </div>
     <div class="modal-actions">
       <button class="danger" id="stepDeleteBtn" style="display:none;">Delete</button>
@@ -2021,18 +2100,17 @@ body:has(.overlay.show) #bottomNav { display:none !important; }
 </div>
 
 <!-- FLOWLINE AI: direct Gemini integration; API key is configured in Settings -->
-<div class="overlay" id="flowAIOverlay" style="z-index:1200;">
+<div class="overlay" id="flowAIOverlay" style="z-index:1500;">
   <div class="modal flow-ai-modal" role="dialog" aria-modal="true" aria-labelledby="flowAITitle">
     <div class="modal-titlebar"><div><h3 id="flowAITitle">Flowline AI</h3><div class="flow-ai-subtitle">Plan, organize, and improve your day — with your approval.</div></div><button class="btn btn-ghost flow-popup-close" id="flowAIClose" type="button" aria-label="Close AI">✕</button></div>
     <div class="flow-ai-prompts" id="flowAIPrompts">
       <button type="button" data-prompt-key="optimize" data-mode="create" data-prompt="Plan my day around my existing schedule, priorities, and free time.">📅 Optimize my day</button>
       <button type="button" data-prompt-key="workout" data-mode="create" data-prompt="Create a practical upper-body strength routine with suitable measurements for each exercise.">💪 Build a workout</button>
       <button type="button" data-prompt-key="analyze" data-mode="analysis" data-prompt="Analyze my workload, deadlines, unfinished tasks, routines, and focus time. Suggest improvements without changing anything.">📊 Analyze my Flowline</button>
-      <button type="button" data-prompt-key="briefing" data-mode="briefing" data-prompt="Give me a concise morning briefing based on my plan for today, my priorities, and available time.">☀️ Daily briefing</button>
-      <button type="button" data-prompt-key="habit" data-mode="habit_support" data-prompt="Help me understand and reduce an unwanted habit. Ask me what the habit is and what tends to trigger it, then suggest compassionate, practical interventions. Include a dua or Islamic reminder only if I request religious support.">🫶 Habit support</button>
+      <button type="button" data-prompt-key="habit" data-mode="habit_support" data-prompt="Help me overcome an unwanted habit with compassionate practical steps, urge management, motivation, a simple daily plan, and a short optional Islamic dua/reminder. Ask about triggers without judging or shaming me.">🫶 Habit support</button>
     </div>
     <div id="flowAIChat" class="flow-ai-chat" aria-live="polite" style="display:none"></div><label for="flowAIInput" class="flow-ai-label">What do you need help with?</label>
-    <textarea id="flowAIInput" rows="3" placeholder="e.g. I have two exams next week. Make a realistic study plan around my current schedule…"></textarea>
+    <textarea id="flowAIInput" rows="3" placeholder="Ask anything, or paste a YouTube/TikTok link and ask me to add it to a routine…"></textarea><div class="settings-help" style="margin-top:5px;">Video links can be attached to routine steps. Flowline AI can’t reliably watch the video itself from a link alone, so include a short description if you want the routine based on its exact contents.</div>
     <div class="flow-ai-actions"><button class="btn btn-primary" id="flowAIGenerate" type="button">Send to Flowline AI ↗</button><span id="flowAIStatus" role="status">AI is not configured yet.</span></div>
     <div id="flowAIResultWrap" style="display:none;">
       <div class="flow-ai-preview-head"><div><strong>Review before applying</strong><div class="flow-ai-subtitle">Nothing changes until you approve it.</div></div><span class="flow-ai-badge">PREVIEW</span></div>
@@ -2048,12 +2126,20 @@ body:has(.overlay.show) #bottomNav { display:none !important; }
 
 <!-- Dedicated focus workspace -->
 <div class="flow-focus-overlay" id="flowFocusOverlay" aria-modal="true" role="dialog" aria-labelledby="flowFocusHeading" style="display:none;">
-  <div class="flow-focus-top"><div class="flow-focus-brand">◈ Flowline <span>FOCUS</span></div><button class="btn btn-ghost" id="flowFocusExit" type="button">Exit focus ✕</button></div>
+  <div class="flow-focus-top"><div class="flow-focus-brand">◈ Flowline <span>FOCUS</span></div><button class="btn btn-ghost" id="flowFocusExit" type="button">Turn off Focus Mode ✕</button></div>
   <div class="flow-focus-content"><div class="flow-focus-eyebrow">ONE THING AT A TIME</div><h1 id="flowFocusHeading">Make space for deep work.</h1><p class="flow-focus-sub">Your day, without the noise.</p>
-    <div class="flow-focus-timer" id="flowFocusTimer">25:00</div><div class="flow-focus-elapsed" id="flowFocusElapsed">0 minutes focused today</div>
-    <div class="flow-focus-controls"><button class="btn btn-primary" id="flowFocusStart" type="button">▶ Start session</button><button class="btn btn-ghost" id="flowFocusReset" type="button">↻ Reset</button></div>
-    <div class="flow-focus-grid"><section><div class="flow-focus-section-title">CURRENT TASK</div><div id="flowFocusCurrent" class="flow-focus-task">Choose one priority and begin.</div></section><section><div class="flow-focus-section-title">TODAY'S PLAN</div><div id="flowFocusToday" class="flow-focus-list"></div></section><section><div class="flow-focus-section-title">UP NEXT</div><div id="flowFocusUpcoming" class="flow-focus-list"></div></section></div>
-    <div class="flow-focus-note">Focus Mode simplifies Flowline; browser-based pages cannot block other apps or websites. Use your device's app/site limits for that.</div>
+    <div class="flow-focus-timer" id="flowFocusTimer">00:00</div><div class="flow-focus-elapsed" id="flowFocusElapsed">00:00 spent this session · 0 minutes today</div>
+    <div class="flow-focus-controls"><button class="btn btn-primary" id="flowFocusStart" type="button">▶ Start session</button><button class="btn btn-ghost" id="flowFocusReset" type="button">↻ Reset timer</button></div>
+    <div class="flow-focus-grid" id="flowFocusPanels">
+      <section data-focus-panel="current"><div class="flow-focus-section-title">CURRENT TASK</div><div id="flowFocusCurrent" class="flow-focus-task">Choose one priority and begin.</div></section>
+      <section data-focus-panel="today"><div class="flow-focus-section-title">TODAY'S PLAN</div><div id="flowFocusToday" class="flow-focus-list"></div></section>
+      <section data-focus-panel="upcoming"><div class="flow-focus-section-title">UP NEXT</div><div id="flowFocusUpcoming" class="flow-focus-list"></div></section>
+      <section data-focus-panel="habits"><div class="flow-focus-section-title">HABITS</div><div id="flowFocusHabits" class="flow-focus-list"></div></section>
+      <section data-focus-panel="routines"><div class="flow-focus-section-title">ROUTINES</div><div id="flowFocusRoutines" class="flow-focus-list"></div></section>
+      <section data-focus-panel="goals"><div class="flow-focus-section-title">GOALS</div><div id="flowFocusGoals" class="flow-focus-list"></div></section>
+      <section data-focus-panel="ai"><div class="flow-focus-section-title">FLOWLINE AI</div><p class="flow-focus-task">Your assistant stays one tap away while you focus.</p><button class="btn btn-primary" id="flowFocusAskAI" type="button">✦ Ask Flowline AI</button></section>
+    </div>
+    <div class="flow-focus-note">Focus Mode keeps Flowline limited to the panels you selected. It cannot block other phone apps or websites.</div>
   </div>
 </div>
 
@@ -2108,8 +2194,8 @@ function loadState(){
       if(parsed.settings.notifEnabled===undefined) parsed.settings.notifEnabled = true;
       if(parsed.settings.routineDayResetHour===undefined) parsed.settings.routineDayResetHour = 0;
       if(parsed.settings.username===undefined) parsed.settings.username = '';
-      if(parsed.settings.aiEndpoint===undefined) parsed.settings.aiEndpoint = ''; if(parsed.settings.geminiApiKey===undefined) parsed.settings.geminiApiKey=''; if(!parsed.settings.aiPromptPrefs) parsed.settings.aiPromptPrefs={optimize:true,workout:true,analyze:true,briefing:true,habit:true};
-      if(!parsed.settings.notificationPrefs) parsed.settings.notificationPrefs = {task:true,routine:true,habit:true,deadline:true,focus:false,ai:true,briefing:true};
+      if(parsed.settings.aiEndpoint===undefined) parsed.settings.aiEndpoint = ''; if(parsed.settings.geminiApiKey===undefined) parsed.settings.geminiApiKey=''; if(!parsed.settings.aiPromptPrefs) parsed.settings.aiPromptPrefs={optimize:true,workout:true,analyze:true,habit:true}; delete parsed.settings.aiPromptPrefs.briefing;
+      if(!parsed.settings.notificationPrefs) parsed.settings.notificationPrefs = {task:true,routine:true,habit:true,deadline:true,focus:false,ai:true}; delete parsed.settings.notificationPrefs.briefing;
       if(!parsed.focusStats) parsed.focusStats = {totalSeconds:0, sessions:[], todaySeconds:0, date:''};
       if(!parsed.routineSessions) parsed.routineSessions = {};
       Object.values(parsed.routineSessions).forEach(session=>{if(session&&session.active){session.active=false;session.startedAt=0;}}); // a closed tab should not accrue routine time
@@ -2125,7 +2211,7 @@ function loadState(){
       {id:'school', name:'School', color:'#8B5CF6'},
     ],
     events: [],
-    settings: { startHour: 0, endHour: 24, reminderMinutes: 10, notifTiming: 10, notifPromptDismissed: false, notifEnabled: true, routineDayResetHour: 0, username:'', aiEndpoint:'', geminiApiKey:'', aiPromptPrefs:{optimize:true,workout:true,analyze:true,briefing:true,habit:true}, notificationPrefs:{task:true,routine:true,habit:true,deadline:true,focus:false,ai:true,briefing:true} },
+    settings: { startHour: 0, endHour: 24, reminderMinutes: 10, notifTiming: 10, notifPromptDismissed: false, notifEnabled: true, routineDayResetHour: 0, username:'', aiEndpoint:'', geminiApiKey:'', aiPromptPrefs:{optimize:true,workout:true,analyze:true,habit:true}, notificationPrefs:{task:true,routine:true,habit:true,deadline:true,focus:false,ai:true} },
     focusStats: {totalSeconds:0,sessions:[],todaySeconds:0,date:''}, routineSessions: {},
     stats: { streak: 0, lastStreakDate: null, longestStreak: 0 },
     goals: [], habits: [], routines: [], notes: [],
@@ -3481,12 +3567,14 @@ document.getElementById('settingsBtn').addEventListener('click', ()=>{
   document.getElementById('settingsDefaultTab').value = state.settings.defaultTab || 'week';
   document.getElementById('settingsThemeSelect').value = currentTheme();
   document.getElementById('settingsReminderMin').value = state.settings.reminderMinutes ?? 10;
+  const fp=state.settings.focusPrefs||{}; [['focusShowCurrent','showCurrent',true],['focusShowToday','showToday',true],['focusShowUpcoming','showUpcoming',false],['focusShowElapsed','showElapsed',true],['focusShowHabits','showHabits',false],['focusShowRoutines','showRoutines',false],['focusShowGoals','showGoals',false],['focusShowAI','showAI',false]].forEach(([id,k,d])=>{const el=document.getElementById(id);if(el)el.checked=fp[k]===undefined?d:!!fp[k];});
+  document.getElementById('focusModeStyle').value=(state.settings.focusPrefs||{}).style||'calm';
   document.getElementById('settingsUsername').value = state.settings.username || '';
   document.getElementById('settingsGeminiKey').value = state.settings.geminiApiKey || '';
-  const ap=state.settings.aiPromptPrefs||{optimize:true,workout:true,analyze:true,briefing:true,habit:true};
-  [['aiPromptOptimize','optimize'],['aiPromptWorkout','workout'],['aiPromptAnalyze','analyze'],['aiPromptBriefing','briefing'],['aiPromptHabit','habit']].forEach(([id,k])=>{const el=document.getElementById(id);if(el)el.checked=ap[k]!==false;});
+  const ap=state.settings.aiPromptPrefs||{optimize:true,workout:true,analyze:true,habit:true};
+  [['aiPromptOptimize','optimize'],['aiPromptWorkout','workout'],['aiPromptAnalyze','analyze'],['aiPromptHabit','habit']].forEach(([id,k])=>{const el=document.getElementById(id);if(el)el.checked=ap[k]!==false;});
   const np = state.settings.notificationPrefs || {};
-  [['Task','task',true],['Routine','routine',true],['Habit','habit',true],['Deadline','deadline',true],['Focus','focus',false],['AI','ai',true],['Briefing','briefing',true]].forEach(([label,key,def])=>{const el=document.getElementById('settings'+label+'Notif');if(el)el.checked=np[key]===undefined?def:!!np[key];});
+  [['Task','task',true],['Routine','routine',true],['Habit','habit',true],['Deadline','deadline',true],['Focus','focus',false],['AI','ai',true]].forEach(([label,key,def])=>{const el=document.getElementById('settings'+label+'Notif');if(el)el.checked=np[key]===undefined?def:!!np[key];});
   renderNotifToggle();
 
   const activeAccent = state.settings.accentColor || ACCENT_OPTIONS[0];
@@ -3513,8 +3601,21 @@ document.getElementById('settingsCancelBtn').addEventListener('click', ()=>{
   document.getElementById('settingsOverlay').classList.remove('show');
 });
 document.getElementById('settingsResetBtn').addEventListener('click', async ()=>{
-  if(!(await showConfirm('This will permanently delete every event and category on this device. Continue?', {title:'Reset all data?'}))) return;
-  try{ localStorage.removeItem(STORE_KEY); }catch(e){}
+  if(!(await showConfirm('This permanently deletes your Flowline planner, routines, habits, goals, notes, settings and saved app data from this browser. This cannot be undone. Continue?', {title:'Clear all Flowline data?'}))) return;
+  try {
+    const keysToRemove=[];
+    for(let i=0;i<localStorage.length;i++){
+      const key=localStorage.key(i);
+      if(!key) continue;
+      if(key===STORE_KEY || /^flowline([:_-]|$)/i.test(key) || /^fl_[a-z0-9:_-]+$/i.test(key)) keysToRemove.push(key);
+    }
+    keysToRemove.forEach(key=>localStorage.removeItem(key));
+    try{ sessionStorage.clear(); }catch(e){}
+  } catch(err) {
+    console.error('Flowline reset failed:',err);
+    if(typeof showToast==='function') showToast('Could not clear all data. Check browser storage permissions.');
+    return;
+  }
   location.reload();
 });
 document.getElementById('settingsSaveBtn').addEventListener('click', ()=>{
@@ -3528,10 +3629,11 @@ document.getElementById('settingsSaveBtn').addEventListener('click', ()=>{
   // Previously one invalid range cancelled every setting, making Settings feel broken.
   state.settings.defaultTab = document.getElementById('settingsDefaultTab').value;
   state.settings.reminderMinutes = Number(document.getElementById('settingsReminderMin').value);
+  state.settings.focusPrefs = {showCurrent:document.getElementById('focusShowCurrent').checked,showToday:document.getElementById('focusShowToday').checked,showUpcoming:document.getElementById('focusShowUpcoming').checked,showElapsed:document.getElementById('focusShowElapsed').checked,showHabits:document.getElementById('focusShowHabits').checked,showRoutines:document.getElementById('focusShowRoutines').checked,showGoals:document.getElementById('focusShowGoals').checked,showAI:document.getElementById('focusShowAI').checked,style:document.getElementById('focusModeStyle').value};
   state.settings.username = document.getElementById('settingsUsername').value.trim().slice(0,40);
   state.settings.geminiApiKey = document.getElementById('settingsGeminiKey').value.trim();
   state.settings.aiEndpoint = ''; // direct Gemini mode; no backend URL required
-  state.settings.aiPromptPrefs = {optimize:document.getElementById('aiPromptOptimize').checked,workout:document.getElementById('aiPromptWorkout').checked,analyze:document.getElementById('aiPromptAnalyze').checked,briefing:document.getElementById('aiPromptBriefing').checked,habit:document.getElementById('aiPromptHabit').checked};
+  state.settings.aiPromptPrefs = {optimize:document.getElementById('aiPromptOptimize').checked,workout:document.getElementById('aiPromptWorkout').checked,analyze:document.getElementById('aiPromptAnalyze').checked,habit:document.getElementById('aiPromptHabit').checked};
   applyFlowAIPromptPrefs();
   if(hoursValid){
     state.settings.startHour = requestedStart;
@@ -3544,7 +3646,6 @@ document.getElementById('settingsSaveBtn').addEventListener('click', ()=>{
     deadline:document.getElementById('settingsDeadlineNotif').checked,
     focus:document.getElementById('settingsFocusNotif').checked,
     ai:document.getElementById('settingsAINotif').checked,
-    briefing:document.getElementById('settingsBriefingNotif').checked
   };
   const chosenAccent = document.getElementById('accentSwatches').dataset.selected;
   if(chosenAccent){ state.settings.accentColor = chosenAccent; applyAccentColor(chosenAccent); }
@@ -4035,7 +4136,7 @@ document.querySelectorAll('.sb-item[data-sb], .bn-item[data-sb]').forEach(btn=>{
   if(!playBtn || !ringFg || !timeEl) return;
 
   const TOTAL_SECONDS = 25*60;
-  let remaining = TOTAL_SECONDS;
+  let elapsed = 0;
   let running = false;
   let timerId = null;
   const CIRC = 113; // matches stroke-dasharray set in CSS/SVG
@@ -4044,29 +4145,22 @@ document.querySelectorAll('.sb-item[data-sb], .bn-item[data-sb]').forEach(btn=>{
   const pauseIcon = '<svg viewBox="0 0 24 24"><rect x="5" y="4" width="5" height="16" rx="1"/><rect x="14" y="4" width="5" height="16" rx="1"/></svg>';
 
   function render(){
-    const m = Math.floor(remaining/60), s = remaining%60;
-    timeEl.textContent = String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')+' remaining';
-    const progress = 1 - remaining/TOTAL_SECONDS;
+    const m = Math.floor(elapsed/60), s = elapsed%60;
+    timeEl.textContent = String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')+' elapsed';
+    const progress = Math.min(1, elapsed/TOTAL_SECONDS);
     ringFg.style.strokeDashoffset = String(CIRC - progress*CIRC);
     playBtn.innerHTML = running ? pauseIcon : playIcon;
-    if(titleEl) titleEl.textContent = running ? 'Focusing…' : (remaining===TOTAL_SECONDS ? 'Deep Work' : 'Paused');
+    if(titleEl) titleEl.textContent = running ? 'Focusing…' : (elapsed===0 ? 'Deep Work' : 'Paused');
   }
 
   function tick(){
-    remaining = Math.max(0, remaining-1);
+    elapsed += 1;
     render();
-    if(remaining<=0){
-      running = false;
-      clearInterval(timerId);
-      timerId = null;
-      render();
-    }
   }
 
   playBtn.addEventListener('click', ()=>{
     running = !running;
     if(running){
-      if(remaining<=0) remaining = TOTAL_SECONDS;
       timerId = setInterval(tick, 1000);
     } else if(timerId){
       clearInterval(timerId);
@@ -4503,8 +4597,11 @@ function ensureYoutubeAPI(cb){
     ytApiQueue.forEach(fn=>fn());
     ytApiQueue = [];
   };
+  const existing=document.querySelector('script[src="https://www.youtube.com/iframe_api"]');
+  if(existing)return;
   const tag = document.createElement('script');
   tag.src = 'https://www.youtube.com/iframe_api';
+  tag.onerror=()=>{ytApiLoading=false;ytApiQueue=[];showToast('YouTube player could not load. Check your connection or open the video link directly.','error',5000);};
   document.head.appendChild(tag);
 }
 const ytPlayers = {};
@@ -4512,6 +4609,11 @@ function initYoutubePlayer(stepId, videoId){
   ensureYoutubeAPI(()=>{
     const elId = 'yt-'+stepId;
     if(!document.getElementById(elId)) return;
+    if(ytPlayers[stepId] && typeof ytPlayers[stepId].destroy==='function'){
+      try{ytPlayers[stepId].destroy();}catch(err){}
+      delete ytPlayers[stepId];
+    }
+    if(window['ytint_'+stepId]){clearInterval(window['ytint_'+stepId]);delete window['ytint_'+stepId];}
     const savedTime = Number(localStorage.getItem('ytprog_'+stepId) || 0);
     ytPlayers[stepId] = new YT.Player(elId, {
       videoId,
@@ -4549,6 +4651,9 @@ function initYoutubePlayer(stepId, videoId){
 function stepMediaHTML(routine, step){
   if(!step.media || step.media.type==='none') return '';
   const m = step.media;
+  if(m.type==='tiktok'){
+    return `<div class="gb-step-media"><a class="gb-media-link" href="${escHtml(m.url||'')}" target="_blank" rel="noopener noreferrer">▶ Open TikTok video</a><div class="gb-video-meta"><span>Opens TikTok in a new tab</span></div></div>`;
+  }
   if(m.type==='youtube'){
     const vid = extractYoutubeId(m.url);
     if(!vid) return '<div class="gb-notes">Couldn\'t read that YouTube link.</div>';
@@ -4830,7 +4935,7 @@ guardedClick('routineDeleteBtn', async ()=>{
 /* ---- step modal ---- */
 function toggleStepMediaFields(){
   const t = document.getElementById('stepMediaType').value;
-  document.getElementById('stepYoutubeField').style.display = t==='youtube' ? 'block' : 'none';
+  document.getElementById('stepYoutubeField').style.display = (t==='youtube'||t==='tiktok') ? 'block' : 'none';
   document.getElementById('stepLinkField').style.display = t==='link' ? 'block' : 'none';
   document.getElementById('stepFileField').style.display = (t==='video'||t==='image'||t==='pdf') ? 'block' : 'none';
 }
@@ -4844,7 +4949,7 @@ function openStepModal(routineId, stepId){
   document.getElementById('stepTitle').value = s ? s.title : '';
   document.getElementById('stepNotes').value = s ? (s.notes||'') : '';
   document.getElementById('stepMediaType').value = s && s.media ? s.media.type : 'none';
-  document.getElementById('stepYoutubeUrl').value = (s && s.media && s.media.type==='youtube') ? s.media.url : '';
+  document.getElementById('stepYoutubeUrl').value = (s && s.media && ['youtube','tiktok'].includes(s.media.type)) ? s.media.url : ''; 
   document.getElementById('stepLinkUrl').value = (s && s.media && s.media.type==='link') ? s.media.url : '';
   document.getElementById('stepFileInput').value = '';
   toggleStepMediaFields();
@@ -4869,11 +4974,12 @@ guardedClick('stepSaveBtn', async ()=>{
   const r = state.routines.find(x=>x.id===editingStepRoutineId);
   const mediaType = document.getElementById('stepMediaType').value;
   let media = { type: 'none' };
-  if(mediaType==='youtube'){
+  if(mediaType==='youtube'||mediaType==='tiktok'){
     const url = document.getElementById('stepYoutubeUrl').value.trim();
     if(!url){ media = { type: 'none' }; }
-    else if(!extractYoutubeId(url)){ showToast('That doesn\'t look like a valid YouTube link.', 'error'); return; }
-    else { media = { type: 'youtube', url }; }
+    else if(mediaType==='youtube' && !extractYoutubeId(url)){ showToast('That doesn\'t look like a valid YouTube link.', 'error'); return; }
+    else if(mediaType==='tiktok' && !/https?:\/\/(?:www\.)?tiktok\.com\//i.test(url)){ showToast('Paste a valid TikTok URL.', 'error'); return; }
+    else { media = { type: mediaType, url }; }
   } else if(mediaType==='link'){
     const url = document.getElementById('stepLinkUrl').value.trim();
     media = url ? { type: 'link', url } : { type: 'none' };
@@ -4881,8 +4987,11 @@ guardedClick('stepSaveBtn', async ()=>{
     const fileInput = document.getElementById('stepFileInput');
     const existing = (editingStepId ? r.steps.find(x=>x.id===editingStepId) : null);
     if(fileInput.files && fileInput.files[0]){
+      const file=fileInput.files[0];
+      const maxBytes=mediaType==='video'?2*1024*1024:(mediaType==='image'?1536*1024:2*1024*1024);
+      if(file.size>maxBytes){showToast(mediaType==='video'?'Video is too large for reliable browser storage. Use a YouTube link or a video under 2 MB.':mediaType==='image'?'Image is too large. Choose an image under 1.5 MB.':'PDF is too large. Choose a PDF under 2 MB.', 'error',6000);return;}
       try{
-        const data = await readFileAsDataURL(fileInput.files[0]);
+        const data = await readFileAsDataURL(file);
         media = { type: mediaType, data };
       }catch(err){ showToast('Could not read that file.', 'error'); return; }
     } else if(existing && existing.media && existing.media.type===mediaType){
@@ -6027,7 +6136,7 @@ let flowAIPending = null;
 let flowAIMode = 'create';
 let flowAILastRequest = '';
 function applyFlowAIPromptPrefs(){
-  const prefs=state.settings.aiPromptPrefs||{optimize:true,workout:true,analyze:true,briefing:true,habit:true};
+  const prefs=state.settings.aiPromptPrefs||{optimize:true,workout:true,analyze:true,habit:true};
   document.querySelectorAll('.flow-ai-prompts [data-prompt-key]').forEach(button=>{
     button.hidden=prefs[button.dataset.promptKey]===false;
   });
@@ -6036,30 +6145,37 @@ function openFlowAI(){
   applyFlowAIPromptPrefs();
   flowAIMode='create';
   const ov=document.getElementById('flowAIOverlay'); if(!ov)return;
-  document.getElementById('flowAIStatus').textContent = state.settings.geminiApiKey ? 'Gemini connected setting found. Ready to chat.' : 'Add your Gemini API key in Settings to start.';
-  const prefs=state.settings.aiPromptPrefs||{optimize:true,workout:true,analyze:true,briefing:true,habit:true}; document.querySelectorAll('.flow-ai-prompts [data-mode]').forEach(b=>{const map={ 'Plan my day around my existing schedule, priorities, and free time.':'optimize','Create a practical upper-body strength routine with suitable measurements for each exercise.':'workout','Analyze my workload, deadlines, unfinished tasks, routines, and focus time. Suggest improvements without changing anything.':'analyze','Give me a concise morning briefing based on my plan for today, my priorities, and available time.':'briefing','Help me understand and reduce an unwanted habit. Ask me what the habit is and what tends to trigger it, then suggest compassionate, practical interventions. Include a dua or Islamic reminder only if I request religious support.':'habit'}; const k=map[b.dataset.prompt]; b.style.display=(k && prefs[k]===false)?'none':'';});
+  document.getElementById('flowAIStatus').textContent = state.settings.geminiApiKey ? 'Gemini connected setting found. Ready to chat.' : 'Add your Gemini API Key in Settings to start.';
+  const prefs=state.settings.aiPromptPrefs||{optimize:true,workout:true,analyze:true,habit:true}; document.querySelectorAll('.flow-ai-prompts [data-mode]').forEach(b=>{const map={ 'Plan my day around my existing schedule, priorities, and free time.':'optimize','Create a practical upper-body strength routine with suitable measurements for each exercise.':'workout','Analyze my workload, deadlines, unfinished tasks, routines, and focus time. Suggest improvements without changing anything.':'analyze','Help me overcome an unwanted habit with compassionate practical steps, urge management, motivation, a simple daily plan, and a short optional Islamic dua/reminder. Ask about triggers without judging or shaming me.':'habit'}; const k=map[b.dataset.prompt]; b.style.display=(k && prefs[k]===false)?'none':'';});
   ov.classList.add('show'); setTimeout(()=>document.getElementById('flowAIInput').focus(),120);
 }
 function closeFlowAI(){document.getElementById('flowAIOverlay').classList.remove('show');}
+const aiAssistantBtn=document.getElementById('aiAssistantBtn');if(aiAssistantBtn)aiAssistantBtn.addEventListener('click',()=>{openFlowAI();const input=document.getElementById('flowAIInput');if(input){input.value='';input.placeholder='Ask Flowline AI anything — or paste a YouTube/TikTok link to add it to a routine…';}});
 document.getElementById('flowAIClose').addEventListener('click',closeFlowAI);
 document.getElementById('flowAIOverlay').addEventListener('click',e=>{if(e.target.id==='flowAIOverlay')closeFlowAI();});
 document.querySelectorAll('.flow-ai-prompts [data-prompt]').forEach(b=>b.addEventListener('click',()=>{flowAIMode=b.dataset.mode||'create';document.getElementById('flowAIInput').value=b.dataset.prompt;document.getElementById('flowAIInput').focus();}));
 function flowAISnapshot(){
   const today=formatDateISO(new Date());
-  const events=(state.events||[]).map(e=>({title:e.title,date:e.repeat?'weekly day '+e.day:e.date,start:e.start,end:e.end,category:(state.categories.find(c=>c.id===e.cat)||{}).name||e.cat,done:!!e.done,notes:e.notes||''}));
-  return {today,username:state.settings.username||'',events:events.slice(0,160),categories:(state.categories||[]).map(c=>({name:c.name,id:c.id})),routines:(state.routines||[]).map(r=>({title:r.title,days:r.days,steps:(r.steps||[]).map(st=>({title:st.title,notes:st.notes||''})).slice(0,20)})).slice(0,80),habits:(state.habits||[]).map(h=>({title:h.title,frequency:h.freq,days:h.days})).slice(0,80),goals:(state.goals||[]).map(g=>({title:g.title,target:g.target,current:g.current,unit:g.unit,notes:g.notes||''})).slice(0,80),focusStats:{...(state.focusStats||{totalSeconds:0}),todaySeconds:(state.focusStats&&state.focusStats.date===today)?(state.focusStats.todaySeconds||0):0},preferences:{...(state.settings.notificationPrefs||{}),aiFeedback:(state.settings.aiFeedback||[]).slice(-12)}};
+  const events=(state.events||[]).map(e=>({id:e.id,title:e.title,date:e.repeat?'weekly day '+e.day:e.date,repeat:!!e.repeat,day:Number.isInteger(e.day)?e.day:null,start:e.start,end:e.end,category:(state.categories.find(c=>c.id===e.cat)||{}).name||e.cat,done:!!e.done,notes:String(e.notes||'').slice(0,300)}));
+  return {today,username:state.settings.username||'',events:events.slice(-240),categories:(state.categories||[]).map(c=>({name:c.name,id:c.id})),routines:(state.routines||[]).map(r=>({id:r.id,title:r.title,days:r.days,steps:(r.steps||[]).map(st=>({id:st.id,title:st.title,notes:String(st.notes||'').slice(0,180),media:st.media&&['youtube','tiktok','link'].includes(st.media.type)?{type:st.media.type,url:st.media.url||''}:undefined})).slice(0,30)})).slice(0,100),habits:(state.habits||[]).map(h=>({id:h.id,title:h.title,frequency:h.freq,days:h.days})).slice(0,100),goals:(state.goals||[]).map(g=>({id:g.id,title:g.title,target:g.target,current:g.current,unit:g.unit,notes:g.notes||''})).slice(0,100),notes:(state.notes||[]).slice(-20).map(n=>({id:n.id,text:String(n.text||'').slice(0,250)})),focusStats:{totalSeconds:(state.focusStats||{}).totalSeconds||0,todaySeconds:(state.focusStats&&state.focusStats.date===today)?(state.focusStats.todaySeconds||0):0},preferences:{...(state.settings.notificationPrefs||{}),aiFeedback:(state.settings.aiFeedback||[]).slice(-12)}};
 }
 async function requestFlowAI(mode='create'){
   const apiKey=(state.settings.geminiApiKey||'').trim();
-  if(!apiKey){showToast('Add your Gemini API key in Settings first.','error',5000);document.getElementById('flowAIStatus').textContent='Not connected — add your Gemini API key in Settings.';return;}
+  if(!apiKey){showToast('Add your Gemini API Key in Settings first.','error',5000);document.getElementById('flowAIStatus').textContent='Not connected — add your Gemini API Key in Settings.';return;}
   const input=document.getElementById('flowAIInput').value.trim();
   if(!input){showToast('Write a message first.','error');return;}
   flowAILastRequest=input;
   const gen=document.getElementById('flowAIGenerate'), status=document.getElementById('flowAIStatus'), chat=document.getElementById('flowAIChat');
   gen.disabled=true;gen.textContent='Thinking…';status.textContent='Thinking with your Flowline data…';
   chat.style.display='grid';
-  const userMsg=document.createElement('div');userMsg.className='flow-ai-chat-message user';userMsg.textContent='You: '+input;chat.appendChild(userMsg);
-  const systemPrompt=`You are Flowline AI, a practical productivity assistant. Respond conversationally and help with planning, studying, routines, habits, goals, and analysis. Use the user's current Flowline data where useful. Return ONLY valid JSON with this shape: {"summary":"conversational reply to the user","recommendations":["..."],"actions":[{"type":"event|task|routine|habit|goal|note","title":"...","date":"YYYY-MM-DD","start":"HH:MM","end":"HH:MM","category":"category name","notes":"...","steps":[{"title":"...","measurement":"..."}],"days":[0,1,2,3,4,5,6],"frequency":"daily","target":1,"current":0,"unit":""}]}. For ordinary chat/advice, use actions: []. Only create actions when the user clearly asks for something to be added/planned. Keep actions valid and realistic. Do not claim you changed the app; user must tap Add to app to apply actions. Recent conversation: ${Array.from(document.querySelectorAll('#flowAIChat .flow-ai-chat-message')).slice(-12).map(el=>el.textContent).join('\n')}\nCurrent Flowline context: ${JSON.stringify(flowAISnapshot())}\nLatest user message: ${input}`;
+  const userMsg=document.createElement('div');userMsg.className='flow-ai-chat-message user';userMsg.textContent='You: '+input;chat.appendChild(userMsg);while(chat.children.length>24)chat.removeChild(chat.firstElementChild);
+  const systemPrompt=`You are Flowline AI embedded throughout Flowline. You can reason about and propose changes to the user's EXISTING plan, not only add new items. Be practical, concise, warm, and non-judgmental. Current date: ${formatDateISO(new Date())}. The user must approve every change with Add to app; never say a change has already happened.
+If the user includes a YouTube or TikTok URL and asks to use it in a routine, add that URL as media on the relevant routine step so it opens directly from the routine. Use media:{type:'youtube',url:'...'} for YouTube or media:{type:'tiktok',url:'...'} for TikTok. Do not claim you watched or analyzed the video unless its contents were provided in the prompt; ask the user for a short description if the actual content matters.
+Use the full current Flowline context below. When asked to improve/replace/reshuffle a plan, inspect existing tasks, dates, times, completion status, routines, deadlines, habits and focus time. Prefer updating existing entries over duplicating them. Use action types: event/task to add a dated event; workout/routine to create a routine; habit/habit_support/goal/note as appropriate; update_event to edit an existing event by existingEventId; delete_event to remove an existing event by existingEventId; update_routine to edit a routine by existingRoutineId; delete_routine to remove a routine by existingRoutineId. For a full plan redesign, propose explicit updates/deletions and additions, but only for entries that should actually change; preserve completed tasks and important deadlines unless the user explicitly asks otherwise. Always explain major changes in summary/recommendations.
+Planner event fields: title, date YYYY-MM-DD, start/end HH:MM, category name or ID, notes, existingEventId for edits/deletes. For recurring weekly planner events, use type event with repeatWeekly:true and days [0..6] (Monday=0). For weekly workout plans, type workout creates a named routine AND planner events on requested days. If days aren't specified, propose a realistic schedule over the next 7 days. Use the user's existing schedule to avoid overlaps; include times, default 17:00-18:00 only if no better time is available.
+Routine step rules: strength exercises use sets and reps (e.g. push-ups 3 sets × 8 reps); isometric/timed exercises such as planks use sets and durationSeconds per set (e.g. 3 sets × 30 seconds), never reps. Cardio can use durationSeconds or distance. Reading/study steps should use optional subject and amount/unit (e.g. subject:'Biology', amount:20, unit:'pages' or amount:30, unit:'minutes'); don't force a subject if not given. Return those fields on each step. Other routine steps may use amount/unit or measurement as appropriate.
+Habit support requests should create a habit_support action with practical trigger awareness, a 10-minute urge plan, replacement actions, compassionate relapse guidance, an optional authentic short dua with meaning when relevant, and a small daily habit action only if it genuinely helps. Never shame or promise instant cures.
+Return ONLY valid JSON: {"summary":"...","recommendations":["..."],"actions":[{"type":"event|task|routine|workout|update_event|delete_event|update_routine|delete_routine|habit|habit_support|goal|note","title":"...","date":"YYYY-MM-DD","start":"HH:MM","end":"HH:MM","category":"category name or id","notes":"...","text":"...","existingEventId":"existing id","existingRoutineId":"existing id","repeatWeekly":false,"steps":[{"title":"...","subject":"optional subject","amount":20,"unit":"pages|minutes|km","measurement":"...","sets":3,"reps":8,"durationSeconds":30,"media":{"type":"youtube|tiktok|link","url":"https://..."}}],"days":[0,2,4],"frequency":"daily","target":1,"current":0,"unit":""}]}. For normal advice/analysis, actions must be []. Never invent existing IDs: only use IDs from context. Recent conversation: ${Array.from(document.querySelectorAll('#flowAIChat .flow-ai-chat-message')).slice(-8).map(el=>el.textContent).join('\n')}\nCurrent Flowline context: ${JSON.stringify(flowAISnapshot())}\nLatest user message: ${input}`;
   try{
     const response=await fetch('https://generativelanguage.googleapis.com/v1beta/interactions',{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':apiKey},body:JSON.stringify({model:'gemini-3.8-flash',input:systemPrompt,store:false})});
     const body=await response.json().catch(()=>({}));
@@ -6070,7 +6186,7 @@ async function requestFlowAI(mode='create'){
     if(!proposal||typeof proposal!=='object')throw new Error('Gemini returned an invalid response.');
     proposal.summary=String(proposal.summary||'I’m ready to help. What would you like to work on next?');
     if(!Array.isArray(proposal.actions))proposal.actions=[];if(!Array.isArray(proposal.recommendations))proposal.recommendations=[];
-    const aiMsg=document.createElement('div');aiMsg.className='flow-ai-chat-message';aiMsg.textContent='Flowline AI: '+proposal.summary+(proposal.recommendations.length?'\n\n'+proposal.recommendations.map(x=>'• '+x).join('\n'):'');chat.appendChild(aiMsg);chat.scrollTop=chat.scrollHeight;
+    const aiMsg=document.createElement('div');aiMsg.className='flow-ai-chat-message';aiMsg.textContent='Flowline AI: '+proposal.summary+(proposal.recommendations.length?'\n\n'+proposal.recommendations.map(x=>'• '+x).join('\n'):'');chat.appendChild(aiMsg);while(chat.children.length>24)chat.removeChild(chat.firstElementChild);chat.scrollTop=chat.scrollHeight;
     flowAIPending=proposal;renderFlowAIPreview(proposal);status.textContent=proposal.actions.length?'Suggestion ready. Review it, then tap Add to app.':'Reply ready. Continue chatting or ask Flowline to create something to add.';
     document.getElementById('flowAIInput').value='';
   }catch(err){status.textContent='AI error: '+(err.message||'unknown error');showToast('Gemini error: '+(err.message||'unknown error'),'error',9000);}
@@ -6080,7 +6196,7 @@ function renderFlowAIPreview(proposal){
   document.getElementById('flowAIResultWrap').style.display='block';
   document.getElementById('flowAIResultSummary').textContent=proposal.summary+(proposal.recommendations&&proposal.recommendations.length?'\n\nRecommendations: '+proposal.recommendations.join(' · '):'');
   const cards=document.getElementById('flowAIActionCards');
-  cards.innerHTML=(proposal.actions||[]).map((a,i)=>{const type=String(a.type||'event');let detail='';if(type==='event'||type==='task')detail=[a.date||'Today',a.start&&a.end?(a.start+'–'+a.end):'',a.category||''].filter(Boolean).join(' · ');else if(type==='routine')detail=(a.steps||[]).map(st=>st.title+(st.measurement?' — '+st.measurement:'')).join(' • ');else if(type==='habit')detail='Habit · '+(a.frequency||'daily');else if(type==='goal')detail='Goal'+(a.target?' · target '+a.target+(a.unit?' '+a.unit:''):'');else detail=String(a.notes||a.text||'');return '<div class="flow-ai-card"><strong>'+escHtml((i+1)+'. '+(a.title||'Untitled item'))+' <span style="font-size:10px;color:var(--purple);font-weight:700;">'+escHtml(type.toUpperCase())+'</span></strong><small>'+escHtml(detail||'Ready to add after approval.')+'</small></div>';}).join('') || '<div class="flow-ai-card"><strong>Advice only — no changes proposed</strong><small>Review the analysis above. No items will be added.</small></div>';
+  cards.innerHTML=(proposal.actions||[]).map((a,i)=>{const type=String(a.type||'event');let detail='';if(type==='event'||type==='task')detail=[a.date||'Today',a.start&&a.end?(a.start+'–'+a.end):'',a.category||''].filter(Boolean).join(' · ');else if(type==='update_event')detail='Update existing planner item · '+(a.date||'keep date')+' · '+(a.start&&a.end?a.start+'–'+a.end:'keep time');else if(type==='delete_event')detail='Remove existing planner item after approval';else if(type==='update_routine')detail='Update existing routine · '+(a.steps||[]).length+' proposed steps';else if(type==='delete_routine')detail='Remove existing routine after approval';else if(type==='routine'||type==='workout')detail=(a.days&&a.days.length?'Weekly · '+a.days.map(d=>['Mon','Tue','Wed','Thu','Fri','Sat','Sun'][d]).join(', ')+' · ':'')+(a.steps||[]).map(st=>st.title+(st.subject?' · '+st.subject:'')+(st.sets&&st.durationSeconds?' — '+st.sets+' × '+st.durationSeconds+' sec':(st.sets&&st.reps?' — '+st.sets+' × '+st.reps+' reps':st.amount&&st.unit?' — '+st.amount+' '+st.unit:st.measurement?' — '+st.measurement:''))).join(' • ');else if(type==='habit')detail='Habit · '+(a.frequency||'daily');else if(type==='habit_support')detail='Habit support plan · practical steps and encouragement';else if(type==='goal')detail='Goal'+(a.target?' · target '+a.target+(a.unit?' '+a.unit:''):'');else detail=String(a.notes||a.text||'');return '<div class="flow-ai-card"><strong>'+escHtml((i+1)+'. '+(a.title||'Untitled item'))+' <span style="font-size:10px;color:var(--purple);font-weight:700;">'+escHtml(type.toUpperCase())+'</span></strong><small>'+escHtml(detail||'Ready to add after approval.')+'</small></div>';}).join('') || '<div class="flow-ai-card"><strong>Advice only — no changes proposed</strong><small>Review the analysis above. No items will be added.</small></div>';
   document.getElementById('flowAIProposal').value=JSON.stringify(proposal,null,2);
   document.getElementById('flowAIApply').style.display=(proposal.actions||[]).length?'':'none';
   document.getElementById('flowAIApply').textContent='Add to app';
@@ -6100,16 +6216,54 @@ document.getElementById('flowAIApply').addEventListener('click',()=>{
   let proposal;try{proposal=JSON.parse(document.getElementById('flowAIProposal').value);}catch(e){showToast('Proposal JSON is invalid. Fix it before applying.','error');return;}
   if(!proposal||!Array.isArray(proposal.actions)){showToast('Proposal must contain an actions array.','error');return;}
   if(proposal.actions.length>80){showToast('This proposal contains too many items. Split it into smaller plans.','error');return;}
+  const beforeApply=JSON.stringify(state);
   let added=0;const today=formatDateISO(new Date());const studyCat=state.categories.find(c=>/study|school/i.test(c.name))||state.categories[0];
-  for(const raw of proposal.actions){const a=raw||{};const title=String(a.title||'').trim().slice(0,180);if(!title)continue;const type=String(a.type||'event').toLowerCase();
+  for(const raw of proposal.actions){const a=raw||{};const title=String(a.title||'').trim().slice(0,180);const type=String(a.type||'event').toLowerCase();if(!title&&!['delete_event','delete_routine','update_event','update_routine'].includes(type))continue;
+    if(type==='update_event'||type==='delete_event'){
+      const target=(state.events||[]).find(e=>e.id===a.existingEventId);
+      if(!target)continue;
+      if(type==='delete_event'){state.events=state.events.filter(e=>e.id!==target.id);added++;continue;}
+      const validTime=v=>/^(?:[01]\\d|2[0-3]):[0-5]\\d$/.test(String(v||''));
+      if(title)target.title=title;
+      if(a.date && /^\\d{4}-\\d{2}-\\d{2}$/.test(a.date) && !target.repeat)target.date=a.date;
+      if(validTime(a.start))target.start=a.start;
+      if(validTime(a.end))target.end=a.end;
+      if(timeToMin(target.end)<=timeToMin(target.start))continue;
+      if(a.category){const c=state.categories.find(c=>c.id===a.category||c.name.toLowerCase()===String(a.category).toLowerCase());if(c)target.cat=c.id;}
+      if(a.notes!==undefined)target.notes=String(a.notes||'').slice(0,1000);
+      if(Array.isArray(a.days)&&target.repeat){const validDays=[...new Set(a.days.filter(n=>Number.isInteger(n)&&n>=0&&n<=6))];if(validDays.length){state.events=state.events.filter(e=>e.id!==target.id);validDays.forEach(day=>state.events.push({...target,id:uid(),day,repeat:true}));}}
+      added++;continue;
+    }
+    if(type==='update_routine'||type==='delete_routine'){
+      const target=(state.routines||[]).find(r=>r.id===a.existingRoutineId);
+      if(!target)continue;
+      if(type==='delete_routine'){state.routines=state.routines.filter(r=>r.id!==target.id);added++;continue;}
+      if(title)target.title=title;
+      if(Array.isArray(a.days)){const ds=[...new Set(a.days.filter(n=>Number.isInteger(n)&&n>=0&&n<=6))];if(ds.length)target.days=ds;}
+      if(Array.isArray(a.steps))target.steps=a.steps.slice(0,50).map(st=>{const stTitle=String(st.title||'').trim().slice(0,180);const sets=Math.max(0,Math.min(20,Number(st.sets)||0)),reps=Math.max(0,Math.min(500,Number(st.reps)||0)),secs=Math.max(0,Math.min(7200,Number(st.durationSeconds)||0)),amount=Math.max(0,Math.min(100000,Number(st.amount)||0));const metric=sets&&secs?sets+' sets × '+secs+' sec':sets&&reps?sets+' sets × '+reps+' reps':amount&&st.unit?amount+' '+String(st.unit).slice(0,30):String(st.measurement||'');return {id:uid(),title:stTitle,notes:[metric,st.subject?'Subject: '+String(st.subject).slice(0,100):'',st.notes].filter(Boolean).join(' · ').slice(0,500),media:{type:'none'}};}).filter(st=>st.title);
+      added++;continue;
+    }
     if(type==='event'||type==='task'||type==='planner'){
       const validTime=v=>/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(String(v||''));const start=validTime(a.start)?a.start:'09:00';let end=validTime(a.end)?a.end:'10:00';if(timeToMin(end)<=timeToMin(start)){const mins=Math.min(1439,timeToMin(start)+60);end=String(Math.floor(mins/60)).padStart(2,'0')+':'+String(mins%60).padStart(2,'0');if(timeToMin(end)<=timeToMin(start))continue;}
       const cat=state.categories.find(c=>c.id===a.category||c.name.toLowerCase()===String(a.category||'').toLowerCase())||studyCat;
       const date=/^\d{4}-\d{2}-\d{2}$/.test(a.date||'')?a.date:today;
-      state.events.push({id:uid(),title,cat:cat?cat.id:'',repeat:false,date,start,end,done:false,notes:String(a.notes||'').slice(0,1000),glow:false,pinned:!!a.pinned,reminder:'none'});added++;
-    }else if(type==='routine'){
-      const steps=Array.isArray(a.steps)?a.steps.slice(0,50).map(st=>({id:uid(),title:String(st.title||'').trim().slice(0,180),notes:[st.measurement,st.notes].filter(Boolean).map(x=>String(x).slice(0,500)).join(' · '),media:{type:'none'}})).filter(st=>st.title):[];
-      state.routines.push({id:uid(),title,days:Array.isArray(a.days)?a.days.filter(n=>Number.isInteger(n)&&n>=0&&n<=6):[0,1,2,3,4,5,6],icon:['🌤','💪','🏋️','📚','🎯','🔥','✅','💧','🧘','🌅','🙏','📝','⭐'].includes(a.icon)?a.icon:'🌤',color:GB_COLORS.includes(a.color)?a.color:GB_COLORS[3],steps});added++;
+      if(a.repeatWeekly===true&&Array.isArray(a.days)){
+        const days=[...new Set(a.days.filter(n=>Number.isInteger(n)&&n>=0&&n<=6))];
+        days.forEach(day=>state.events.push({id:uid(),title,cat:cat?cat.id:'',repeat:true,day,start,end,done:false,notes:String(a.notes||'').slice(0,1000),glow:false,pinned:!!a.pinned,reminder:'none'}));added+=days.length;
+      }else{state.events.push({id:uid(),title,cat:cat?cat.id:'',repeat:false,date,start,end,done:false,notes:String(a.notes||'').slice(0,1000),glow:false,pinned:!!a.pinned,reminder:'none'});added++;}
+    }else if(type==='routine'||type==='workout'){
+      const days=Array.isArray(a.days)?[...new Set(a.days.filter(n=>Number.isInteger(n)&&n>=0&&n<=6))]:[0,2,4];
+      const steps=Array.isArray(a.steps)?a.steps.slice(0,50).map(st=>{const title=String(st.title||'').trim().slice(0,180);const sets=Math.max(0,Math.min(20,Number(st.sets)||0)),reps=Math.max(0,Math.min(500,Number(st.reps)||0)),secs=Math.max(0,Math.min(7200,Number(st.durationSeconds)||0)),amount=Math.max(0,Math.min(100000,Number(st.amount)||0));const metric=sets&&secs?sets+' sets × '+secs+' sec':(sets&&reps?sets+' sets × '+reps+' reps':(secs?secs+' sec':(amount&&st.unit?amount+' '+String(st.unit).slice(0,30):String(st.measurement||''))));const sm=st.media&&typeof st.media==='object'?st.media:{};const mediaType=['youtube','tiktok','link'].includes(sm.type)?sm.type:'none';const mediaUrl=typeof sm.url==='string'&&/^https?:\/\//i.test(sm.url)?sm.url.slice(0,2000):'';const media=mediaType!=='none'&&mediaUrl?{type:mediaType,url:mediaUrl}:{type:'none'};return {id:uid(),title,notes:[metric,st.subject?'Subject: '+String(st.subject).slice(0,100):'',st.notes].filter(Boolean).map(x=>String(x).slice(0,500)).join(' · '),media};}).filter(st=>st.title):[];
+      const workoutLike=type==='workout'||/(workout|gym|exercise|fitness|push day|pull day|leg day|upper body|lower body|plank|squat|push.?up|pull.?up|bench press)/i.test(title+' '+steps.map(st=>st.title).join(' '));
+      state.routines.push({id:uid(),title,days:days.length?days:[0,2,4],icon:['🌤','💪','🏋️','📚','🎯','🔥','✅','💧','🧘','🌅','🙏','📝','⭐'].includes(a.icon)?a.icon:(workoutLike?'💪':'🌤'),color:GB_COLORS.includes(a.color)?a.color:GB_COLORS[3],steps});added++;
+      if(workoutLike){
+        const validTime=v=>/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(String(v||''));const start=validTime(a.start)?a.start:'17:00';let end=validTime(a.end)?a.end:'18:00';if(timeToMin(end)<=timeToMin(start))end='18:00';
+        let cat=state.categories.find(c=>/fitness|workout|health|exercise/i.test(c.name));
+        if(!cat){cat={id:uid(),name:'Fitness',color:'#10B981'};state.categories.push(cat);}
+        days.forEach(day=>{const exists=(state.events||[]).some(e=>e.repeat&&e.day===day&&e.start===start&&String(e.title||'').trim().toLowerCase()===title.trim().toLowerCase());if(!exists){state.events.push({id:uid(),title,cat:cat.id,repeat:true,day,start,end,done:false,notes:'Workout routine: '+steps.map(st=>st.title+(st.notes?' — '+st.notes:'')).join('; ').slice(0,1000),glow:false,pinned:false,reminder:'none'});added++;}});
+      }
+    }else if(type==='habit_support'){
+      state.notes=state.notes||[];state.notes.push({id:uid(),text:'🌱 HABIT SUPPORT: '+title+'\n\n'+String(a.text||a.notes||'Take this one day at a time. Notice triggers without judging yourself, delay the urge for 10 minutes, change location, remove easy access to triggers, and choose a replacement activity. If you slip, reset without shame and learn what triggered it.').slice(0,4000),createdAt:new Date().toISOString()});added++;
     }else if(type==='habit'){
       state.habits.push({id:uid(),title,freq:['daily','weekly','monthly'].includes(a.frequency)?a.frequency:'daily',days:Array.isArray(a.days)?a.days.filter(n=>Number.isInteger(n)&&n>=0&&n<=6):[0,1,2,3,4,5,6],monthDay:1,icon:['🌤','💪','🏋️','📚','🎯','🔥','✅','💧','🧘','🌅','🙏','📝','⭐'].includes(a.icon)?a.icon:'✅',color:GB_COLORS.includes(a.color)?a.color:GB_COLORS[1],goalId:null});added++;
     }else if(type==='goal'){
@@ -6118,35 +6272,57 @@ document.getElementById('flowAIApply').addEventListener('click',()=>{
       state.notes=state.notes||[];state.notes.push({id:uid(),text:String(a.text||a.notes||title).slice(0,4000),createdAt:new Date().toISOString()});added++;
     }
   }
-  saveState();if(typeof renderAll==='function')renderAll();if(typeof renderGetBetterQuick==='function')renderGetBetterQuick();
-  closeFlowAI();showToast(added?('Approved — added '+added+' item'+(added===1?'':'s')+' to Flowline.'):'No supported items to add. Advice was not applied.',added?'success':'info',5000);flowAIPending=null;
+  if(!saveState()){try{state=JSON.parse(beforeApply);}catch(e){};if(typeof renderAll==='function')renderAll();showToast('Nothing was applied because Flowline could not save. Free some browser storage and try again.','error',6000);return;}
+  if(typeof renderAll==='function')renderAll();if(typeof renderGetBetterQuick==='function')renderGetBetterQuick();
+  closeFlowAI();showToast(added?('Approved — applied '+added+' change'+(added===1?'':'s')+' to Flowline.'):'No supported items to apply. Advice was not applied.',added?'success':'info',5000);flowAIPending=null;
 });
 
 /* ================= FOCUS WORKSPACE + SESSION STATISTICS ================= */
 (function(){
   const overlay=document.getElementById('flowFocusOverlay');if(!overlay)return;
-  const total=25*60;let remaining=total,running=false,timer=null,sessionStart=0,focusSessionAccumulated=0;
+  let elapsed=0,running=false,timer=null,sessionStart=0,recordedSeconds=0;
   function todayISO(){return formatDateISO(new Date());}
   function ensureStats(){if(!state.focusStats)state.focusStats={totalSeconds:0,sessions:[],todaySeconds:0,date:todayISO()};if(state.focusStats.date!==todayISO()){state.focusStats.date=todayISO();state.focusStats.todaySeconds=0;}}
   function fmt(sec){sec=Math.max(0,Math.floor(sec));return String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0');}
-  function render(){ensureStats();document.getElementById('flowFocusTimer').textContent=fmt(remaining);document.getElementById('flowFocusElapsed').textContent=Math.floor((state.focusStats.todaySeconds||0)/60)+' minutes focused today';document.getElementById('flowFocusStart').textContent=running?'Ⅱ Pause session':'▶ Start session';}
+  function prefs(){return state.settings.focusPrefs||{showCurrent:true,showToday:true,showUpcoming:false,showElapsed:true,showHabits:false,showRoutines:false,showGoals:false,showAI:false,style:'calm'};}
+  function panel(key,visible){const el=overlay.querySelector('[data-focus-panel="'+key+'"]');if(el)el.style.display=visible?'':'none';}
+  function render(){ensureStats();const live=elapsed+(running&&sessionStart?Math.floor((Date.now()-sessionStart)/1000):0);const showTime=prefs().showElapsed!==false;document.getElementById('flowFocusTimer').textContent=fmt(live);document.getElementById('flowFocusTimer').style.display=showTime?'':'none';const elapsedEl=document.getElementById('flowFocusElapsed');elapsedEl.textContent=fmt(live)+' spent this session · '+Math.floor((state.focusStats.todaySeconds||0)/60)+' minutes today';elapsedEl.style.display=showTime?'':'none';document.querySelector('.flow-focus-controls').style.display=showTime?'':'none';document.getElementById('flowFocusStart').textContent=running?'Ⅱ Pause session':'▶ Start session';}
   function currentEvents(){const today=todayISO();return (state.events||[]).filter(e=>e.repeat?weekdayIndexFromDate(new Date())===e.day:e.date===today).sort((a,b)=>timeToMin(a.start)-timeToMin(b.start));}
-  function renderPlan(){const evs=currentEvents();const now=new Date();const nowMin=now.getHours()*60+now.getMinutes();const current=evs.find(e=>!e.done&&timeToMin(e.start)<=nowMin&&timeToMin(e.end)>nowMin)||evs.find(e=>!e.done)||null;document.getElementById('flowFocusCurrent').textContent=current?(current.title+' · '+current.start+'–'+current.end):'No scheduled task left today. Choose one important task and add it to your planner.';document.getElementById('flowFocusToday').innerHTML=evs.length?evs.map(e=>'<div class="flow-focus-list-item">'+(e.done?'✓ ':'')+escHtml(e.start+' · '+e.title)+'</div>').join(''):'<div class="flow-focus-list-item">Nothing scheduled yet.</div>';const up=evs.filter(e=>!e.done&&timeToMin(e.start)>nowMin).slice(0,3);document.getElementById('flowFocusUpcoming').innerHTML=up.length?up.map(e=>'<div class="flow-focus-list-item">'+escHtml(e.start+' · '+e.title)+'</div>').join(''):'<div class="flow-focus-list-item">No upcoming tasks.</div>';}
-  function finishSession(completed){if(timer){clearInterval(timer);timer=null;}running=false;const elapsed=sessionStart?Math.max(0,Math.floor((Date.now()-sessionStart)/1000)):0;focusSessionAccumulated+=elapsed;ensureStats();if(elapsed>0){state.focusStats.totalSeconds=(state.focusStats.totalSeconds||0)+elapsed;state.focusStats.todaySeconds=(state.focusStats.todaySeconds||0)+elapsed;state.focusStats.sessions=state.focusStats.sessions||[];state.focusStats.sessions.push({date:todayISO(),seconds:elapsed,completed:!!completed});state.focusStats.sessions=state.focusStats.sessions.slice(-200);}sessionStart=0;saveState();render();if(typeof renderStats==='function')renderStats();if(completed){const totalFocused=focusSessionAccumulated;focusSessionAccumulated=0;const todays=(state.events||[]).filter(e=>e.repeat?weekdayIndexFromDate(new Date())===e.day:e.date===todayISO());const done=todays.filter(e=>e.done).length;const left=todays.length-done;showToast('Focus session complete · '+Math.floor(totalFocused/60)+' min focused · '+done+' task'+(done===1?'':'s')+' completed · '+left+' remaining.','success',6000);}}
-  function tick(){remaining=Math.max(0,remaining-1);render();if(remaining<=0)finishSession(true);}
-  function open(){ensureStats();renderPlan();render();overlay.style.display='block';document.body.style.overflow='hidden';}
-  function exit(){if(running)finishSession(false);if(focusSessionAccumulated>0){showToast('Focus session ended · '+Math.floor(focusSessionAccumulated/60)+' min recorded.','info',4000);focusSessionAccumulated=0;}overlay.style.display='none';document.body.style.overflow='';}
-  document.getElementById('flowFocusStart').addEventListener('click',()=>{if(running){finishSession(false);return;}running=true;sessionStart=Date.now();timer=setInterval(tick,1000);render();});
-  document.getElementById('flowFocusReset').addEventListener('click',()=>{if(running)finishSession(false);focusSessionAccumulated=0;remaining=total;render();});
+  function renderPlan(){
+    const evs=currentEvents(),now=new Date(),nowMin=now.getHours()*60+now.getMinutes(),p=prefs();
+    panel('current',p.showCurrent!==false);panel('today',p.showToday!==false);panel('upcoming',p.showUpcoming===true);panel('habits',p.showHabits===true);panel('routines',p.showRoutines===true);panel('goals',p.showGoals===true);panel('ai',p.showAI===true);
+    const current=evs.find(e=>!e.done&&timeToMin(e.start)<=nowMin&&timeToMin(e.end)>nowMin)||evs.find(e=>!e.done)||null;
+    document.getElementById('flowFocusCurrent').textContent=current?(current.title+' · '+current.start+'–'+current.end):'No scheduled task left today. Choose one important task and add it to your planner.';
+    document.getElementById('flowFocusToday').innerHTML=evs.length?evs.map(e=>'<div class="flow-focus-list-item">'+(e.done?'✓ ':'')+escHtml(e.start+' · '+e.title)+'</div>').join(''):'<div class="flow-focus-list-item">Nothing scheduled yet.</div>';
+    const up=evs.filter(e=>!e.done&&timeToMin(e.start)>nowMin).slice(0,3);document.getElementById('flowFocusUpcoming').innerHTML=up.length?up.map(e=>'<div class="flow-focus-list-item">'+escHtml(e.start+' · '+e.title)+'</div>').join(''):'<div class="flow-focus-list-item">No upcoming tasks.</div>';
+    const habits=(state.habits||[]);document.getElementById('flowFocusHabits').innerHTML=habits.length?habits.map(h=>{const done=!!(state.habitLog&&state.habitLog[h.id]&&state.habitLog[h.id][todayISO()]);const due=habitIsDueOnDate(h,new Date());return '<div class="focus-module-row"><div class="focus-module-copy"><strong>'+escHtml((h.icon||'✓')+' '+h.title)+'</strong><small>'+(done?'Completed today':due?'Due today':'Not due today')+'</small></div><button class="focus-action-btn" type="button" data-focus-habit="'+escHtml(h.id)+'" '+(!due?'disabled':'')+'>'+(done?'✓ Done':'Mark done')+'</button></div>';}).join(''):'<div class="flow-focus-list-item">No habits added yet.</div>';
+    const routines=(state.routines||[]).filter(r=>routineIsDueOnDate(r,routineNow()));document.getElementById('flowFocusRoutines').innerHTML=routines.length?routines.map(r=>{const prog=routineTodayProgress(r);const next=(r.steps||[]).find(st=>!stepDoneOn(r.id,st.id,routineTodayISO()));return '<div class="focus-module-row"><div class="focus-module-copy"><strong>'+escHtml((r.icon||'◈')+' '+r.title)+'</strong><small>'+prog.done+' / '+prog.total+' steps completed</small>'+(next?'<small>Next: '+escHtml(next.title)+'</small>':'<small>Routine complete</small>')+'</div>'+(next?'<button class="focus-action-btn" type="button" data-focus-routine="'+escHtml(r.id)+'" data-focus-step="'+escHtml(next.id)+'">Complete step</button>':'<span class="focus-done-mark">✓ Done</span>')+'</div>';}).join(''):'<div class="flow-focus-list-item">No routines due today.</div>';
+    const goals=(state.goals||[]);document.getElementById('flowFocusGoals').innerHTML=goals.length?goals.map(g=>{const pct=g.target>0?Math.min(100,Math.round((g.current/g.target)*100)):0;return '<div class="focus-module-row"><div class="focus-module-copy"><strong>'+escHtml((g.icon||'🎯')+' '+g.title)+'</strong><small>'+escHtml(String(g.current||0)+' / '+String(g.target||0)+' '+(g.unit||''))+' · '+pct+'%</small><div class="focus-progress"><span style="width:'+pct+'%;background:'+(GB_COLORS.includes(g.color)?g.color:'#64748b')+'"></span></div></div>'+(g.completed?'<span class="focus-done-mark">✓ Done</span>':'<button class="focus-action-btn" type="button" data-focus-goal="'+escHtml(g.id)+'">+1 progress</button>')+'</div>';}).join(''):'<div class="flow-focus-list-item">No goals added yet.</div>';
+    overlay.classList.toggle('flow-focus-dark',p.style==='dark');
+  }
+  function recordSession(){const seconds=Math.max(0,Math.floor(elapsed)-recordedSeconds);ensureStats();if(seconds){state.focusStats.totalSeconds=(state.focusStats.totalSeconds||0)+seconds;state.focusStats.todaySeconds=(state.focusStats.todaySeconds||0)+seconds;state.focusStats.sessions=state.focusStats.sessions||[];state.focusStats.sessions.push({date:todayISO(),seconds,completed:false});state.focusStats.sessions=state.focusStats.sessions.slice(-200);recordedSeconds+=seconds;saveState();if(typeof renderStats==='function')renderStats();}}
+  function pause(){if(timer){clearInterval(timer);timer=null;}if(running&&sessionStart)elapsed+=Math.max(0,Math.floor((Date.now()-sessionStart)/1000));running=false;sessionStart=0;recordSession();render();}
+  function tick(){render();}
+  function open(){ensureStats();elapsed=0;recordedSeconds=0;running=false;sessionStart=0;if(timer){clearInterval(timer);timer=null;}renderPlan();render();overlay.style.display='block';document.body.style.overflow='hidden';document.body.classList.add('flow-focus-active');}
+  function exit(){if(running)pause();else recordSession();if(timer){clearInterval(timer);timer=null;}overlay.style.display='none';document.body.style.overflow='';document.body.classList.remove('flow-focus-active');}
+  document.getElementById('flowFocusStart').addEventListener('click',()=>{if(running){pause();return;}running=true;sessionStart=Date.now();timer=setInterval(tick,1000);render();});
+  document.getElementById('flowFocusReset').addEventListener('click',()=>{if(timer){clearInterval(timer);timer=null;}running=false;sessionStart=0;elapsed=0;recordedSeconds=0;render();});
   document.getElementById('flowFocusExit').addEventListener('click',exit);
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&overlay.style.display==='block')exit();});
+  const settingsEnter=document.getElementById('settingsEnterFocusBtn');if(settingsEnter)settingsEnter.addEventListener('click',()=>{const save=document.getElementById('settingsSaveBtn');if(save)save.click();const settingsOverlay=document.getElementById('settingsOverlay')||document.getElementById('settingsModal');if(settingsOverlay){settingsOverlay.classList.remove('show');settingsOverlay.style.display='';}open();});
+  // Focus remains locked until the explicit Exit focus action. Escape cannot accidentally dismiss it.
+  document.addEventListener('keydown',e=>{if(overlay.style.display==='block'&&e.key==='Escape'){e.preventDefault();e.stopPropagation();}} ,true);
+  overlay.addEventListener('click',e=>{
+    const hb=e.target.closest('[data-focus-habit]');if(hb){const h=(state.habits||[]).find(x=>String(x.id)===hb.dataset.focusHabit);if(!h)return;state.habitLog=state.habitLog||{};state.habitLog[h.id]=state.habitLog[h.id]||{};if(state.habitLog[h.id][todayISO()]){delete state.habitLog[h.id][todayISO()];unlogCompletion('habit',h.id,todayISO());}else{state.habitLog[h.id][todayISO()]=true;logCompletion('habit',h.title,0,h.id);}saveState();renderPlan();if(typeof renderHabits==='function')renderHabits();if(typeof checkAchievements==='function')checkAchievements();return;}
+    const rb=e.target.closest('[data-focus-routine]');if(rb){setStepDone(rb.dataset.focusRoutine,rb.dataset.focusStep,routineTodayISO(),true);const r=(state.routines||[]).find(x=>String(x.id)===rb.dataset.focusRoutine);const st=(r?.steps||[]).find(x=>String(x.id)===rb.dataset.focusStep);if(st&&r)logCompletion('routine',r.title,5,r.id+':'+st.id);saveState();renderPlan();if(typeof renderRoutines==='function')renderRoutines();if(typeof renderStatStrip==='function')renderStatStrip();return;}
+    const gb=e.target.closest('[data-focus-goal]');if(gb){const g=(state.goals||[]).find(x=>String(x.id)===gb.dataset.focusGoal);if(!g)return;g.current=Math.min(Number(g.target)||1,(Number(g.current)||0)+1);g.completed=g.current>=g.target;saveState();renderPlan();if(typeof renderGoals==='function')renderGoals();return;}
+  });
+  const askAI=document.getElementById('flowFocusAskAI');if(askAI)askAI.addEventListener('click',()=>{if(typeof openFlowAI==='function')openFlowAI();else if(typeof window.flowlineAIBriefing==='function')window.flowlineAIBriefing();});
   const card=document.getElementById('sbFocusCard');if(card){card.addEventListener('dblclick',open);const info=card.querySelector('.sb-focus-info');if(info){info.style.cursor='pointer';info.title='Open full Focus Mode';info.addEventListener('click',open);}}
-  // Keep the existing sidebar timer; its title opens this full focus workspace.
-  window.openFlowFocus=open;
+  window.openFlowFocus=open;window.closeFlowFocus=exit;
 })();
 
-/* ================= AI DAILY BRIEFING / ANALYSIS SHORTCUTS ================= */
-window.flowlineAIBriefing=()=>{openFlowAI();flowAIMode='briefing';document.getElementById('flowAIInput').value='Give me a concise daily briefing based on my current plan, deadlines, available time, routines, habits, and focus stats. Include useful recommendations but do not change anything.';};
+/* AI Assistant entry point (kept as a compatibility alias for older button bindings). */
+window.flowlineAIBriefing=()=>{openFlowAI();const input=document.getElementById('flowAIInput');if(input){input.value='';input.placeholder='Ask Flowline AI anything about your plan…';input.focus();}};
 
 </script>
 <script>
@@ -6176,5 +6352,69 @@ window.flowlineAIBriefing=()=>{openFlowAI();flowAIMode='briefing';document.getEl
 })();
 
 </script>
+<style>
+#flowFocusOverlay.flow-focus-dark{background:#10121b;color:#f5f5fb}#flowFocusOverlay.flow-focus-dark .flow-focus-task,#flowFocusOverlay.flow-focus-dark .flow-focus-grid section{background:#191c29;border-color:#303448;color:#f5f5fb}#flowFocusOverlay.flow-focus-dark .flow-focus-sub,#flowFocusOverlay.flow-focus-dark .flow-focus-note,#flowFocusOverlay.flow-focus-dark .flow-focus-section-title{color:#b7bdd2}
+
+/* Focus Mode: calm, compact, app-like focus workspace */
+.focus-choice-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px!important}
+.focus-choice-grid label{display:flex;align-items:center;gap:9px;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);min-height:42px}
+#flowFocusPanels{grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));align-items:start;max-width:1120px;margin:24px auto 0}
+#flowFocusPanels section{box-shadow:0 8px 26px rgba(20,30,55,.045);min-height:100px}
+.focus-module-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.focus-module-row:last-child{border-bottom:0}
+.focus-module-copy{min-width:0;flex:1;display:flex;flex-direction:column;gap:4px}
+.focus-module-copy strong{font-size:14px;line-height:1.35;overflow-wrap:anywhere}
+.focus-module-copy small{font-size:12px;color:var(--ink-soft);line-height:1.4}
+.focus-action-btn{flex-shrink:0;border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--surface-2,var(--surface));color:var(--ink);font:inherit;font-size:12px;font-weight:650;cursor:pointer}
+.focus-action-btn:disabled{opacity:.45;cursor:default}
+.focus-done-mark{font-size:12px;color:#16845b;font-weight:700;white-space:nowrap}
+.focus-progress{height:5px;border-radius:99px;background:var(--line);overflow:hidden;margin-top:4px}
+.focus-progress span{display:block;height:100%;border-radius:inherit}
+#flowFocusAskAI{margin-top:10px}
+#flowFocusOverlay .flow-focus-note{max-width:900px;margin:24px auto 8px}
+@media(max-width:520px){.focus-choice-grid{grid-template-columns:1fr}#flowFocusPanels{grid-template-columns:1fr;gap:10px}#flowFocusPanels section{padding:14px}.focus-module-row{align-items:flex-start}.focus-action-btn{max-width:120px;white-space:normal}}
+
+</style>
 </body>
 </html>
+
+<style id="flow-focus-exclusive-workspace-fix">
+#flowFocusOverlay{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;max-height:100dvh!important;overflow-y:auto!important;z-index:2147483000!important;box-sizing:border-box!important;background:var(--bg,#f5f5f8)!important}
+body.flow-focus-active{overflow:hidden!important}
+body.flow-focus-active>*:not(#flowFocusOverlay){pointer-events:none!important;user-select:none!important}
+body.flow-focus-active #flowFocusOverlay{pointer-events:auto!important;user-select:auto!important}
+#flowFocusPanels section[style*="display: none"]{display:none!important}
+#flowFocusPanels{grid-auto-flow:row;align-items:stretch}
+#flowFocusOverlay .flow-focus-top{position:sticky;top:0;z-index:3;background:inherit;padding:4px 0 12px}
+#flowFocusOverlay .flow-focus-content{max-width:1100px;margin:0 auto}
+#flowFocusOverlay .flow-focus-grid section{min-width:0;overflow-wrap:anywhere}
+</style>
+
+<style id="flowline-settings-theme-sync">
+html[data-theme="dark"] #settingsOverlay .modal, html[data-theme="dark"] #settingsOverlay .settings-group, html[data-theme="dark"] #settingsOverlay .settings-danger, html[data-theme="dark"] #settingsOverlay .modal-actions {background:#191a20!important;color:#f5f5f7!important;border-color:#34353d!important}
+html[data-theme="dark"] #settingsOverlay .settings-group summary, html[data-theme="dark"] #settingsOverlay label, html[data-theme="dark"] #settingsOverlay h2, html[data-theme="dark"] #settingsOverlay h3, html[data-theme="dark"] #settingsOverlay .settings-help, html[data-theme="dark"] #settingsOverlay .settings-group small {color:#e7e7ec!important}
+html[data-theme="dark"] #settingsOverlay input:not([type="checkbox"]), html[data-theme="dark"] #settingsOverlay select, html[data-theme="dark"] #settingsOverlay textarea {background:#24252d!important;color:#f5f5f7!important;border-color:#42434d!important;color-scheme:dark}
+html[data-theme="dark"] #settingsOverlay .settings-check-grid label {background:#24252d!important;color:#f5f5f7!important;border-color:#42434d!important}
+html[data-theme="dark"] #settingsOverlay .settings-danger {border-color:#60383b!important}
+html[data-theme="dark"] #settingsOverlay .settings-danger button {background:#3b2024!important;color:#ffb4b4!important}
+html[data-theme="dark"] #settingsOverlay .btn-ghost {background:#292a32!important;color:#e7e7ec!important}
+</style>
+
+<style id="flowline-final-stability-patch">
+/* Keep Focus exclusive while allowing the explicitly selected AI assistant to open above it. */
+#flowFocusOverlay{z-index:1400!important}
+#flowAIOverlay{z-index:1500!important}
+body.flow-focus-active>*:not(#flowFocusOverlay):not(#flowAIOverlay){pointer-events:none!important;user-select:none!important}
+body.flow-focus-active #flowFocusOverlay,body.flow-focus-active #flowAIOverlay{pointer-events:auto!important;user-select:auto!important}
+body.flow-focus-active #flowAIOverlay.show{position:fixed!important;inset:0!important;overflow-y:auto!important}
+/* Match settings to the chosen app theme regardless of the operating system theme. */
+html[data-theme="dark"] #settingsOverlay .settings-modal{background:#191a20!important;color:#f5f5f7!important;border-color:#34353d!important}
+html[data-theme="dark"] #settingsOverlay .settings-modal .settings-intro{color:#aeb0bb!important}
+html[data-theme="dark"] #settingsOverlay .settings-group,html[data-theme="dark"] #settingsOverlay .settings-group summary,html[data-theme="dark"] #settingsOverlay .settings-group-body{background:#24252d!important;color:#f5f5f7!important;border-color:#3b3c46!important}
+html[data-theme="dark"] #settingsOverlay .settings-group summary span,html[data-theme="dark"] #settingsOverlay .settings-group summary small,html[data-theme="dark"] #settingsOverlay .settings-group-body label,html[data-theme="dark"] #settingsOverlay .settings-help{color:#e3e4eb!important}
+html[data-theme="dark"] #settingsOverlay input:not([type="checkbox"]),html[data-theme="dark"] #settingsOverlay select,html[data-theme="dark"] #settingsOverlay textarea{background:#191a20!important;color:#f5f5f7!important;border-color:#454651!important;color-scheme:dark}
+html[data-theme="dark"] #settingsOverlay .settings-check-grid label,html[data-theme="dark"] #settingsOverlay .focus-choice-grid label{background:#191a20!important;color:#f5f5f7!important;border-color:#454651!important}
+html[data-theme="dark"] #settingsOverlay .modal-actions{background:rgba(25,26,32,.97)!important;border-color:#34353d!important}
+html[data-theme="dark"] #settingsOverlay #settingsCancelBtn{background:#30313a!important;color:#f5f5f7!important}
+#flowFocusPanels section[style*="display: none"]{display:none!important}
+</style>
